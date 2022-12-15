@@ -1,3 +1,10 @@
+linux-6.1-rockchip (6.1+rockchip-2) unstable; urgency=medium
+
+  * Fix alternate linux-initramfs-tool dependency
+  * d/patches: fix proximity sensor not probing
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Thu, 15 Dec 2022 11:27:44 +0100
+
 linux-6.1-rockchip (6.1+rockchip-1) unstable; urgency=medium
 
   * Initial 6.1 release
