@@ -37,7 +37,7 @@ index 9323666..e3d04a5 100644
 +
 +	val = rk818_bat_read(di, RK818_VB_MON_REG);
 +	val &= (~(VBAT_LOW_VOL_MASK | VBAT_LOW_ACT_MASK));
-+	val |= (RK818_VBAT_LOW_3V4 | EN_VBAT_LOW_IRQ);
++	val |= (RK818_VBAT_LOW_3V0 | EN_VBAT_LOW_IRQ);
 +	rk818_bat_write(di, RK818_VB_MON_REG, val);
 +	rk818_bat_set_bits(di, RK818_INT_STS_MSK_REG1, VB_LOW_INT_EN, 0);
  }
