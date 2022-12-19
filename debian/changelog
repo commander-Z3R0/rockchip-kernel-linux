@@ -1,3 +1,9 @@
+linux-6.1-rockchip (6.1+rockchip-3) unstable; urgency=medium
+
+  * d/patches: revert back to 3.0V for low voltage IRQ
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 19 Dec 2022 14:40:10 +0100
+
 linux-6.1-rockchip (6.1+rockchip-2) unstable; urgency=medium
 
   * Fix alternate linux-initramfs-tool dependency
