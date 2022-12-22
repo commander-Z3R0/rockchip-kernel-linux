@@ -1,3 +1,9 @@
+linux-6.1-rockchip (6.1.1+rockchip-1) unstable; urgency=medium
+
+  * d/patches: rebase on 6.1.1
+
+ -- Undef <debian@undef.tools>  Thu, 22 Dec 2022 09:11:45 +0000
+
 linux-6.1-rockchip (6.1+rockchip-3) unstable; urgency=medium
 
   * d/patches: revert back to 3.0V for low voltage IRQ
