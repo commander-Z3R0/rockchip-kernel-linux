@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 21 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index 1a7a350..e9a533086 100644
+index f9c9d2f..93eab95 100644
 --- a/drivers/usb/typec/altmodes/displayport.c
 +++ b/drivers/usb/typec/altmodes/displayport.c
 @@ -93,27 +93,37 @@ static int dp_altmode_configure(struct dp_altmode *dp, u8 con)
