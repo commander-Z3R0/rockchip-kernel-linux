@@ -17,7 +17,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 38 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index de66a29..1a7a350 100644
+index 80d8c6c..f9c9d2f 100644
 --- a/drivers/usb/typec/altmodes/displayport.c
 +++ b/drivers/usb/typec/altmodes/displayport.c
 @@ -93,14 +93,22 @@ static int dp_altmode_configure(struct dp_altmode *dp, u8 con)
@@ -47,7 +47,7 @@ index de66a29..1a7a350 100644
  		break;
  	default:
  		break;
-@@ -525,15 +533,37 @@ int dp_altmode_probe(struct typec_altmode *alt)
+@@ -531,15 +539,37 @@ int dp_altmode_probe(struct typec_altmode *alt)
  	struct fwnode_handle *fwnode;
  	struct dp_altmode *dp;
  	int ret;
