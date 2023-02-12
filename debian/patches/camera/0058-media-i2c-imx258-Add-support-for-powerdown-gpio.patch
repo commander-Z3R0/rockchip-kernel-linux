@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 12 insertions(+)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index eab5fc1..3c7e4c1 100644
+index 85d73b1..b80b9b2 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -612,6 +612,8 @@ struct imx258 {
+@@ -613,6 +613,8 @@ struct imx258 {
  	struct v4l2_ctrl *hblank;
  	struct v4l2_ctrl *exposure;
  
@@ -23,7 +23,7 @@ index eab5fc1..3c7e4c1 100644
  	/* Current mode */
  	const struct imx258_mode *cur_mode;
  
-@@ -1010,6 +1012,8 @@ static int imx258_power_on(struct device *dev)
+@@ -1011,6 +1013,8 @@ static int imx258_power_on(struct device *dev)
  	struct imx258 *imx258 = to_imx258(sd);
  	int ret;
  
@@ -32,7 +32,7 @@ index eab5fc1..3c7e4c1 100644
  	ret = clk_prepare_enable(imx258->clk);
  	if (ret)
  		dev_err(dev, "failed to enable clock\n");
-@@ -1024,6 +1028,8 @@ static int imx258_power_off(struct device *dev)
+@@ -1025,6 +1029,8 @@ static int imx258_power_off(struct device *dev)
  
  	clk_disable_unprepare(imx258->clk);
  
@@ -41,9 +41,9 @@ index eab5fc1..3c7e4c1 100644
  	return 0;
  }
  
-@@ -1284,6 +1290,12 @@ static int imx258_probe(struct i2c_client *client)
- 	if (ret || val != 180)
+@@ -1299,6 +1305,12 @@ static int imx258_probe(struct i2c_client *client)
  		return -EINVAL;
+ 	}
  
 +	/* request optional power down pin */
 +	imx258->pwdn_gpio = devm_gpiod_get_optional(&client->dev, "powerdown",
