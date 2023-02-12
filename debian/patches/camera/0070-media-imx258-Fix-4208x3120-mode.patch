@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 553b4a8..1b3ea2b 100644
+index eb7e48a..1697307 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -442,11 +442,11 @@ static const struct imx258_reg common_regs[] = {
+@@ -443,11 +443,11 @@ static const struct imx258_reg common_regs[] = {
  	REG8(HDR_MODE, 0x00),
  };
  
@@ -27,7 +27,7 @@ index 553b4a8..1b3ea2b 100644
  	REG16(X_ADD_STA, 0),
  	REG16(Y_ADD_STA, 0),
  	REG16(X_ADD_END, 4207),
-@@ -469,7 +469,7 @@ static const struct imx258_reg mode_4208x3118_regs[] = {
+@@ -470,7 +470,7 @@ static const struct imx258_reg mode_4208x3118_regs[] = {
  	REG16(X_OUT_SIZE, 4208),
  	REG16(Y_OUT_SIZE, 3120),
  	REG8(FRM_LENGTH_CTL, 0x01),
@@ -36,7 +36,7 @@ index 553b4a8..1b3ea2b 100644
  };
  
  static const struct imx258_reg mode_4032x3024_regs[] = {
-@@ -632,12 +632,12 @@ static const struct imx258_link_freq_config link_freq_configs[] = {
+@@ -633,12 +633,12 @@ static const struct imx258_link_freq_config link_freq_configs[] = {
  static const struct imx258_mode supported_modes[] = {
  	{
  		.width = 4208,
