@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 477 insertions(+), 382 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 4f47253..db9abd9 100644
+index 1a715f2..e09a47a 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -79,9 +79,60 @@
+@@ -80,9 +80,60 @@
  #define REG_CONFIG_FLIP_TEST_PATTERN	0x02
  
  /* Input clock frequency in Hz */
@@ -78,7 +78,7 @@ index 4f47253..db9abd9 100644
  
  struct imx258_reg {
  	u16 address;
-@@ -118,398 +169,424 @@ struct imx258_mode {
+@@ -119,398 +170,424 @@ struct imx258_mode {
  	struct imx258_reg_list reg_list;
  };
  
@@ -882,7 +882,7 @@ index 4f47253..db9abd9 100644
  };
  
  static const char * const imx258_test_pattern_menu[] = {
-@@ -578,6 +655,17 @@ static const struct imx258_mode supported_modes[] = {
+@@ -579,6 +656,17 @@ static const struct imx258_mode supported_modes[] = {
  		},
  		.link_freq_index = IMX258_LINK_FREQ_1267MBPS,
  	},
@@ -900,7 +900,7 @@ index 4f47253..db9abd9 100644
  	{
  		.width = 2104,
  		.height = 1560,
-@@ -964,6 +1052,13 @@ static int imx258_start_streaming(struct imx258 *imx258)
+@@ -965,6 +1053,13 @@ static int imx258_start_streaming(struct imx258 *imx258)
  	const struct imx258_reg_list *reg_list;
  	int ret, link_freq_index;
  
