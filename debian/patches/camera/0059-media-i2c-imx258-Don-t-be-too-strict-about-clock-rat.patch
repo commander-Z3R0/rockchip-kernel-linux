@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 3c7e4c1..24c3a20 100644
+index b80b9b2..e7bbbd3 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -79,7 +79,9 @@
+@@ -80,7 +80,9 @@
  #define REG_CONFIG_FLIP_TEST_PATTERN	0x02
  
  /* Input clock frequency in Hz */
@@ -24,7 +24,7 @@ index 3c7e4c1..24c3a20 100644
  
  struct imx258_reg {
  	u16 address;
-@@ -1277,8 +1279,11 @@ static int imx258_probe(struct i2c_client *client)
+@@ -1300,8 +1302,11 @@ static int imx258_probe(struct i2c_client *client)
  	} else {
  		val = clk_get_rate(imx258->clk);
  	}
