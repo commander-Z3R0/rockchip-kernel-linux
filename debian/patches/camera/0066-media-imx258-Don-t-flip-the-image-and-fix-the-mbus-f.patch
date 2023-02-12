@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index db9abd9..0639fd6 100644
+index e09a47a..36cf9e6 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -75,14 +75,16 @@
+@@ -76,14 +76,16 @@
  
  /* Orientation */
  #define REG_MIRROR_FLIP_CONTROL		0x0101
@@ -32,7 +32,7 @@ index db9abd9..0639fd6 100644
  /* regs */
  #define PLL_MULT_DRIV                  0x0310
  #define IVTPXCK_DIV                    0x0301
-@@ -819,7 +821,7 @@ static int imx258_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
+@@ -820,7 +822,7 @@ static int imx258_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
  	/* Initialize try_fmt */
  	try_fmt->width = supported_modes[0].width;
  	try_fmt->height = supported_modes[0].height;
@@ -41,7 +41,7 @@ index db9abd9..0639fd6 100644
  	try_fmt->field = V4L2_FIELD_NONE;
  
  	return 0;
-@@ -931,7 +933,7 @@ static int imx258_enum_mbus_code(struct v4l2_subdev *sd,
+@@ -932,7 +934,7 @@ static int imx258_enum_mbus_code(struct v4l2_subdev *sd,
  	if (code->index > 0)
  		return -EINVAL;
  
@@ -50,7 +50,7 @@ index db9abd9..0639fd6 100644
  
  	return 0;
  }
-@@ -943,7 +945,7 @@ static int imx258_enum_frame_size(struct v4l2_subdev *sd,
+@@ -944,7 +946,7 @@ static int imx258_enum_frame_size(struct v4l2_subdev *sd,
  	if (fse->index >= ARRAY_SIZE(supported_modes))
  		return -EINVAL;
  
@@ -59,7 +59,7 @@ index db9abd9..0639fd6 100644
  		return -EINVAL;
  
  	fse->min_width = supported_modes[fse->index].width;
-@@ -959,7 +961,7 @@ static void imx258_update_pad_format(const struct imx258_mode *mode,
+@@ -960,7 +962,7 @@ static void imx258_update_pad_format(const struct imx258_mode *mode,
  {
  	fmt->format.width = mode->width;
  	fmt->format.height = mode->height;
@@ -68,7 +68,7 @@ index db9abd9..0639fd6 100644
  	fmt->format.field = V4L2_FIELD_NONE;
  }
  
-@@ -1007,7 +1009,7 @@ static int imx258_set_pad_format(struct v4l2_subdev *sd,
+@@ -1008,7 +1010,7 @@ static int imx258_set_pad_format(struct v4l2_subdev *sd,
  	mutex_lock(&imx258->mutex);
  
  	/* Only one raw bayer(GBRG) order is supported */

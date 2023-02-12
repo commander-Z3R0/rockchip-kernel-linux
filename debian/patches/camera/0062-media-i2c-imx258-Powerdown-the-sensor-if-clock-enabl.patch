@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 76fc173..e63ec7b 100644
+index d4198cc..b34e7d5 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -1040,6 +1040,7 @@ static int imx258_power_on(struct device *dev)
+@@ -1041,6 +1041,7 @@ static int imx258_power_on(struct device *dev)
  	ret = clk_prepare_enable(imx258->clk);
  	if (ret) {
  		dev_err(dev, "failed to enable clock\n");
