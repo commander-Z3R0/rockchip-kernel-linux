@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 47 insertions(+), 47 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 0639fd6..9bc9480 100644
+index 36cf9e6..bb4d289 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -187,17 +187,17 @@ static const struct imx258_reg mipi_data_rate_1267mbps[] = {
+@@ -188,17 +188,17 @@ static const struct imx258_reg mipi_data_rate_1267mbps[] = {
  };
  
  static const struct imx258_reg mipi_data_rate_640mbps[] = {
@@ -42,7 +42,7 @@ index 0639fd6..9bc9480 100644
  };
  
  static const struct imx258_reg common_regs[] = {
-@@ -472,28 +472,28 @@ static const struct imx258_reg common_regs[] = {
+@@ -473,28 +473,28 @@ static const struct imx258_reg common_regs[] = {
  };
  
  static const struct imx258_reg mode_4208x3118_regs[] = {
@@ -80,7 +80,7 @@ index 0639fd6..9bc9480 100644
  	REG8(FORCE_FD_SUM, 0x00),
  	REG16(X_OUT_SIZE, 4208),
  	REG16(Y_OUT_SIZE, 3120),
-@@ -532,28 +532,28 @@ static const struct imx258_reg mode_4032x3024_regs[] = {
+@@ -533,28 +533,28 @@ static const struct imx258_reg mode_4032x3024_regs[] = {
  };
  
  static const struct imx258_reg mode_2104_1560_regs[] = {
@@ -119,7 +119,7 @@ index 0639fd6..9bc9480 100644
  	REG8(FORCE_FD_SUM, 0x00),
  	REG16(X_OUT_SIZE, 2104),
  	REG16(Y_OUT_SIZE, 1560),
-@@ -562,33 +562,33 @@ static const struct imx258_reg mode_2104_1560_regs[] = {
+@@ -563,33 +563,33 @@ static const struct imx258_reg mode_2104_1560_regs[] = {
  };
  
  static const struct imx258_reg mode_1048_780_regs[] = {
