@@ -13,10 +13,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 60 insertions(+), 63 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 9bc9480..83068d1 100644
+index bb4d289..fc1a6d83 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -171,35 +171,6 @@ struct imx258_mode {
+@@ -172,35 +172,6 @@ struct imx258_mode {
  	struct imx258_reg_list reg_list;
  };
  
@@ -52,7 +52,7 @@ index 9bc9480..83068d1 100644
  static const struct imx258_reg common_regs[] = {
  	REG8(EXCK_FREQ, 24),
  	REG8(EXCK_FREQ+1, 0),
-@@ -502,7 +473,7 @@ static const struct imx258_reg mode_4208x3118_regs[] = {
+@@ -503,7 +474,7 @@ static const struct imx258_reg mode_4208x3118_regs[] = {
  };
  
  static const struct imx258_reg mode_4032x3024_regs[] = {
@@ -61,7 +61,7 @@ index 9bc9480..83068d1 100644
  	REG8(CSI_LANE_MODE, 0x03),
  	REG16(LINE_LENGTH_PCK, 5352),
  	REG16(FRM_LENGTH_LINES, 3224),
-@@ -548,7 +519,7 @@ static const struct imx258_reg mode_2104_1560_regs[] = {
+@@ -549,7 +520,7 @@ static const struct imx258_reg mode_2104_1560_regs[] = {
  	REG8(BINNING_TYPE_V, 0x12),
  	REG8(SCALE_MODE, 1),
  	REG16(SCALE_M, 32),
@@ -70,7 +70,7 @@ index 9bc9480..83068d1 100644
  	REG16(DIG_CROP_Y_OFFSET, 0),
  	REG16(DIG_CROP_IMAGE_WIDTH, 4208),
  	REG16(DIG_CROP_IMAGE_HEIGHT, 1560),
-@@ -578,7 +549,7 @@ static const struct imx258_reg mode_1048_780_regs[] = {
+@@ -579,7 +550,7 @@ static const struct imx258_reg mode_1048_780_regs[] = {
  	REG8(BINNING_TYPE_V, 0x14),
  	REG8(SCALE_MODE, 0x01),
  	REG16(SCALE_M, 64),
@@ -79,7 +79,7 @@ index 9bc9480..83068d1 100644
  	REG16(DIG_CROP_Y_OFFSET, 0),
  	REG16(DIG_CROP_IMAGE_WIDTH, 4192),
  	REG16(DIG_CROP_IMAGE_HEIGHT, 780),
-@@ -599,47 +570,60 @@ static const char * const imx258_test_pattern_menu[] = {
+@@ -600,47 +571,60 @@ static const char * const imx258_test_pattern_menu[] = {
  	"Pseudorandom Sequence (PN9)",
  };
  
@@ -166,7 +166,7 @@ index 9bc9480..83068d1 100644
  		}
  	},
  };
-@@ -655,7 +639,7 @@ static const struct imx258_mode supported_modes[] = {
+@@ -656,7 +640,7 @@ static const struct imx258_mode supported_modes[] = {
  			.num_of_regs = ARRAY_SIZE(mode_4208x3118_regs),
  			.regs = mode_4208x3118_regs,
  		},
@@ -175,7 +175,7 @@ index 9bc9480..83068d1 100644
  	},
  	{
  		.width = 4032,
-@@ -666,7 +650,7 @@ static const struct imx258_mode supported_modes[] = {
+@@ -667,7 +651,7 @@ static const struct imx258_mode supported_modes[] = {
  			.num_of_regs = ARRAY_SIZE(mode_4032x3024_regs),
  			.regs = mode_4032x3024_regs,
  		},
@@ -184,7 +184,7 @@ index 9bc9480..83068d1 100644
  	},
  	{
  		.width = 2104,
-@@ -677,7 +661,7 @@ static const struct imx258_mode supported_modes[] = {
+@@ -678,7 +662,7 @@ static const struct imx258_mode supported_modes[] = {
  			.num_of_regs = ARRAY_SIZE(mode_2104_1560_regs),
  			.regs = mode_2104_1560_regs,
  		},
@@ -193,7 +193,7 @@ index 9bc9480..83068d1 100644
  	},
  	{
  		.width = 1048,
-@@ -688,10 +672,22 @@ static const struct imx258_mode supported_modes[] = {
+@@ -689,10 +673,22 @@ static const struct imx258_mode supported_modes[] = {
  			.num_of_regs = ARRAY_SIZE(mode_1048_780_regs),
  			.regs = mode_1048_780_regs,
  		},
@@ -217,8 +217,8 @@ index 9bc9480..83068d1 100644
  /* regulator supplies */
  static const char * const imx258_supply_names[] = {
  	"vana", /* Analog (2.8V) supply */
-@@ -1328,7 +1324,8 @@ static int imx258_init_controls(struct imx258 *imx258)
- 		imx258->link_freq->flags |= V4L2_CTRL_FLAG_READ_ONLY;
+@@ -1342,7 +1338,8 @@ static int imx258_init_controls(struct imx258 *imx258)
+ 		vflip->flags |= V4L2_CTRL_FLAG_READ_ONLY;
  
  	pixel_rate_max = link_freq_to_pixel_rate(link_freq_menu_items[0]);
 -	pixel_rate_min = link_freq_to_pixel_rate(link_freq_menu_items[1]);
