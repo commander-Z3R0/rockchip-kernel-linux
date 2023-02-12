@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 18 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 486d685..4f47253 100644
+index c511fdb..1a715f2 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -1024,8 +1024,23 @@ static int imx258_power_on(struct device *dev)
+@@ -1025,8 +1025,23 @@ static int imx258_power_on(struct device *dev)
  {
  	struct v4l2_subdev *sd = dev_get_drvdata(dev);
  	struct imx258 *imx258 = to_imx258(sd);
@@ -38,7 +38,7 @@ index 486d685..4f47253 100644
  	ret = regulator_bulk_enable(IMX258_SUPPLY_COUNT, imx258->supplies);
  	if (ret) {
  		dev_err(dev, "failed to enable regulators\n");
-@@ -1315,12 +1330,9 @@ static int imx258_probe(struct i2c_client *client)
+@@ -1338,12 +1353,9 @@ static int imx258_probe(struct i2c_client *client)
  		val = clk_get_rate(imx258->clk);
  	}
  
@@ -52,5 +52,5 @@ index 486d685..4f47253 100644
 +	// but we now just configure the clock to expected value before power on
 +	// if possible
  
- 	/*
- 	 * Check that the device is mounted upside down. The driver only
+ 	for (i = 0; i < IMX258_SUPPLY_COUNT; i++)
+ 		imx258->supplies[i].supply = imx258_supply_names[i];
