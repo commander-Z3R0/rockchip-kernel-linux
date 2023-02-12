@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index e63ec7b..486d685 100644
+index b34e7d5..c511fdb 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
-@@ -607,6 +607,7 @@ static const char * const imx258_supply_names[] = {
+@@ -608,6 +608,7 @@ static const char * const imx258_supply_names[] = {
  	"vana", /* Analog (2.8V) supply */
  	"vdig", /* Digital Core (1.5V) supply */
  	"vif",  /* Digital I/O (1.8V) supply */
