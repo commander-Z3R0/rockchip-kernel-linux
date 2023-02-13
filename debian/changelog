@@ -1,3 +1,10 @@
+linux-6.1-rockchip (6.1.11+rockchip-2) unstable; urgency=medium
+
+  [ Arnaud Ferraris ]
+  * d/patches: use upstream camera & panel drivers
+
+ -- Undef <debian@undef.tools>  Mon, 13 Feb 2023 08:16:38 +0000
+
 linux-6.1-rockchip (6.1.11-rockchip-1) unstable; urgency=medium
 
   * d/changelog: release version 6.1.9+rockchip-1
