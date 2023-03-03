@@ -16,7 +16,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 109 insertions(+), 36 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 5ba4465c..0dd6998 100644
+index f250c384..bb24135 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -58,6 +58,43 @@ backlight: backlight {
@@ -124,8 +124,8 @@ index 5ba4465c..0dd6998 100644
 +	};
  };
  
- &cpu_l0 {
-@@ -247,7 +308,8 @@ &cpu_b1 {
+ &cpu_alert0 {
+@@ -254,7 +315,8 @@ &cpu_b1 {
  
  &cdn_dp {
  	status = "okay";
@@ -135,7 +135,7 @@ index 5ba4465c..0dd6998 100644
  };
  
  &emmc_phy {
-@@ -277,8 +339,6 @@ rk818: pmic@1c {
+@@ -284,8 +346,6 @@ rk818: pmic@1c {
  		rockchip,system-power-controller;
  		wakeup-source;
  
@@ -144,7 +144,7 @@ index 5ba4465c..0dd6998 100644
  		vcc1-supply = <&vcc_sys>;
  		vcc2-supply = <&vcc_sys>;
  		vcc3-supply = <&vcc_sys>;
-@@ -287,6 +347,7 @@ rk818: pmic@1c {
+@@ -294,6 +354,7 @@ rk818: pmic@1c {
  		vcc7-supply = <&vcc3v3_sys>;
  		vcc8-supply = <&vcc_sys>;
  		vcc9-supply = <&vcc3v3_sys>;
@@ -152,7 +152,7 @@ index 5ba4465c..0dd6998 100644
  
  		regulators {
  			vdd_cpu_l: DCDC_REG1 {
-@@ -433,13 +494,13 @@ regulator-state-mem {
+@@ -440,13 +501,13 @@ regulator-state-mem {
  
  			otg_switch: OTG_SWITCH {
  				regulator-name = "otg_switch";
@@ -170,7 +170,7 @@ index 5ba4465c..0dd6998 100644
  		battery {
  			compatible = "rockchip,rk818-battery";
  			ocv_table = <3400 3675 3689 3716 3740 3756 3768 3780
-@@ -464,6 +525,12 @@ battery {
+@@ -471,6 +532,12 @@ battery {
  			power_dc2otg = <0>;
  			otg5v_suspend_enable = <1>;
  		};
@@ -183,7 +183,7 @@ index 5ba4465c..0dd6998 100644
  	};
  
  	vdd_cpu_b: regulator@40 {
-@@ -667,7 +734,9 @@ fusb0: typec-portc@22 {
+@@ -674,7 +741,9 @@ fusb0: typec-portc@22 {
  		interrupts = <RK_PA2 IRQ_TYPE_LEVEL_LOW>;
  		pinctrl-names = "default";
  		pinctrl-0 = <&fusb0_int>;
@@ -194,7 +194,7 @@ index 5ba4465c..0dd6998 100644
  
  		connector {
  			compatible = "usb-c-connector";
-@@ -675,12 +744,18 @@ connector {
+@@ -682,12 +751,18 @@ connector {
  			label = "USB-C";
  			op-sink-microwatt = <2500000>;
  			power-role = "dual";
@@ -217,7 +217,7 @@ index 5ba4465c..0dd6998 100644
  
  			ports {
  				#address-cells = <1>;
-@@ -1008,7 +1083,7 @@ &sdhci {
+@@ -1015,7 +1090,7 @@ &sdhci {
  };
  
  &tcphy0 {
@@ -226,7 +226,7 @@ index 5ba4465c..0dd6998 100644
  	status = "okay";
  };
  
-@@ -1036,15 +1111,7 @@ &tsadc {
+@@ -1043,15 +1118,7 @@ &tsadc {
  
  &u2phy0 {
  	status = "okay";
@@ -243,7 +243,7 @@ index 5ba4465c..0dd6998 100644
  
  	port {
  		u2phy0_typec_hs: endpoint {
-@@ -1053,17 +1120,22 @@ u2phy0_typec_hs: endpoint {
+@@ -1060,17 +1127,22 @@ u2phy0_typec_hs: endpoint {
  	};
  };
  
@@ -274,7 +274,7 @@ index 5ba4465c..0dd6998 100644
  };
  
  &uart0 {
-@@ -1112,7 +1184,8 @@ &usbdrd3_0 {
+@@ -1119,7 +1191,8 @@ &usbdrd3_0 {
  };
  
  &usbdrd_dwc3_0 {
