@@ -124,8 +124,7 @@ device-tree/0123-arm64-dts-rockchip-rk3399-pinephone-pro-Support-both.patch
 device-tree/0124-arm64-dts-rk3399-pinephone-pro-Make-LOUT-use-mono-di.patch
 device-tree/0125-arm64-dts-rk3399-pinephone-pro-Fix-initial-codec-clo.patch
 device-tree/0126-arm64-dts-rk3399-pinephone-pro-Enable-SDR104-on-SD-c.patch
-device-tree/0127-arm64-dts-rockchip-reduce-thermal-limits-on-PinePhon.patch
-mobian/0128-arm64-configs-add-rockchip_defconfig.patch
-mobian/0129-arm64-configs-enable-Multi-Gen-LRU.patch
-mobian/0130-builddeb-don-t-build-linux-libc-dev-package.patch
-debian/0131-wireless-add-debian-wireless-regdb-certificates.patch
+mobian/0127-arm64-configs-add-rockchip_defconfig.patch
+mobian/0128-arm64-configs-enable-Multi-Gen-LRU.patch
+mobian/0129-builddeb-don-t-build-linux-libc-dev-package.patch
+debian/0130-wireless-add-debian-wireless-regdb-certificates.patch
