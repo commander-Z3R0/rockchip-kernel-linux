@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 0b39ced..e99ae3bd8 100644
+index 8babafe..9c47e67 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -673,12 +673,10 @@ connector {
+@@ -680,12 +680,10 @@ connector {
  			compatible = "usb-c-connector";
  			data-role = "dual";
  			label = "USB-C";
