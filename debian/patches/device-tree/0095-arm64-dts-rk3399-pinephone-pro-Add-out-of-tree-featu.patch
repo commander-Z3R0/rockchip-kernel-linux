@@ -14,7 +14,7 @@ Signed-of-by: Kamil Trzciński <ayufan@ayufan.eu>
  1 file changed, 600 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 2e058c3..6dfeaad 100644
+index fccc2b2..86b5bd2 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -10,7 +10,10 @@
@@ -207,8 +207,8 @@ index 2e058c3..6dfeaad 100644
 +	};
  };
  
- &cpu_l0 {
-@@ -107,10 +262,20 @@ &cpu_b1 {
+ &cpu_alert0 {
+@@ -114,10 +269,20 @@ &cpu_b1 {
  	cpu-supply = <&vdd_cpu_b>;
  };
  
@@ -229,7 +229,7 @@ index 2e058c3..6dfeaad 100644
  &i2c0 {
  	clock-frequency = <400000>;
  	i2c-scl-rising-time-ns = <168>;
-@@ -129,6 +294,8 @@ rk818: pmic@1c {
+@@ -136,6 +301,8 @@ rk818: pmic@1c {
  		rockchip,system-power-controller;
  		wakeup-source;
  
@@ -238,7 +238,7 @@ index 2e058c3..6dfeaad 100644
  		vcc1-supply = <&vcc_sys>;
  		vcc2-supply = <&vcc_sys>;
  		vcc3-supply = <&vcc_sys>;
-@@ -265,6 +432,51 @@ regulator-state-mem {
+@@ -272,6 +439,51 @@ regulator-state-mem {
  					regulator-on-in-suspend;
  				};
  			};
@@ -290,7 +290,7 @@ index 2e058c3..6dfeaad 100644
  		};
  	};
  
-@@ -326,6 +538,138 @@ opp07 {
+@@ -333,6 +545,138 @@ opp07 {
  	};
  };
  
@@ -429,7 +429,7 @@ index 2e058c3..6dfeaad 100644
  &io_domains {
  	bt656-supply = <&vcc1v8_dvp>;
  	audio-supply = <&vcca1v8_codec>;
-@@ -334,18 +678,89 @@ &io_domains {
+@@ -341,18 +685,89 @@ &io_domains {
  	status = "okay";
  };
  
@@ -519,7 +519,7 @@ index 2e058c3..6dfeaad 100644
  	pmic {
  		pmic_int_l: pmic-int-l {
  			rockchip,pins = <1 RK_PC5 RK_FUNC_GPIO &pcfg_pull_up>;
-@@ -360,6 +775,39 @@ vsel2_pin: vsel2-pin {
+@@ -367,6 +782,39 @@ vsel2_pin: vsel2-pin {
  		};
  	};
  
@@ -559,7 +559,7 @@ index 2e058c3..6dfeaad 100644
  	sound {
  		vcc1v8_codec_en: vcc1v8-codec-en {
  			rockchip,pins = <3 RK_PA4 RK_FUNC_GPIO &pcfg_pull_down>;
-@@ -367,6 +815,37 @@ vcc1v8_codec_en: vcc1v8-codec-en {
+@@ -374,6 +822,37 @@ vcc1v8_codec_en: vcc1v8-codec-en {
  	};
  };
  
@@ -597,7 +597,7 @@ index 2e058c3..6dfeaad 100644
  &sdmmc {
  	bus-width = <4>;
  	cap-sd-highspeed;
-@@ -387,12 +866,133 @@ &sdhci {
+@@ -394,12 +873,133 @@ &sdhci {
  	status = "okay";
  };
  
