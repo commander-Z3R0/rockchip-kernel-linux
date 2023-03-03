@@ -12,7 +12,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 40 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 0dd6998..675ef67 100644
+index bb24135..40b81aa 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -235,6 +235,32 @@ vcca1v8_s3: vcc1v8-s3-regulator {
@@ -48,7 +48,7 @@ index 0dd6998..675ef67 100644
  	vcc1v8_codec: vcc1v8-codec-regulator {
  		compatible = "regulator-fixed";
  		enable-active-high;
-@@ -913,6 +939,10 @@ mipi_in_panel: endpoint {
+@@ -920,6 +946,10 @@ mipi_in_panel: endpoint {
  	};
  };
  
@@ -59,7 +59,7 @@ index 0dd6998..675ef67 100644
  &pmu_io_domains {
  	pmu1830-supply = <&vcc_1v8>;
  	status = "okay";
-@@ -977,6 +1007,16 @@ blue_led_pin: blue-led-pin {
+@@ -984,6 +1014,16 @@ blue_led_pin: blue-led-pin {
  		};
  	};
  
