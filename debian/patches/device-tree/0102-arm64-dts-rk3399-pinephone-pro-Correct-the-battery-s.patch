@@ -18,10 +18,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 6e9645e..0b39ced 100644
+index c2605af..8babafe 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -447,16 +447,16 @@ battery {
+@@ -454,16 +454,16 @@ battery {
  				4110 4161 4217 4308>;
  			design_capacity = <2916>;
  			design_qmax = <2708>;

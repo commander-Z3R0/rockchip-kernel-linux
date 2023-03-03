@@ -9,10 +9,10 @@ Signed-of-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 61ef70a..d1e3fae 100644
+index b4e8152..be4452b 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -449,8 +449,8 @@ otg_switch: OTG_SWITCH {
+@@ -456,8 +456,8 @@ otg_switch: OTG_SWITCH {
  				regulator-name = "otg_switch";
  				// TODO: This requires a proper rk818-charger implementation
  				// without this always-on the type-c is not powered on
@@ -23,7 +23,7 @@ index 61ef70a..d1e3fae 100644
  			};
  		};
  
-@@ -969,7 +969,7 @@ &usbdrd3_0 {
+@@ -976,7 +976,7 @@ &usbdrd3_0 {
  };
  
  &usbdrd_dwc3_0 {
