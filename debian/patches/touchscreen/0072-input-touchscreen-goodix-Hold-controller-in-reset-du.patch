@@ -1,21 +1,33 @@
-From: Ondrej Jirman <megous@megous.com>
-Date: Sun, 25 Apr 2021 03:16:42 +0200
-Subject: input: goodix: Add option to power off the controller during suspend
+From: =?utf-8?q?Ond=C5=99ej_Jirman?= <megi@xff.cz>
+Date: Sun, 12 Mar 2023 23:28:41 +0000
+Subject: input: touchscreen: goodix: Hold controller in reset during suspend
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-For whatever reason the controller is not suspended on Pinephone
-by the default procedure. It consumes quite a bit of power (~40mW)
-during system sleep, and more when the screen is touched.
+The Goodix touchscreen controller used in PinePhone is not properly
+suspended during system sleep, leading to high power consumption. This
+commit modifies the driver to hold the controller in reset during
+system sleep, reducing power consumption by around 40mW.
 
-Let's power off the controller during system sleep instead.
+The original patch also disabled the regulators during system sleep, but
+this could cause issues with other peripherals attached to the same power
+supplies. Hence, this commit only holds the controller in reset during
+system sleep and does not attempt to power it off.
 
-Signed-off-by: Ondrej Jirman <megous@megous.com>
+Separate commit adds a new device tree property "hold-in-reset-in-suspend"
+to control the hold-in-reset behavior of the controller during system
+sleep.
+
+Signed-off-by: Ondřej Jirman <megi@xff.cz>
+Signed-off-by: Jan Jasper de Kroon <jajadekroon@gmail.com>
 ---
- drivers/input/touchscreen/goodix.c | 37 +++++++++++++++++++++++++++++++++++++
+ drivers/input/touchscreen/goodix.c | 23 +++++++++++++++++++++++
  drivers/input/touchscreen/goodix.h |  1 +
- 2 files changed, 38 insertions(+)
+ 2 files changed, 24 insertions(+)
 
 diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index c281e49..ce81a8d 100644
+index c281e49..eed114a 100644
 --- a/drivers/input/touchscreen/goodix.c
 +++ b/drivers/input/touchscreen/goodix.c
 @@ -1285,6 +1285,7 @@ static void goodix_disable_regulators(void *arg)
@@ -30,43 +42,29 @@ index c281e49..ce81a8d 100644
  	i2c_set_clientdata(client, ts);
  	init_completion(&ts->firmware_loading_complete);
  	ts->contact_size = GOODIX_CONTACT_SIZE;
-+	ts->poweroff_in_suspend = of_property_read_bool(np, "poweroff-in-suspend");
++	ts->hold_in_reset_in_suspend = of_property_read_bool(np, "hold-in-reset-in-suspend");
  
  	error = goodix_get_gpio_config(ts);
  	if (error)
-@@ -1411,6 +1413,15 @@ static int __maybe_unused goodix_suspend(struct device *dev)
+@@ -1411,6 +1413,13 @@ static int __maybe_unused goodix_suspend(struct device *dev)
  	if (ts->load_cfg_from_disk)
  		wait_for_completion(&ts->firmware_loading_complete);
  
-+	if (ts->poweroff_in_suspend) {
++	if (ts->hold_in_reset_in_suspend) {
 +		goodix_free_irq(ts);
 +		goodix_irq_direction_output(ts, 0);
 +		gpiod_direction_output(ts->gpiod_rst, 0);
-+		regulator_disable(ts->avdd28);
-+		regulator_disable(ts->vddio);
 +		return 0;
 +	}
 +
  	/* We need gpio pins to suspend/resume */
  	if (ts->irq_pin_access_method == IRQ_PIN_ACCESS_NONE) {
  		disable_irq(client->irq);
-@@ -1456,6 +1467,32 @@ static int __maybe_unused goodix_resume(struct device *dev)
+@@ -1456,6 +1465,20 @@ static int __maybe_unused goodix_resume(struct device *dev)
  	u8 config_ver;
  	int error;
  
-+	if (ts->poweroff_in_suspend) {
-+		error = regulator_enable(ts->avdd28);
-+		if (error) {
-+			dev_err(dev, "Regulator avdd28 enable failed.\n");
-+			return error;
-+		}
-+
-+		error = regulator_enable(ts->vddio);
-+		if (error) {
-+			dev_err(dev, "Regulator vddio enable failed.\n");
-+			return error;
-+		}
-+
++	if (ts->hold_in_reset_in_suspend) {
 +		error = goodix_reset(ts);
 +		if (error) {
 +			dev_err(dev, "Controller reset failed.\n");
@@ -84,14 +82,14 @@ index c281e49..ce81a8d 100644
  		enable_irq(client->irq);
  		return 0;
 diff --git a/drivers/input/touchscreen/goodix.h b/drivers/input/touchscreen/goodix.h
-index 87797cc..c0d8cee 100644
+index 87797cc..c515d03 100644
 --- a/drivers/input/touchscreen/goodix.h
 +++ b/drivers/input/touchscreen/goodix.h
 @@ -104,6 +104,7 @@ struct goodix_ts_data {
  	u8 main_clk[GOODIX_MAIN_CLK_LEN];
  	int bak_ref_len;
  	u8 *bak_ref;
-+	bool poweroff_in_suspend;
++	bool hold_in_reset_in_suspend;
  };
  
  int goodix_i2c_read(struct i2c_client *client, u16 reg, u8 *buf, int len);
