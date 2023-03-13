@@ -7,7 +7,7 @@ Subject: arm64: dts: rk3399-pinephone-pro: Use newer DT bindings for keyboard
  1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index c6df329..ea55dfa 100644
+index 6d081f5..44ddcb8 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -95,7 +95,7 @@ bat: battery {

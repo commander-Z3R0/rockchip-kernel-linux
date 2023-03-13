@@ -9,7 +9,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index b033ed4..15881a2 100644
+index 3115209..bdd728c 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -1329,6 +1329,7 @@ &tsadc {
