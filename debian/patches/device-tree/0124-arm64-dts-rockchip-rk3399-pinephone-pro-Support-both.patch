@@ -1,8 +1,9 @@
 From: Ondrej Jirman <megi@xff.cz>
-Date: Sat, 24 Sep 2022 22:00:25 +0200
-Subject: arm64: dts: rk3399-pinephone-pro: Enable SDR104 on SD card interface
+Date: Mon, 27 Jun 2022 18:45:09 +0200
+Subject: arm64: dts: rockchip: rk3399-pinephone-pro: Support both Type-C plug
+ orientations
 
-This should work fine now when the card supports it.
+This fixes USB 3.0 and Alt-DP modes in reverse plug orientation.
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
@@ -10,14 +11,14 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 2aa3a2f..7dd283b 100644
+index dd24e95..51cb5e1 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -1400,6 +1400,7 @@ &sdmmc {
- 	pinctrl-0 = <&sdmmc_clk &sdmmc_cmd &sdmmc_cd &sdmmc_bus4>;
- 	vmmc-supply = <&vcc3v3_sys>;
- 	vqmmc-supply = <&vccio_sd>;
-+	sd-uhs-sdr104;
+@@ -1522,6 +1522,7 @@ &usbdrd3_0 {
+ &usbdrd_dwc3_0 {
+ 	dr_mode = "otg";
+ 	extcon = <&typec_extcon_bridge>;
++	snps,usb3-phy-reset-quirk;
  	status = "okay";
  };
  
