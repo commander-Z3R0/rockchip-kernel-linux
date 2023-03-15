@@ -1,8 +1,11 @@
-linux-6.1-rockchip (6.1.18+rockchip-1) UNRELEASED; urgency=medium
+linux-6.1-rockchip (6.1.19+rockchip-1) unstable; urgency=medium
 
+  [ undef ]
   * Rebase on 6.1.18
+  * d/patches: include more upstream commits, fix wifi and renumber
+  * Rebase on 6.1.19
 
- -- undef <Undef <debian@undef.tools>  Sat, 11 Mar 2023 23:59:06 +0000
+ -- Undef <debian@undef.tools>  Wed, 15 Mar 2023 04:39:42 +0000
 
 linux-6.1-rockchip (6.1.15+rockchip-1) unstable; urgency=medium
 
