@@ -21,7 +21,7 @@ display/0020-drm-rockchip-Fix-panic-on-reboot-when-DRM-device-fai.patch
 display/0021-drm-bridge-dw-hdmi-Allow-to-accept-HPD-status-from-o.patch
 display/0022-video-pwm_bl-Allow-to-change-lth_brightness-via-sysf.patch
 power/0023-power-rk818-Configure-rk808-clkout2-function.patch
-power/0024-power-rk818-battery-Add-battery-driver-for-RK818.patch
+0024-power-supply-rk818-battery-Add-battery-driver-for-RK.patch
 power/0025-power-supply-rk818-battery-Use-a-more-propper-compat.patch
 power/0026-power-supply-rk818-charger-Implement-charger-driver-.patch
 power/0027-power-supply-rk818-battery-Report-charging-status-ba.patch
@@ -32,7 +32,7 @@ power/0031-power-supply-rk818-battery-Drop-dependency-on-frameb.patch
 power/0032-power-supply-rk818-battery-Speed-up-battery-current-.patch
 power/0033-power-rk818-charger-Delay-applying-input-current-lim.patch
 power/0034-power-supply-rk818-charger-Add-support-for-POWER_SUP.patch
-power/0035-power-supply-rk818-battery-Don-t-auto-poweroff-the-P.patch
+0035-power-supply-rk818-battery-Don-t-auto-poweroff-the-P.patch
 power/0036-power-supply-rk818-battery-Don-t-reset-dsoc-to-0-on-.patch
 typec/0037-usb-typec-fusb302-Set-the-current-before-enabling-pu.patch
 typec/0038-usb-typec-fusb302-Extend-debugging-interface-with-dr.patch
@@ -128,3 +128,9 @@ mobian/0127-arm64-configs-add-rockchip_defconfig.patch
 mobian/0128-arm64-configs-enable-Multi-Gen-LRU.patch
 mobian/0129-builddeb-don-t-build-linux-libc-dev-package.patch
 debian/0130-wireless-add-debian-wireless-regdb-certificates.patch
+0131-Add-mount-matrix-of-the-PinePhone-Pro-magnetometer.patch
+0132-arm64-dts-rk3399-pinephone-pro-Add-correct-camera-ro.patch
+0133-usb-quirks-Add-USB_QUIRK_RESET-for-Quectel-EG25G-Mod.patch
+0134-usb-typec-altmodes-displayport-Respect-DP_CAP_RECEPT.patch
+0135-usb-typec-tcpm-Fix-PD-devices-capabilities-registrat.patch
+0136-usb-typec-typec-extcon-Allow-to-force-reset-on-each-.patch
