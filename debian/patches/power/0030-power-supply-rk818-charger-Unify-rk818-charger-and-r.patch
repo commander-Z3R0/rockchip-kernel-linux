@@ -8,20 +8,20 @@ less. This also makes writing a power manager for the keyboard easier.
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
- drivers/power/supply/Kconfig         |  7 ----
+ drivers/power/supply/Kconfig         |  8 ----
  drivers/power/supply/Makefile        |  3 +-
  drivers/power/supply/rk818_battery.c | 38 ++++++++++++++----
  drivers/power/supply/rk818_charger.c | 77 +++++++++++++++++++++++++++++-------
- 4 files changed, 94 insertions(+), 31 deletions(-)
+ 4 files changed, 94 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index 26d9bd01..7b62864 100644
+index d3bdf26..7b62864 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
-@@ -917,13 +917,6 @@ config BATTERY_UG3105
- 	  Since Linux does not monitor coulomb-counter changes while the
+@@ -918,14 +918,6 @@ config BATTERY_UG3105
  	  device is off or suspended, the functionality of this driver is
  	  limited to reporting capacity only.
+ 
 -config BATTERY_RK818
 -	bool "RK818 Battery driver"
 -	depends on MFD_RK808
@@ -29,9 +29,10 @@ index 26d9bd01..7b62864 100644
 -	help
 -	  If you say yes here you will get support for the battery of RK818 PMIC.
 -	  This driver can give support for Rk818 Battery Charge Interface.
- 
+-
  config CHARGER_RK818
  	bool "RK818 Charger driver"
+ 	depends on MFD_RK808
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
 index 3b9ea83..9d286e2 100644
 --- a/drivers/power/supply/Makefile
