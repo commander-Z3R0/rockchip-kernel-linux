@@ -1,6 +1,6 @@
-From: =?utf-8?q?Kamil_Trzci=C5=84ski?= <ayufan@ayufan.eu>
-Date: Sun, 3 Jan 2021 11:43:38 +0100
-Subject: power: rk818-battery: Add battery driver for RK818
+From: Ondrej Jirman <megi@xff.cz>
+Date: Fri, 30 Dec 2022 23:17:16 +0100
+Subject: power: supply: rk818-battery: Add battery driver for RK818
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -10,12 +10,12 @@ This is forward ported driver from Rockchip BSP.
 Signed-of-by: Kamil Trzciński <ayufan@ayufan.eu>
 ---
  drivers/mfd/rk808.c                  |   40 +-
- drivers/power/supply/Kconfig         |    7 +
+ drivers/power/supply/Kconfig         |    8 +
  drivers/power/supply/Makefile        |    1 +
  drivers/power/supply/rk818_battery.c | 3568 ++++++++++++++++++++++++++++++++++
  drivers/power/supply/rk818_battery.h |  168 ++
  include/linux/mfd/rk808.h            |   81 +-
- 6 files changed, 3862 insertions(+), 3 deletions(-)
+ 6 files changed, 3863 insertions(+), 3 deletions(-)
  create mode 100644 drivers/power/supply/rk818_battery.c
  create mode 100644 drivers/power/supply/rk818_battery.h
 
@@ -82,13 +82,13 @@ index 3b0eaee..c93761c 100644
  		.name = "rk808-rtc",
  		.num_resources = ARRAY_SIZE(rtc_resources),
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index 0bbfe6a..75d5c20 100644
+index 0bbfe6a..a138e81 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
-@@ -917,5 +917,12 @@ config BATTERY_UG3105
- 	  Since Linux does not monitor coulomb-counter changes while the
+@@ -918,4 +918,12 @@ config BATTERY_UG3105
  	  device is off or suspended, the functionality of this driver is
  	  limited to reporting capacity only.
+ 
 +config BATTERY_RK818
 +	bool "RK818 Battery driver"
 +	depends on MFD_RK808
@@ -96,7 +96,7 @@ index 0bbfe6a..75d5c20 100644
 +	help
 +	  If you say yes here you will get support for the battery of RK818 PMIC.
 +	  This driver can give support for Rk818 Battery Charge Interface.
- 
++
  endif # POWER_SUPPLY
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
 index 0ee8653..dcea0e7 100644
