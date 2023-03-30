@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index 83a6615..98f3e2f 100644
+index e3d04a5..b62d59a 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -2930,7 +2930,6 @@ static irqreturn_t rk818_vb_low_irq(int irq, void *bat)
