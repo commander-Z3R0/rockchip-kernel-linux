@@ -29,10 +29,10 @@ index 6f6eaa8..4807360 100644
  		.name = "rk808-rtc",
  		.num_resources = ARRAY_SIZE(rtc_resources),
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index 75d5c20..26d9bd01 100644
+index a138e81..d3bdf26 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
-@@ -925,4 +925,12 @@ config BATTERY_RK818
+@@ -926,4 +926,12 @@ config BATTERY_RK818
  	  If you say yes here you will get support for the battery of RK818 PMIC.
  	  This driver can give support for Rk818 Battery Charge Interface.
  
