@@ -1,3 +1,11 @@
+linux-6.1-rockchip (6.1.22+rockchip-1) unstable; urgency=medium
+
+  [ undef ]
+  * WIP: import additional patches from Megi's tree
+  * Rebase on 6.1.22
+
+ -- Undef <debian@undef.tools>  Sat, 01 Apr 2023 07:45:24 +0000
+
 linux-6.1-rockchip (6.1.21+rockchip-1) unstable; urgency=medium
 
   [ undef ]
