@@ -1,3 +1,10 @@
+linux-6.1-rockchip (6.1.25+rockchip-1) unstable; urgency=medium
+
+  [ undef ]
+  * Rebase on 6.1.25
+
+ -- Undef <debian@undef.tools>  Fri, 21 Apr 2023 09:07:22 +0000
+
 linux-6.1-rockchip (6.1.24+rockchip-1) unstable; urgency=medium
 
   [ undef ]
