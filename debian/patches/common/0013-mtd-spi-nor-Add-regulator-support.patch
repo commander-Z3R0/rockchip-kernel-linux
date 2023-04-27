@@ -9,7 +9,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 34 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index cda57cb..5c835b3 100644
+index 75e6947..4f754b0 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
 @@ -3112,6 +3112,22 @@ static int spi_nor_probe(struct spi_mem *spimem)
