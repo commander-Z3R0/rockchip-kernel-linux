@@ -1,9 +1,11 @@
-linux-6.1-rockchip (6.1.26+rockchip-1) UNRELEASED; urgency=medium
+linux-6.1-rockchip (6.1.27+rockchip-1) unstable; urgency=medium
 
   [ undef ]
   * Rebase on 6.1.26
+  * d/patches: set near-level to 80
+  * Rebase on 6.1.27
 
- -- Undef <debian@undef.tools>  Thu, 27 Apr 2023 06:03:09 +0000
+ -- Undef <debian@undef.tools>  Sun, 07 May 2023 02:37:21 +0000
 
 linux-6.1-rockchip (6.1.25+rockchip-1) unstable; urgency=medium
 
