@@ -17,7 +17,7 @@ index c304fc7..6d081f5 100644
 @@ -983,6 +983,8 @@ light-sensor@48 {
  		interrupt-parent = <&gpio4>;
  		interrupts = <RK_PD3 IRQ_TYPE_EDGE_FALLING>;
- 		proximity-near-level = <32>;
+ 		proximity-near-level = <80>;
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&stk3311_int>;
  		vdd-supply = <&vcc_3v0>;
