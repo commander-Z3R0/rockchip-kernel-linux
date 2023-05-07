@@ -19,7 +19,7 @@ index 2fb797a..036baa1 100644
  		reg = <0x48>;
  		interrupt-parent = <&gpio4>;
  		interrupts = <RK_PD3 IRQ_TYPE_EDGE_FALLING>;
-+		proximity-near-level = <32>;
++		proximity-near-level = <80>;
  		vdd-supply = <&vcc_3v0>;
  		leda-supply = <&vcc_3v0>;
  	};
