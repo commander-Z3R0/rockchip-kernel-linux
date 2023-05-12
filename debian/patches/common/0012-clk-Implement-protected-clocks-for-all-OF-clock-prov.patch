@@ -67,7 +67,7 @@ Signed-off-by: Samuel Holland <samuel@sholland.org>
  3 files changed, 87 insertions(+)
 
 diff --git a/drivers/clk/clk-conf.c b/drivers/clk/clk-conf.c
-index 2ef8196..a57d28b 100644
+index 1a4e634..3b8e22d 100644
 --- a/drivers/clk/clk-conf.c
 +++ b/drivers/clk/clk-conf.c
 @@ -11,6 +11,54 @@
@@ -125,7 +125,7 @@ index 2ef8196..a57d28b 100644
  static int __set_clk_parents(struct device_node *node, bool clk_supplier)
  {
  	struct of_phandle_args clkspec;
-@@ -135,6 +183,12 @@ int of_clk_set_defaults(struct device_node *node, bool clk_supplier)
+@@ -143,6 +191,12 @@ int of_clk_set_defaults(struct device_node *node, bool clk_supplier)
  	if (!node)
  		return 0;
  
