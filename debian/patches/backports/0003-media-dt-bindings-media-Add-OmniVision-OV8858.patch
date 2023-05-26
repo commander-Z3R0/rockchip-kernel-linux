@@ -16,7 +16,7 @@ Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 
 diff --git a/Documentation/devicetree/bindings/media/i2c/ovti,ov8858.yaml b/Documentation/devicetree/bindings/media/i2c/ovti,ov8858.yaml
 new file mode 100644
-index 00000000..a65f921
+index 0000000..a65f921
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/media/i2c/ovti,ov8858.yaml
 @@ -0,0 +1,106 @@
