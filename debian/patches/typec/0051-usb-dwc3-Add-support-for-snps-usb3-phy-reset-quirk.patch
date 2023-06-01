@@ -164,7 +164,7 @@ index f9b720e..038a459 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 1f2091e..bbd4a2b 100644
+index 26ba210..60929c8 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -244,6 +244,12 @@
@@ -180,10 +180,10 @@ index 1f2091e..bbd4a2b 100644
  
  #define DWC3_GCTL_CORESOFTRESET		BIT(11)
  #define DWC3_GCTL_SOFITPSYNC		BIT(10)
-@@ -1110,6 +1116,10 @@ struct dwc3_scratchpad_array {
-  *	3	- Reserved
+@@ -1111,6 +1117,10 @@ struct dwc3_scratchpad_array {
   * @dis_metastability_quirk: set to disable metastability quirk.
   * @dis_split_quirk: set to disable split boundary.
+  * @suspended: set to track suspend event due to U3/L2.
 + * @usb3_phy_reset_quirk: set to power cycle the USB3 PHY during mode
 + *                        changes. Useful on RK3399 that needs this
 + *                        to apply Type-C orientation changes in
@@ -191,9 +191,9 @@ index 1f2091e..bbd4a2b 100644
   * @imod_interval: set the interrupt moderation interval in 250ns
   *			increments or 0 to disable.
   * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1329,6 +1339,8 @@ struct dwc3 {
- 	unsigned		dis_split_quirk:1;
+@@ -1331,6 +1341,8 @@ struct dwc3 {
  	unsigned		async_callbacks:1;
+ 	unsigned		suspended:1;
  
 +	unsigned		usb3_phy_reset_quirk:1;
 +
