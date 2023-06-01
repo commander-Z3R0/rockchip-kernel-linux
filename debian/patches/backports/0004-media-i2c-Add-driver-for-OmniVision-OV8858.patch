@@ -83,7 +83,7 @@ index 0a29331..d44934f 100644
  obj-$(CONFIG_VIDEO_OV9640) += ov9640.o
 diff --git a/drivers/media/i2c/ov8858.c b/drivers/media/i2c/ov8858.c
 new file mode 100644
-index 0000000..9ca8a17
+index 00000000..9ca8a17
 --- /dev/null
 +++ b/drivers/media/i2c/ov8858.c
 @@ -0,0 +1,2008 @@
