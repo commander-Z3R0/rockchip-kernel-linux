@@ -46,10 +46,10 @@ index 9f8c988..f9b720e 100644
  err3:
  	phy_power_off(dwc->usb2_generic_phy);
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 582ebd9..1f2091e 100644
+index bb57bc9..26ba210 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
-@@ -1160,6 +1160,7 @@ struct dwc3 {
+@@ -1161,6 +1161,7 @@ struct dwc3 {
  
  	struct phy		*usb2_generic_phy;
  	struct phy		*usb3_generic_phy;
