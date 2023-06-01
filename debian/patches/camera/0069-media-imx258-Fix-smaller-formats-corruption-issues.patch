@@ -13,7 +13,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 60 insertions(+), 63 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index bb4d289..fc1a6d8 100644
+index bb4d289..fc1a6d83 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
 @@ -172,35 +172,6 @@ struct imx258_mode {
