@@ -26,7 +26,7 @@ Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
  create mode 100644 drivers/media/i2c/ov8858.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 301b9ba..d1e73f4 100644
+index 379387e..6f910f8 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -15300,6 +15300,15 @@ T:	git git://linuxtv.org/media_tree.git
