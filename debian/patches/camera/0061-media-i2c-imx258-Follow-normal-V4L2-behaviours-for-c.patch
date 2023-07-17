@@ -1,0 +1,79 @@
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Date: Tue, 30 May 2023 18:29:49 +0100
+Subject: media: i2c: imx258: Follow normal V4L2 behaviours for clipping
+ exposure
+
+V4L2 sensor drivers are expected are expected to clip the supported
+exposure range based on the VBLANK configured.
+IMX258 wasn't doing that as register 0x350 (FRM_LENGTH_CTL)
+switches it to a mode where frame length tracks coarse exposure time.
+
+Disable this mode and clip the range for V4L2_CID_EXPOSURE appropriately
+based on V4L2_CID_VBLANK.
+
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+---
+ drivers/media/i2c/imx258.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
+index 0548414..8baa363 100644
+--- a/drivers/media/i2c/imx258.c
++++ b/drivers/media/i2c/imx258.c
+@@ -37,10 +37,11 @@
+ 
+ /* Exposure control */
+ #define IMX258_REG_EXPOSURE		0x0202
++#define IMX258_EXPOSURE_OFFSET		10
+ #define IMX258_EXPOSURE_MIN		4
+ #define IMX258_EXPOSURE_STEP		1
+ #define IMX258_EXPOSURE_DEFAULT		0x640
+-#define IMX258_EXPOSURE_MAX		65535
++#define IMX258_EXPOSURE_MAX		(IMX258_VTS_MAX - IMX258_EXPOSURE_OFFSET)
+ 
+ /* Analog gain control */
+ #define IMX258_REG_ANALOG_GAIN		0x0204
+@@ -366,7 +367,7 @@ static const struct imx258_reg mode_common_regs[] = {
+ 	{ 0x303A, 0x00 },
+ 	{ 0x303B, 0x10 },
+ 	{ 0x300D, 0x00 },
+-	{ 0x0350, 0x01 },
++	{ 0x0350, 0x00 },
+ 	{ 0x0204, 0x00 },
+ 	{ 0x0205, 0x00 },
+ 	{ 0x020E, 0x01 },
+@@ -739,6 +740,19 @@ static int imx258_update_digital_gain(struct imx258 *imx258, u32 len, u32 val)
+ 	return 0;
+ }
+ 
++static void imx258_adjust_exposure_range(struct imx258 *imx258)
++{
++	int exposure_max, exposure_def;
++
++	/* Honour the VBLANK limits when setting exposure. */
++	exposure_max = imx258->cur_mode->height + imx258->vblank->val -
++		       IMX258_EXPOSURE_OFFSET;
++	exposure_def = min(exposure_max, imx258->exposure->val);
++	__v4l2_ctrl_modify_range(imx258->exposure, imx258->exposure->minimum,
++				 exposure_max, imx258->exposure->step,
++				 exposure_def);
++}
++
+ static int imx258_set_ctrl(struct v4l2_ctrl *ctrl)
+ {
+ 	struct imx258 *imx258 =
+@@ -746,6 +760,13 @@ static int imx258_set_ctrl(struct v4l2_ctrl *ctrl)
+ 	struct i2c_client *client = v4l2_get_subdevdata(&imx258->sd);
+ 	int ret = 0;
+ 
++	/*
++	 * The VBLANK control may change the limits of usable exposure, so check
++	 * and adjust if necessary.
++	 */
++	if (ctrl->id == V4L2_CID_VBLANK)
++		imx258_adjust_exposure_range(imx258);
++
+ 	/*
+ 	 * Applying V4L2 control value only happens
+ 	 * when power is up for streaming
