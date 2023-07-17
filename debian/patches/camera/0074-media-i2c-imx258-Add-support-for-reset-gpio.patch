@@ -1,0 +1,62 @@
+From: Ondrej Jirman <megous@megous.com>
+Date: Fri, 22 Oct 2021 21:44:13 +0200
+Subject: media: i2c: imx258: Add support for reset gpio
+
+It was documented in DT, but not implemented.
+
+Signed-off-by: Ondrej Jirman <megous@megous.com>
+---
+ drivers/media/i2c/imx258.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
+index eac2c35..ec7fcb8 100644
+--- a/drivers/media/i2c/imx258.c
++++ b/drivers/media/i2c/imx258.c
+@@ -700,6 +700,7 @@ struct imx258 {
+ 	unsigned int long_exp_shift;
+ 
+ 	struct gpio_desc *pwdn_gpio;
++	struct gpio_desc *reset_gpio;
+ 
+ 	/* Current mode */
+ 	const struct imx258_mode *cur_mode;
+@@ -1279,9 +1280,14 @@ static int imx258_power_on(struct device *dev)
+ 		dev_err(dev, "failed to enable clock\n");
+ 		gpiod_set_value_cansleep(imx258->pwdn_gpio, 1);
+ 		regulator_bulk_disable(IMX258_NUM_SUPPLIES, imx258->supplies);
++		return ret;
+ 	}
+ 
+-	return ret;
++	gpiod_set_value_cansleep(imx258->reset_gpio, 0);
++
++	usleep_range(400, 500);
++
++	return 0;
+ }
+ 
+ static int imx258_power_off(struct device *dev)
+@@ -1292,6 +1298,7 @@ static int imx258_power_off(struct device *dev)
+ 	clk_disable_unprepare(imx258->clk);
+ 	regulator_bulk_disable(IMX258_NUM_SUPPLIES, imx258->supplies);
+ 
++	gpiod_set_value_cansleep(imx258->reset_gpio, 1);
+ 	gpiod_set_value_cansleep(imx258->pwdn_gpio, 1);
+ 
+ 	return 0;
+@@ -1649,6 +1656,14 @@ static int imx258_probe(struct i2c_client *client)
+ 		goto error_endpoint_poweron;
+ 	}
+ 
++	/* request optional reset pin */
++	imx258->reset_gpio = devm_gpiod_get_optional(&client->dev, "reset",
++						    GPIOD_OUT_HIGH);
++	if (IS_ERR(imx258->reset_gpio)) {
++		ret = PTR_ERR(imx258->reset_gpio);
++		goto error_endpoint_poweron;
++	}
++
+ 	/* Initialize subdev */
+ 	v4l2_i2c_subdev_init(&imx258->sd, client, &imx258_subdev_ops);
+ 
