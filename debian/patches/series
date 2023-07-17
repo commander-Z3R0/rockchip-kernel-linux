@@ -135,3 +135,5 @@ device-tree/0134-arch-arm64-add-Pine64-PineTab2-device-trees.patch
 device-tree/0135-arm64-dts-rk3399-pinephone-pro-Add-camera-orientatio.patch
 device-tree/0136-arm64-dts-rk3399-pinephone-pro-Fix-CSI-clock-frequen.patch
 device-tree/0137-arm64-dts-rk3399-pinephone-pro-Fix-adc-keys-threshol.patch
+debian/0138-wireless-add-debian-wireless-regdb-certificates.patch
+mobian/0139-arm64-configs-add-rockchip_defconfig.patch
