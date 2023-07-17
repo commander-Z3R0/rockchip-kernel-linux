@@ -1,0 +1,33 @@
+From: undef <gitlab@undef.tools>
+Date: Sat, 25 Feb 2023 04:16:53 +0000
+Subject: arm64: dts: rockchip: remove sdio_pwrseq node
+
+Replaced by upstream's wifi_pwrseq
+---
+ arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+index b4ee1ea..6af97b1 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+@@ -328,19 +328,6 @@ speaker_amp: audio-amplifier {
+ 		sound-name-prefix = "Speaker Amp";
+ 	};
+ 
+-	sdio_pwrseq: sdio-pwrseq {
+-		compatible = "mmc-pwrseq-simple";
+-		clocks = <&rk818 1>;
+-		clock-names = "ext_clock";
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&wifi_enable_h_pin>;
+-		post-power-on-delay-ms = <100>;
+-		power-off-delay-us = <500000>;
+-
+-		/* WL_REG_ON on module */
+-		reset-gpios = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW>;
+-	};
+-
+ 	vibrator {
+ 		compatible = "gpio-vibrator";
+ 		enable-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_HIGH>;
