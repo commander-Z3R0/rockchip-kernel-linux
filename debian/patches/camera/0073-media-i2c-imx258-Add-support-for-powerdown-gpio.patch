@@ -1,0 +1,62 @@
+From: =?utf-8?q?Ond=C5=99ej_Jirman?= <megi@xff.cz>
+Date: Fri, 22 Oct 2021 18:10:18 +0200
+Subject: media: i2c: imx258: Add support for powerdown gpio
+
+On some boards powerdown signal needs to be deasserted for this
+sensor to be enabled.
+
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+---
+ drivers/media/i2c/imx258.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
+index 5796f8e..eac2c35 100644
+--- a/drivers/media/i2c/imx258.c
++++ b/drivers/media/i2c/imx258.c
+@@ -699,6 +699,8 @@ struct imx258 {
+ 	/* Current long exposure factor in use. Set through V4L2_CID_VBLANK */
+ 	unsigned int long_exp_shift;
+ 
++	struct gpio_desc *pwdn_gpio;
++
+ 	/* Current mode */
+ 	const struct imx258_mode *cur_mode;
+ 
+@@ -1270,9 +1272,12 @@ static int imx258_power_on(struct device *dev)
+ 		return ret;
+ 	}
+ 
++	gpiod_set_value_cansleep(imx258->pwdn_gpio, 0);
++
+ 	ret = clk_prepare_enable(imx258->clk);
+ 	if (ret) {
+ 		dev_err(dev, "failed to enable clock\n");
++		gpiod_set_value_cansleep(imx258->pwdn_gpio, 1);
+ 		regulator_bulk_disable(IMX258_NUM_SUPPLIES, imx258->supplies);
+ 	}
+ 
+@@ -1287,6 +1292,8 @@ static int imx258_power_off(struct device *dev)
+ 	clk_disable_unprepare(imx258->clk);
+ 	regulator_bulk_disable(IMX258_NUM_SUPPLIES, imx258->supplies);
+ 
++	gpiod_set_value_cansleep(imx258->pwdn_gpio, 1);
++
+ 	return 0;
+ }
+ 
+@@ -1634,6 +1641,14 @@ static int imx258_probe(struct i2c_client *client)
+ 	if (!match)
+ 		imx258->variant_cfg = &imx258_cfg;
+ 
++	/* request optional power down pin */
++	imx258->pwdn_gpio = devm_gpiod_get_optional(&client->dev, "powerdown",
++						    GPIOD_OUT_HIGH);
++	if (IS_ERR(imx258->pwdn_gpio)) {
++		ret = PTR_ERR(imx258->pwdn_gpio);
++		goto error_endpoint_poweron;
++	}
++
+ 	/* Initialize subdev */
+ 	v4l2_i2c_subdev_init(&imx258->sd, client, &imx258_subdev_ops);
+ 
