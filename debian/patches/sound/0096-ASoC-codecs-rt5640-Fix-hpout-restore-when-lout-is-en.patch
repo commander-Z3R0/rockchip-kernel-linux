@@ -12,7 +12,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index 03b9bc4..7a95fe1 100644
+index bbc9bf9..5ae83f0 100644
 --- a/sound/soc/codecs/rt5640.c
 +++ b/sound/soc/codecs/rt5640.c
 @@ -997,7 +997,8 @@ static int rt5640_lout_event(struct snd_soc_dapm_widget *w,
