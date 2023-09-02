@@ -17,7 +17,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 46 insertions(+)
 
 diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
-index 813f9f8..8af96bc 100644
+index 8e12053..9d50b91 100644
 --- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
 +++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
 @@ -356,6 +356,42 @@ static void rockchip_drm_match_remove(struct device *dev)
