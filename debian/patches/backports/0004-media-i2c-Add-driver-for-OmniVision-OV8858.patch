@@ -46,10 +46,10 @@ index 07a9c27..1212ba0 100644
  M:	Paul J. Murphy <paul.j.murphy@intel.com>
  M:	Daniele Alessandrelli <daniele.alessandrelli@intel.com>
 diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig
-index 7806d4b..424d4e4 100644
+index a34afb5..d937c69 100644
 --- a/drivers/media/i2c/Kconfig
 +++ b/drivers/media/i2c/Kconfig
-@@ -619,6 +619,19 @@ config VIDEO_OV8856
+@@ -626,6 +626,19 @@ config VIDEO_OV8856
  	  To compile this driver as a module, choose M here: the
  	  module will be called ov8856.
  
