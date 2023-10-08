@@ -13,10 +13,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 6 insertions(+)
 
 diff --git a/sound/soc/codecs/rt5640.c b/sound/soc/codecs/rt5640.c
-index a7071d0a..da131a8 100644
+index 37ea4d8..819ce26 100644
 --- a/sound/soc/codecs/rt5640.c
 +++ b/sound/soc/codecs/rt5640.c
-@@ -2719,6 +2719,10 @@ static int rt5640_probe(struct snd_soc_component *component)
+@@ -2718,6 +2718,10 @@ static int rt5640_probe(struct snd_soc_component *component)
  		snd_soc_component_update_bits(component, RT5640_IN1_IN2,
  					      RT5640_IN_DF2, RT5640_IN_DF2);
  
