@@ -15,7 +15,7 @@ Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
  1 file changed, 21 insertions(+), 215 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index f25549d..36c7ce46 100644
+index f25549d..36c7ce4 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
 @@ -151,7 +151,7 @@ static const struct imx258_reg mipi_data_rate_640mbps[] = {
