@@ -24,7 +24,7 @@ index 9ebd6c4..aa3cb0d 100644
  			RK3399_CLKGATE_CON(10), 7, GFLAGS),
  
 diff --git a/include/dt-bindings/clock/rk3399-cru.h b/include/dt-bindings/clock/rk3399-cru.h
-index 39169d9..63f078ff 100644
+index 39169d9..63f078f 100644
 --- a/include/dt-bindings/clock/rk3399-cru.h
 +++ b/include/dt-bindings/clock/rk3399-cru.h
 @@ -125,6 +125,7 @@
