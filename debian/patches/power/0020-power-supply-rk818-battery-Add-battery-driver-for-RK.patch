@@ -115,7 +115,7 @@ index a8a9fa6..d23cf10 100644
 +obj-$(CONFIG_BATTERY_RK818)	+= rk818_battery.o
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
 new file mode 100644
-index 00000000..f09f456
+index 0000000..f09f456
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -0,0 +1,3568 @@
@@ -3690,7 +3690,7 @@ index 00000000..f09f456
 \ No newline at end of file
 diff --git a/drivers/power/supply/rk818_battery.h b/drivers/power/supply/rk818_battery.h
 new file mode 100644
-index 00000000..2f4430a
+index 0000000..2f4430a
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.h
 @@ -0,0 +1,168 @@
