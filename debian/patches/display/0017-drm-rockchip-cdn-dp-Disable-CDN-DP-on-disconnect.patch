@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-index 8526dda..78c5a61 100644
+index 0b33c3a..dbfe249 100644
 --- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
 +++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
 @@ -969,6 +969,7 @@ static void cdn_dp_pd_event_work(struct work_struct *work)
