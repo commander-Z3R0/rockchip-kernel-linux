@@ -9,26 +9,25 @@ This is forward ported driver from Rockchip BSP.
 
 Signed-of-by: Kamil Trzciński <ayufan@ayufan.eu>
 ---
- drivers/mfd/rk8xx-core.c             |    2 +
+ drivers/mfd/rk8xx-core.c             |    1 +
  drivers/mfd/rk8xx-i2c.c              |   38 +-
  drivers/power/supply/Kconfig         |    8 +
  drivers/power/supply/Makefile        |    1 +
  drivers/power/supply/rk818_battery.c | 3568 ++++++++++++++++++++++++++++++++++
  drivers/power/supply/rk818_battery.h |  168 ++
  include/linux/mfd/rk808.h            |   81 +-
- 7 files changed, 3863 insertions(+), 3 deletions(-)
+ 7 files changed, 3862 insertions(+), 3 deletions(-)
  create mode 100644 drivers/power/supply/rk818_battery.c
  create mode 100644 drivers/power/supply/rk818_battery.h
 
 diff --git a/drivers/mfd/rk8xx-core.c b/drivers/mfd/rk8xx-core.c
-index be885b3..62245fc 100644
+index ab42527..13d9f6c 100644
 --- a/drivers/mfd/rk8xx-core.c
 +++ b/drivers/mfd/rk8xx-core.c
-@@ -118,6 +118,8 @@ static const struct mfd_cell rk817s[] = {
+@@ -111,6 +111,7 @@ static const struct mfd_cell rk817s[] = {
  static const struct mfd_cell rk818s[] = {
- 	{ .name = "rk808-clkout", .id = PLATFORM_DEVID_NONE, },
- 	{ .name = "rk808-regulator", .id = PLATFORM_DEVID_NONE, },
-+	{ .name = "rk808-clkout", },
+ 	{ .name = "rk808-clkout", },
+ 	{ .name = "rk808-regulator", },
 +	{ .name = "rk818-battery", .of_compatible = "rk818-battery", },
  	{
  		.name = "rk808-rtc",
@@ -115,7 +114,7 @@ index a8a9fa6..d23cf10 100644
 +obj-$(CONFIG_BATTERY_RK818)	+= rk818_battery.o
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
 new file mode 100644
-index 0000000..f09f456
+index 00000000..f09f456
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -0,0 +1,3568 @@
@@ -3690,7 +3689,7 @@ index 0000000..f09f456
 \ No newline at end of file
 diff --git a/drivers/power/supply/rk818_battery.h b/drivers/power/supply/rk818_battery.h
 new file mode 100644
-index 0000000..2f4430a
+index 00000000..2f4430a
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.h
 @@ -0,0 +1,168 @@
