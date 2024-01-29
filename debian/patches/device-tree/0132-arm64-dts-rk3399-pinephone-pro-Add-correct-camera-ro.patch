@@ -38,7 +38,7 @@ index 6af97b1..982d85c 100644
  		powerdown-gpios = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
  
 -		rotation = <180>;
-+		rotation = <90>;
++		rotation = <270>;
  
  		lens-focus = <&wcam_lens>;
  		flash-leds = <&sgm3140_flash>;
