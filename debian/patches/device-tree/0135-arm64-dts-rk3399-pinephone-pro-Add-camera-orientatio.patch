@@ -21,7 +21,7 @@ index 315ce48..bcf4e5f 100644
  		powerdown-gpios = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
  
 +		orientation = <1>;
- 		rotation = <90>;
+ 		rotation = <270>;
  
  		lens-focus = <&wcam_lens>;
 @@ -910,6 +911,7 @@ ucam: camera@36 {
