@@ -13,7 +13,7 @@ Signed-off-by: Robert Mader <robert.mader@posteo.de>
  1 file changed, 2 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 315ce48..bcf4e5f 100644
+index 7bef501..4b27117 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -870,6 +870,7 @@ wcam: camera@1a {
