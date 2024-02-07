@@ -53,7 +53,7 @@ index b1c784e..ec5c46f 100644
  obj-$(CONFIG_BMC150_MAGN) += bmc150_magn.o
 diff --git a/drivers/iio/magnetometer/af8133j.c b/drivers/iio/magnetometer/af8133j.c
 new file mode 100644
-index 00000000..f71b413
+index 0000000..f71b413
 --- /dev/null
 +++ b/drivers/iio/magnetometer/af8133j.c
 @@ -0,0 +1,351 @@
