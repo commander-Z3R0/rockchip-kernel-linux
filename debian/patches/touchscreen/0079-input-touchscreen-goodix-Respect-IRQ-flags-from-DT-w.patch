@@ -12,7 +12,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index 8a05778..c8f8b81 100644
+index 29f0a46..723de92 100644
 --- a/drivers/input/touchscreen/goodix.c
 +++ b/drivers/input/touchscreen/goodix.c
 @@ -520,9 +520,13 @@ static void goodix_free_irq(struct goodix_ts_data *ts)
@@ -30,7 +30,7 @@ index 8a05778..c8f8b81 100644
  }
  
  static int goodix_check_cfg_8(struct goodix_ts_data *ts, const u8 *cfg, int len)
-@@ -1309,6 +1313,7 @@ static int goodix_ts_probe(struct i2c_client *client)
+@@ -1310,6 +1314,7 @@ static int goodix_ts_probe(struct i2c_client *client)
  	if (!ts)
  		return -ENOMEM;
  
