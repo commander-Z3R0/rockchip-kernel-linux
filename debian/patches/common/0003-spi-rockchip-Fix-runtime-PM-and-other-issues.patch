@@ -1,0 +1,67 @@
+From: Ondrej Jirman <megi@xff.cz>
+Date: Tue, 21 Jun 2022 18:18:21 +0200
+Subject: spi: rockchip: Fix runtime PM and other issues
+
+The driver didn't bother with proper error handling, or clock resource
+management, leaing to warnings during suspend/resume.
+
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+---
+ drivers/spi/spi-rockchip.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/spi/spi-rockchip.c b/drivers/spi/spi-rockchip.c
+index 4b9669d..5c2733b 100644
+--- a/drivers/spi/spi-rockchip.c
++++ b/drivers/spi/spi-rockchip.c
+@@ -762,10 +762,10 @@ static int rockchip_spi_probe(struct platform_device *pdev)
+ 	target_mode = of_property_read_bool(np, "spi-slave");
+ 
+ 	if (target_mode)
+-		ctlr = spi_alloc_target(&pdev->dev,
++		ctlr = devm_spi_alloc_target(&pdev->dev,
+ 				sizeof(struct rockchip_spi));
+ 	else
+-		ctlr = spi_alloc_host(&pdev->dev,
++		ctlr = devm_spi_alloc_host(&pdev->dev,
+ 				sizeof(struct rockchip_spi));
+ 
+ 	if (!ctlr)
+@@ -924,6 +924,7 @@ static int rockchip_spi_probe(struct platform_device *pdev)
+ 	if (ctlr->dma_tx)
+ 		dma_release_channel(ctlr->dma_tx);
+ err_disable_pm_runtime:
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ err_put_ctlr:
+ 	spi_controller_put(ctlr);
+@@ -937,6 +938,7 @@ static void rockchip_spi_remove(struct platform_device *pdev)
+ 
+ 	pm_runtime_get_sync(&pdev->dev);
+ 
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+@@ -960,6 +962,7 @@ static int rockchip_spi_suspend(struct device *dev)
+ 	if (ret < 0)
+ 		return ret;
+ 
++	pm_runtime_disable(dev);
+ 	clk_disable_unprepare(rs->spiclk);
+ 	clk_disable_unprepare(rs->apb_pclk);
+ 
+@@ -984,10 +987,13 @@ static int rockchip_spi_resume(struct device *dev)
+ 	if (ret < 0)
+ 		clk_disable_unprepare(rs->apb_pclk);
+ 
++	pm_runtime_enable(dev);
++
+ 	ret = spi_controller_resume(ctlr);
+ 	if (ret < 0) {
+ 		clk_disable_unprepare(rs->spiclk);
+ 		clk_disable_unprepare(rs->apb_pclk);
++		return ret;
+ 	}
+ 
+ 	return 0;
