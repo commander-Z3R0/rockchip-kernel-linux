@@ -22,16 +22,16 @@ index 893ca47..d084231 100644
  	struct usb_power_delivery_capabilities_desc caps = { };
  	struct usb_power_delivery_capabilities *cap;
 +	struct usb_power_delivery *partner_pd;
++
++	if (!port->partner_pd) {
++		partner_pd = usb_power_delivery_register(NULL, &desc);
++		if (IS_ERR(partner_pd))
++			return PTR_ERR(partner_pd);
  
 -	if (!port->partner_pd)
 -		port->partner_pd = usb_power_delivery_register(NULL, &desc);
 -	if (IS_ERR(port->partner_pd))
 -		return PTR_ERR(port->partner_pd);
-+	if (!port->partner_pd) {
-+		partner_pd = usb_power_delivery_register(NULL, &desc);
-+		if (IS_ERR(partner_pd))
-+			return PTR_ERR(partner_pd);
-+
 +		port->partner_pd = partner_pd;
 +	}
  

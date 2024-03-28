@@ -145,20 +145,16 @@ index 1faec1a..a27cab1 100644
  /* Link frequency configs */
 -static const struct imx258_link_freq_config link_freq_configs[] = {
 +static const struct imx258_link_freq_config link_freq_configs_19_2[] = {
- 	[IMX258_LINK_FREQ_1267MBPS] = {
- 		.pixels_per_line = IMX258_PPL_DEFAULT,
- 		.reg_list = {
--			.num_of_regs = ARRAY_SIZE(mipi_data_rate_1267mbps),
--			.regs = mipi_data_rate_1267mbps,
++	[IMX258_LINK_FREQ_1267MBPS] = {
++		.pixels_per_line = IMX258_PPL_DEFAULT,
++		.reg_list = {
 +			.num_of_regs = ARRAY_SIZE(mipi_1267mbps_19_2mhz),
 +			.regs = mipi_1267mbps_19_2mhz,
- 		}
- 	},
- 	[IMX258_LINK_FREQ_640MBPS] = {
- 		.pixels_per_line = IMX258_PPL_DEFAULT,
- 		.reg_list = {
--			.num_of_regs = ARRAY_SIZE(mipi_data_rate_640mbps),
--			.regs = mipi_data_rate_640mbps,
++		}
++	},
++	[IMX258_LINK_FREQ_640MBPS] = {
++		.pixels_per_line = IMX258_PPL_DEFAULT,
++		.reg_list = {
 +			.num_of_regs = ARRAY_SIZE(mipi_640mbps_19_2mhz),
 +			.regs = mipi_640mbps_19_2mhz,
 +		}
@@ -166,16 +162,20 @@ index 1faec1a..a27cab1 100644
 +};
 +
 +static const struct imx258_link_freq_config link_freq_configs_24[] = {
-+	[IMX258_LINK_FREQ_1267MBPS] = {
-+		.pixels_per_line = IMX258_PPL_DEFAULT,
-+		.reg_list = {
+ 	[IMX258_LINK_FREQ_1267MBPS] = {
+ 		.pixels_per_line = IMX258_PPL_DEFAULT,
+ 		.reg_list = {
+-			.num_of_regs = ARRAY_SIZE(mipi_data_rate_1267mbps),
+-			.regs = mipi_data_rate_1267mbps,
 +			.num_of_regs = ARRAY_SIZE(mipi_1272mbps_24mhz),
 +			.regs = mipi_1272mbps_24mhz,
-+		}
-+	},
-+	[IMX258_LINK_FREQ_640MBPS] = {
-+		.pixels_per_line = IMX258_PPL_DEFAULT,
-+		.reg_list = {
+ 		}
+ 	},
+ 	[IMX258_LINK_FREQ_640MBPS] = {
+ 		.pixels_per_line = IMX258_PPL_DEFAULT,
+ 		.reg_list = {
+-			.num_of_regs = ARRAY_SIZE(mipi_data_rate_640mbps),
+-			.regs = mipi_data_rate_640mbps,
 +			.num_of_regs = ARRAY_SIZE(mipi_642mbps_24mhz),
 +			.regs = mipi_642mbps_24mhz,
  		}
