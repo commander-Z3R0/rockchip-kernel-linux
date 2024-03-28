@@ -8,7 +8,7 @@ developed-by: djhg2000
  1 file changed, 45 insertions(+)
 
 diff --git a/sound/soc/rockchip/rockchip_i2s.c b/sound/soc/rockchip/rockchip_i2s.c
-index b0c3ef0..73af509f 100644
+index b0c3ef0..73af509 100644
 --- a/sound/soc/rockchip/rockchip_i2s.c
 +++ b/sound/soc/rockchip/rockchip_i2s.c
 @@ -97,10 +97,23 @@ static int i2s_runtime_suspend(struct device *dev)
