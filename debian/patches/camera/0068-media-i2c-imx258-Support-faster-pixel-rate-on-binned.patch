@@ -18,7 +18,7 @@ Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
  1 file changed, 71 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index 7ec1ab0..9a57d72 100644
+index 7ec1ab0..9a57d72c 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
 @@ -103,6 +103,11 @@ struct imx258_reg_list {
