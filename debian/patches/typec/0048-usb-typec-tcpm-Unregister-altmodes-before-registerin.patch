@@ -33,7 +33,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 3 insertions(+)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index ff69e32..893ca47 100644
+index 221ff0f9..ad2b965 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
 @@ -1592,6 +1592,9 @@ static void tcpm_register_partner_altmodes(struct tcpm_port *port)
