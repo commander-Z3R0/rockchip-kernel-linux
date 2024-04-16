@@ -1,0 +1,5 @@
+linux-6.12-rockchip (6.12~rc1+rockchip-1) UNRELEASED; urgency=medium
+
+  * Initial 6.12 release
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Tue, 01 Oct 2024 18:15:55 +0200
