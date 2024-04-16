@@ -1,0 +1,5 @@
+linux-6.16-rockchip (6.16~rc6-1) UNRELEASED; urgency=medium
+
+  * Initial 6.16 release
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Fri, 18 Jul 2025 13:57:47 +0200
