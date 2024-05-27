@@ -13,7 +13,7 @@ Device: PineTab2
  create mode 100644 drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c
 
 diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 8f37837..00a9479 100644
+index 888297d..afce1ec 100644
 --- a/drivers/gpu/drm/panel/Kconfig
 +++ b/drivers/gpu/drm/panel/Kconfig
 @@ -67,6 +67,17 @@ config DRM_PANEL_BOE_HIMAX8279D
@@ -48,7 +48,7 @@ index d94a644..015bb8d 100644
  obj-$(CONFIG_DRM_PANEL_LVDS) += panel-lvds.o
 diff --git a/drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c b/drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c
 new file mode 100644
-index 0000000..6081e18
+index 00000000..6081e18
 --- /dev/null
 +++ b/drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c
 @@ -0,0 +1,293 @@
