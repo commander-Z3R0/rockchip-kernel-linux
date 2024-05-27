@@ -17,7 +17,7 @@ Signed-off-by: Samuel Holland <samuel@sholland.org>
  1 file changed, 46 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
-index 435d0e2..4634615 100644
+index 435d0e26..4634615 100644
 --- a/drivers/firmware/arm_scpi.c
 +++ b/drivers/firmware/arm_scpi.c
 @@ -231,7 +231,8 @@ struct scpi_xfer {
