@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 48 insertions(+)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index fc1a6d8..eb7e48a 100644
+index fc1a6d83..eb7e48a 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
 @@ -1276,6 +1276,53 @@ static int imx258_identify_module(struct imx258 *imx258)
