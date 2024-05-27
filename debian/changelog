@@ -1,3 +1,9 @@
+linux-6.8-rockchip (6.8.11+rockchip-1) unstable; urgency=medium
+
+  * d/patches: rebase on 6.8.11
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 27 May 2024 12:54:27 +0200
+
 linux-6.8-rockchip (6.8.3+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.8.3
