@@ -48,7 +48,7 @@ index 433e93d..a64d55d 100644
  obj-$(CONFIG_DRM_PANEL_LVDS) += panel-lvds.o
 diff --git a/drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c b/drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c
 new file mode 100644
-index 00000000..6081e18
+index 0000000..6081e18
 --- /dev/null
 +++ b/drivers/gpu/drm/panel/panel-boe-th101mb31ig002-28a.c
 @@ -0,0 +1,293 @@

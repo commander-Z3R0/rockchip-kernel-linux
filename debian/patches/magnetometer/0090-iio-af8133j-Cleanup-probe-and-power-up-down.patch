@@ -6,8 +6,8 @@ This prepares the driver for runtime PM and sleep implementation.
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
- drivers/iio/magnetometer/af8133j.c | 171 +++++++++++++++++--------------------
- 1 file changed, 76 insertions(+), 95 deletions(-)
+ drivers/iio/magnetometer/af8133j.c | 165 ++++++++++++++++---------------------
+ 1 file changed, 73 insertions(+), 92 deletions(-)
 
 diff --git a/drivers/iio/magnetometer/af8133j.c b/drivers/iio/magnetometer/af8133j.c
 index f71b413..5fc6848 100644
@@ -65,27 +65,26 @@ index f71b413..5fc6848 100644
  	unsigned int val;
  	int ret;
  
--	ret = regmap_read(data->regmap, AF8133J_REG_PCODE, &val);
--	if (ret < 0) {
--		dev_err(&data->client->dev, "Error reading product code\n");
 +        ret = regulator_bulk_enable(AF8133J_NUM_SUPPLIES, data->supplies);
 +        if (ret) {
 +                dev_err(dev, "Could not enable regulators\n");
- 		return ret;
- 	}
- 
++		return ret;
++	}
++
 +	msleep(15);
 +
 +	gpiod_set_value_cansleep(data->reset_gpiod, 0);
 +
 +	msleep(1);
 +
-+	ret = regmap_read(data->regmap, AF8133J_REG_PCODE, &val);
-+	if (ret < 0) {
+ 	ret = regmap_read(data->regmap, AF8133J_REG_PCODE, &val);
+ 	if (ret < 0) {
+-		dev_err(&data->client->dev, "Error reading product code\n");
+-		return ret;
 +		dev_err(dev, "Error reading product code\n");
 +		goto out_assert_reset;
-+	}
-+
+ 	}
+ 
  	if (val != AF8133J_REG_PCODE_VAL) {
 -		dev_warn(&data->client->dev,
 -			"Unknown AF8133J product code %x\n", val);
@@ -172,7 +171,8 @@ index f71b413..5fc6848 100644
  	i2c_set_clientdata(client, indio_dev);
  	data->client = client;
  	data->regmap = regmap;
--
++	mutex_init(&data->mutex);
+ 
 -	data->reset_gpiod = devm_gpiod_get(&client->dev, "reset",
 -					   GPIOD_OUT_HIGH);
 -	if (IS_ERR(data->reset_gpiod)) {
@@ -187,34 +187,31 @@ index f71b413..5fc6848 100644
 -		ret = PTR_ERR(data->avdd);
 -		goto out_release_reset_gpio;
 -	}
--
++	data->reset_gpiod = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
++	if (IS_ERR(data->reset_gpiod))
++		return dev_err_probe(&client->dev, PTR_ERR(data->reset_gpiod),
++				     "Failed to get reset gpio\n");
+ 
 -	data->dvdd = devm_regulator_get(&client->dev, "dvdd");
 -	if (IS_ERR(data->dvdd)) {
 -		dev_err(&client->dev, "Got error while retrieving dvdd reg\n");
 -		ret = PTR_ERR(data->dvdd);
 -		goto out_release_reset_gpio;
 -	}
--
- 	mutex_init(&data->mutex);
- 
--	ret = iio_read_mount_matrix(&client->dev, "mount-matrix",
--			&data->orientation);
-+	data->reset_gpiod = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR(data->reset_gpiod))
-+		return dev_err_probe(&client->dev, PTR_ERR(data->reset_gpiod),
-+				     "Failed to get reset gpio\n");
-+
 +        for (i = 0; i < AF8133J_NUM_SUPPLIES; i++)
 +                data->supplies[i].supply = af8133j_supply_names[i];
 +        ret = devm_regulator_bulk_get(&client->dev, AF8133J_NUM_SUPPLIES, data->supplies);
 +        if (ret)
 +		return ret;
-+
+ 
+-	mutex_init(&data->mutex);
 +	ret = iio_read_mount_matrix(&client->dev, &data->orientation);
 +	if (ret)
 +		return dev_err_probe(&client->dev, ret,
 +				     "Failed to read mount matrix\n");
-+
+ 
+-	ret = iio_read_mount_matrix(&client->dev, "mount-matrix",
+-			&data->orientation);
 +	/*
 +	 * Check if the device is responding.
 +	 */
