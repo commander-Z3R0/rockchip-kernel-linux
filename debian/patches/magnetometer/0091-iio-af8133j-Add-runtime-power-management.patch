@@ -198,20 +198,20 @@ index 5fc6848..5b84859 100644
 +	pm_runtime_disable(dev);
 +	pm_runtime_set_suspended(dev);
 +	pm_runtime_put_noidle(dev);
- 
- 	af8133j_power_down(data);
- }
- 
++
++	af8133j_power_down(data);
++}
++
 +static int __maybe_unused af8133j_runtime_suspend(struct device *dev)
 +{
 +	struct iio_dev *indio_dev = dev_get_drvdata(dev);
 +	struct af8133j_data *data = iio_priv(indio_dev);
-+
-+	af8133j_power_down(data);
+ 
+ 	af8133j_power_down(data);
 +
 +	return 0;
-+}
-+
+ }
+ 
 +static int __maybe_unused af8133j_runtime_resume(struct device *dev)
 +{
 +	struct iio_dev *indio_dev = dev_get_drvdata(dev);
