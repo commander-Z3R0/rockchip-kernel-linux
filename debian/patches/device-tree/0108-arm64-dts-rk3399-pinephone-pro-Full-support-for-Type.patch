@@ -247,27 +247,27 @@ index 8c3b048..d2080d0 100644
  	};
  };
  
+-&u2phy1 {
 +&u2phy0_otg {
-+	status = "okay";
-+};
-+
-+&u2phy0_host {
-+	status = "okay";
-+	phy-supply = <&vcc5v0_sys>;
-+};
-+
- &u2phy1 {
  	status = "okay";
 +};
  
 -	u2phy1_otg: otg-port {
 -		status = "okay";
 -	};
--
++&u2phy0_host {
++	status = "okay";
++	phy-supply = <&vcc5v0_sys>;
++};
+ 
 -	u2phy1_host: host-port {
 -		status = "okay";
 -		phy-supply = <&vcc5v0_sys>;
 -	};
++&u2phy1 {
++	status = "okay";
++};
++
 +&u2phy1_host {
 +	status = "okay";
 +	phy-supply = <&vcc5v0_sys>;
