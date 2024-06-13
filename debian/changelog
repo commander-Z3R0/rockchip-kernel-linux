@@ -1,3 +1,9 @@
+linux-6.6-rockchip (6.6.33+rockchip-1) unstable; urgency=medium
+
+  * Rebase on 6.6.33
+
+ -- Mobot <group_9279_bot_63f8e5239ee997bddf744fbb961e9cce@noreply.salsa.debian.org>  Thu, 13 Jun 2024 04:38:16 +0000
+
 linux-6.6-rockchip (6.6.32+rockchip-1) unstable; urgency=medium
 
   * d/patches: rebase on 6.6.32
