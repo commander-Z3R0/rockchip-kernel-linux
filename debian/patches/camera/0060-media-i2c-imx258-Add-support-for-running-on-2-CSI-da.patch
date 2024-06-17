@@ -8,8 +8,8 @@ hardware simply hasn't wired more up.
 
 Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 ---
- drivers/media/i2c/imx258.c | 215 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 189 insertions(+), 26 deletions(-)
+ drivers/media/i2c/imx258.c | 211 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 187 insertions(+), 24 deletions(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
 index a27cab1..bfbb3bb 100644
@@ -67,7 +67,7 @@ index a27cab1..bfbb3bb 100644
  	{ 0x0136, 0x13 },
  	{ 0x0137, 0x33 },
  	{ 0x0301, 0x05 },
-@@ -127,13 +153,37 @@ static const struct imx258_reg mipi_1267mbps_19_2mhz[] = {
+@@ -127,16 +153,18 @@ static const struct imx258_reg mipi_1267mbps_19_2mhz[] = {
  	{ 0x030E, 0x00 },
  	{ 0x030F, 0xD8 },
  	{ 0x0310, 0x00 },
@@ -81,9 +81,30 @@ index a27cab1..bfbb3bb 100644
  
 -static const struct imx258_reg mipi_1272mbps_24mhz[] = {
 +static const struct imx258_reg mipi_1272mbps_24mhz_2l[] = {
+ 	{ 0x0136, 0x18 },
+ 	{ 0x0137, 0x00 },
+-	{ 0x0301, 0x05 },
++	{ 0x0301, 0x0a },
+ 	{ 0x0303, 0x02 },
+ 	{ 0x0305, 0x04 },
+ 	{ 0x0306, 0x00 },
+@@ -147,13 +175,59 @@ static const struct imx258_reg mipi_1272mbps_24mhz[] = {
+ 	{ 0x030E, 0x00 },
+ 	{ 0x030F, 0xD8 },
+ 	{ 0x0310, 0x00 },
++
++	{ 0x0114, 0x01 },
+ 	{ 0x0820, 0x13 },
+ 	{ 0x0821, 0x4C },
+ 	{ 0x0822, 0xCC },
+ 	{ 0x0823, 0xCC },
+ };
+ 
+-static const struct imx258_reg mipi_640mbps_19_2mhz[] = {
++static const struct imx258_reg mipi_1272mbps_24mhz_4l[] = {
 +	{ 0x0136, 0x18 },
 +	{ 0x0137, 0x00 },
-+	{ 0x0301, 0x0a },
++	{ 0x0301, 0x05 },
 +	{ 0x0303, 0x02 },
 +	{ 0x0305, 0x04 },
 +	{ 0x0306, 0x00 },
@@ -95,50 +116,14 @@ index a27cab1..bfbb3bb 100644
 +	{ 0x030F, 0xD8 },
 +	{ 0x0310, 0x00 },
 +
-+	{ 0x0114, 0x01 },
-+	{ 0x0820, 0x13 },
-+	{ 0x0821, 0x4C },
-+	{ 0x0822, 0xCC },
-+	{ 0x0823, 0xCC },
-+};
-+
-+static const struct imx258_reg mipi_1272mbps_24mhz_4l[] = {
- 	{ 0x0136, 0x18 },
- 	{ 0x0137, 0x00 },
- 	{ 0x0301, 0x05 },
-@@ -147,13 +197,15 @@ static const struct imx258_reg mipi_1272mbps_24mhz[] = {
- 	{ 0x030E, 0x00 },
- 	{ 0x030F, 0xD8 },
- 	{ 0x0310, 0x00 },
-+
 +	{ 0x0114, 0x03 },
- 	{ 0x0820, 0x13 },
--	{ 0x0821, 0x4C },
--	{ 0x0822, 0xCC },
--	{ 0x0823, 0xCC },
++	{ 0x0820, 0x13 },
 +	{ 0x0821, 0xE0 },
 +	{ 0x0822, 0x00 },
 +	{ 0x0823, 0x00 },
- };
- 
--static const struct imx258_reg mipi_640mbps_19_2mhz[] = {
-+static const struct imx258_reg mipi_640mbps_19_2mhz_2l[] = {
- 	{ 0x0136, 0x13 },
- 	{ 0x0137, 0x33 },
- 	{ 0x0301, 0x05 },
-@@ -167,13 +219,59 @@ static const struct imx258_reg mipi_640mbps_19_2mhz[] = {
- 	{ 0x030E, 0x00 },
- 	{ 0x030F, 0xD8 },
- 	{ 0x0310, 0x00 },
-+
-+	{ 0x0114, 0x01 },
-+	{ 0x0820, 0x05 },
-+	{ 0x0821, 0x00 },
-+	{ 0x0822, 0x00 },
-+	{ 0x0823, 0x00 },
 +};
 +
-+static const struct imx258_reg mipi_640mbps_19_2mhz_4l[] = {
++static const struct imx258_reg mipi_640mbps_19_2mhz_2l[] = {
 +	{ 0x0136, 0x13 },
 +	{ 0x0137, 0x33 },
 +	{ 0x0301, 0x05 },
@@ -152,6 +137,22 @@ index a27cab1..bfbb3bb 100644
 +	{ 0x030E, 0x00 },
 +	{ 0x030F, 0xD8 },
 +	{ 0x0310, 0x00 },
++
++	{ 0x0114, 0x01 },
++	{ 0x0820, 0x05 },
++	{ 0x0821, 0x00 },
++	{ 0x0822, 0x00 },
++	{ 0x0823, 0x00 },
++};
++
++static const struct imx258_reg mipi_640mbps_19_2mhz_4l[] = {
+ 	{ 0x0136, 0x13 },
+ 	{ 0x0137, 0x33 },
+ 	{ 0x0301, 0x05 },
+@@ -167,13 +241,37 @@ static const struct imx258_reg mipi_640mbps_19_2mhz[] = {
+ 	{ 0x030E, 0x00 },
+ 	{ 0x030F, 0xD8 },
+ 	{ 0x0310, 0x00 },
 +
 +	{ 0x0114, 0x03 },
  	{ 0x0820, 0x0A },

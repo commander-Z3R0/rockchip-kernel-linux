@@ -33,7 +33,7 @@ index 2747a29..e5200eb 100644
  		.name = "rk808-rtc",
  		.num_resources = ARRAY_SIZE(rtc_resources),
 diff --git a/drivers/mfd/rk8xx-i2c.c b/drivers/mfd/rk8xx-i2c.c
-index 75b5cf0..3d9632fb 100644
+index 75b5cf0..3d9632f 100644
 --- a/drivers/mfd/rk8xx-i2c.c
 +++ b/drivers/mfd/rk8xx-i2c.c
 @@ -75,13 +75,47 @@ static bool rk817_is_volatile_reg(struct device *dev, unsigned int reg)
@@ -114,7 +114,7 @@ index 58b5672..aa3de47 100644
 +obj-$(CONFIG_BATTERY_RK818)	+= rk818_battery.o
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
 new file mode 100644
-index 00000000..7041fa8
+index 0000000..7041fa8
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -0,0 +1,3569 @@
@@ -3690,7 +3690,7 @@ index 00000000..7041fa8
 \ No newline at end of file
 diff --git a/drivers/power/supply/rk818_battery.h b/drivers/power/supply/rk818_battery.h
 new file mode 100644
-index 00000000..2f4430a
+index 0000000..2f4430a
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.h
 @@ -0,0 +1,168 @@
