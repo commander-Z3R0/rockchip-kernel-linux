@@ -1,3 +1,13 @@
+linux-6.8-rockchip (6.8.12+rockchip-2) unstable; urgency=medium
+
+  * d/patches: fix rear camera after suspend/resume
+  * d/rules: fix build with newer kernels
+    `builddep` no longer fully builds the packages, so we must "manually"
+    run the needed `dh_*` commands in order to properly populate and build
+    the binary packages.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Wed, 03 Jul 2024 23:51:53 +0200
+
 linux-6.8-rockchip (6.8.12+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.8.12
