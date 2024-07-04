@@ -1,3 +1,9 @@
+linux-6.6-rockchip (6.6.35+rockchip-2) unstable; urgency=medium
+
+  * d/patches: fix rear camera after suspend/resume
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Thu, 04 Jul 2024 10:18:49 +0200
+
 linux-6.6-rockchip (6.6.35+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.6.35
