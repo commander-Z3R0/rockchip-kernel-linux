@@ -18,7 +18,7 @@ Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
 diff --git a/Documentation/devicetree/bindings/media/i2c/imx258.yaml b/Documentation/devicetree/bindings/media/i2c/imx258.yaml
 deleted file mode 100644
-index 80d2422..00000000
+index 80d2422..0000000
 --- a/Documentation/devicetree/bindings/media/i2c/imx258.yaml
 +++ /dev/null
 @@ -1,134 +0,0 @@
@@ -158,7 +158,7 @@ index 80d2422..00000000
 -    };
 diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx258.yaml b/Documentation/devicetree/bindings/media/i2c/sony,imx258.yaml
 new file mode 100644
-index 00000000..bee61a4
+index 0000000..bee61a4
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx258.yaml
 @@ -0,0 +1,134 @@
