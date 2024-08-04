@@ -101,3 +101,5 @@ device-tree/0100-Add-mount-matrix-of-the-PinePhone-Pro-magnetometer.patch
 device-tree/0101-arm64-dts-rk3399-pinephone-pro-Add-camera-orientatio.patch
 device-tree/0102-arm64-dts-rk3399-pinephone-pro-Fix-CSI-clock-frequen.patch
 device-tree/0103-arm64-dts-rk3399-pinephone-pro-Fix-adc-keys-threshol.patch
+debian/0104-wireless-add-debian-wireless-regdb-certificates.patch
+mobian/0105-arm64-configs-add-rockchip_defconfig.patch
