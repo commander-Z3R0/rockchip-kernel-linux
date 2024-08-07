@@ -1,3 +1,11 @@
+linux-6.11-rockchip (6.11~rc2+rockchip-1) unstable; urgency=medium
+
+  * Rebase on 6.11-rc2
+  * d/patches: attempt fixing the back camera.
+    It seems we're lacking a DT property, add it and hope for the best.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Wed, 07 Aug 2024 19:53:54 +0200
+
 linux-6.11-rockchip (6.11~rc1+rockchip-1) unstable; urgency=medium
 
   * Initial 6.11 release
