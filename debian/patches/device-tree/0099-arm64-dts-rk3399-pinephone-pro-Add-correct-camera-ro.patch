@@ -30,7 +30,7 @@ Signed-off-by: Robert Mader <robert.mader@posteo.de>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index cda0085..d952e89 100644
+index e3de3b5..9f07cd6 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -874,7 +874,7 @@ wcam: camera@1a {
@@ -42,7 +42,7 @@ index cda0085..d952e89 100644
  
  		lens-focus = <&wcam_lens>;
  		flash-leds = <&sgm3140_flash>;
-@@ -914,7 +914,7 @@ ucam: camera@36 {
+@@ -915,7 +915,7 @@ ucam: camera@36 {
  		rockchip,camera-module-name = "CameraKing";
  		rockchip,camera-module-lens-name = "Largan-9569A2";
  
