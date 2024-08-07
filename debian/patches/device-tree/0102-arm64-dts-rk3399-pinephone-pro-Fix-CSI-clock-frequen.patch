@@ -10,7 +10,7 @@ be more accurately generated.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 6800d10..e98287d 100644
+index e435916..80da00d 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -856,7 +856,7 @@ &i2c1 {
@@ -21,4 +21,4 @@ index 6800d10..e98287d 100644
 +	assigned-clock-rates = <24000000 0>;
  
  	wcam: camera@1a {
- 		compatible = "sony,imx258";
+ 		compatible = "sony,imx258-pdaf";
