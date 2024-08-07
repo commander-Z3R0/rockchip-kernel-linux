@@ -6,14 +6,14 @@ IMX258 + OV5640.
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
- .../boot/dts/rockchip/rk3399-pinephone-pro.dts     | 159 ++++++++++++++++++++-
- 1 file changed, 158 insertions(+), 1 deletion(-)
+ .../boot/dts/rockchip/rk3399-pinephone-pro.dts     | 160 ++++++++++++++++++++-
+ 1 file changed, 159 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 7d7594b..4c83807 100644
+index 7d7594b..324298e 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -550,10 +550,105 @@ regulator-state-mem {
+@@ -550,10 +550,106 @@ regulator-state-mem {
  	};
  };
  
@@ -53,7 +53,7 @@ index 7d7594b..4c83807 100644
 +	assigned-clock-rates = <19200000 0>;
 +
 +	wcam: camera@1a {
-+		compatible = "sony,imx258";
++		compatible = "sony,imx258-pdaf";
 +		reg = <0x1a>;
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&wcam_rst &wcam_pdn>;
@@ -77,6 +77,7 @@ index 7d7594b..4c83807 100644
 +			wcam_out: endpoint {
 +				remote-endpoint = <&mipi_in_wcam>;
 +				data-lanes = <1 2 3 4>;
++				link-frequencies = /bits/ 64 <636000000>;
 +			};
 +		};
 +	};
@@ -120,7 +121,7 @@ index 7d7594b..4c83807 100644
  };
  
  &i2c3 {
-@@ -729,6 +824,50 @@ &io_domains {
+@@ -729,6 +825,50 @@ &io_domains {
  	status = "okay";
  };
  
@@ -171,7 +172,7 @@ index 7d7594b..4c83807 100644
  &mipi_dsi {
  	status = "okay";
  	clock-master;
-@@ -775,6 +914,24 @@ pwrbtn_pin: pwrbtn-pin {
+@@ -775,6 +915,24 @@ pwrbtn_pin: pwrbtn-pin {
  		};
  	};
  
