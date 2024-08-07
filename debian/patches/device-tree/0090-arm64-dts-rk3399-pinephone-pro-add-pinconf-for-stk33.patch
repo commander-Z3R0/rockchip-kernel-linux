@@ -11,10 +11,10 @@ Signed-off-by: Caleb Connolly <caleb@connolly.tech>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index a18069b..eaa91b6 100644
+index e457a7e..1452d0a6 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -987,6 +987,8 @@ light-sensor@48 {
+@@ -988,6 +988,8 @@ light-sensor@48 {
  		interrupt-parent = <&gpio4>;
  		interrupts = <RK_PD3 IRQ_TYPE_EDGE_FALLING>;
  		proximity-near-level = <80>;
@@ -23,7 +23,7 @@ index a18069b..eaa91b6 100644
  		vdd-supply = <&vcc_3v0>;
  		leda-supply = <&vcc_3v0>;
  	};
-@@ -1369,6 +1371,12 @@ bt_reset_pin: bt-reset-pin {
+@@ -1370,6 +1372,12 @@ bt_reset_pin: bt-reset-pin {
  			rockchip,pins = <0 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
  	};
