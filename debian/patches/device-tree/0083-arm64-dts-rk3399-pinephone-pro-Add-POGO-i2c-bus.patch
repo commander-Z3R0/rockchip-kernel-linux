@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index d5694c91a..97f2793 100644
+index ae7223d..a0f4e34 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -980,6 +980,14 @@ ak09911: compass@c {
+@@ -981,6 +981,14 @@ ak09911: compass@c {
  	};
  };
  
