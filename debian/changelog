@@ -1,3 +1,9 @@
+linux-6.8-rockchip (6.8.12+rockchip-3) unstable; urgency=medium
+
+  * d/patches: add missing drivers for debos
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Tue, 13 Aug 2024 21:42:04 +0200
+
 linux-6.8-rockchip (6.8.12+rockchip-2) unstable; urgency=medium
 
   * d/patches: fix rear camera after suspend/resume
