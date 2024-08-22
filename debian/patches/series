@@ -1,0 +1,10 @@
+misc/0001-usb-serial-option-add-reset-resume-callback-for-WWAN.patch
+display/0002-drm-rockchip-dw-mipi-dsi-Fix-data-rate-calculation.patch
+camera/0003-drm-rockchip-dw-mipi-dsi-rockchip-Fix-ISP1-PHY-initi.patch
+camera/0004-clk-rk3399-Export-SCLK_CIF_OUT_SRC-to-device-tree.patch
+camera/0005-clk-rockchip-rk3399-Don-t-allow-to-reparent-dclk_vop.patch
+camera/0006-media-i2c-imx258-Add-support-for-powerdown-gpio.patch
+camera/0007-media-i2c-imx258-Add-support-for-reset-gpio.patch
+sound/0008-sound-rockchip-work-around-PPP-suspend-smurfbug-issu.patch
+sound/0009-ASoC-codec-rt5640-Fix-output-mixer-input-channel-lis.patch
+sound/0010-ASoC-codec-rt5640-Resolve-failure-to-set-DMIC-clock-.patch
