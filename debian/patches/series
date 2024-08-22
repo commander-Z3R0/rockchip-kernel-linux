@@ -8,3 +8,12 @@ camera/0007-media-i2c-imx258-Add-support-for-reset-gpio.patch
 sound/0008-sound-rockchip-work-around-PPP-suspend-smurfbug-issu.patch
 sound/0009-ASoC-codec-rt5640-Fix-output-mixer-input-channel-lis.patch
 sound/0010-ASoC-codec-rt5640-Resolve-failure-to-set-DMIC-clock-.patch
+for-mainline/0011-arm64-dts-rk3399-pinephone-pro-enable-flash-LED.patch
+for-mainline/0012-arm64-dts-rk3399-pinephone-pro-enable-USB-host.patch
+for-mainline/0013-arm64-dts-rk3399-pinephone-pro-enable-LTE-modem.patch
+for-mainline/0014-arm64-dts-rk3399-pinephone-pro-enable-ambiant-light-.patch
+for-mainline/0015-arm64-dts-rk3399-pinephone-pro-enable-I2C-on-pogo-pi.patch
+for-mainline/0016-arm64-dts-rk3399-pinephone-pro-enable-sound.patch
+for-mainline/0017-arm64-dts-rk3399-pinephone-pro-fix-volume-keys.patch
+for-mainline/0018-arm64-dts-rk3399-pinephone-pro-enable-SDR104-on-SD-c.patch
+for-mainline/0019-arm64-dts-rk3399-pinephone-pro-enable-cameras.patch

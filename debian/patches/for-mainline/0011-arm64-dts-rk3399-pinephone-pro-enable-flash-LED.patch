@@ -1,0 +1,50 @@
+From: Arnaud Ferraris <aferraris@debian.org>
+Date: Thu, 28 Sep 2023 00:56:34 +0200
+Subject: arm64: dts: rk3399-pinephone-pro: enable flash LED
+
+The PinePhone Pro includes a flash LED, controlled by a SGM3140.
+
+Signed-off-by: Arnaud Ferraris <arnaud.ferraris@gmail.com>
+---
+ .../boot/dts/rockchip/rk3399-pinephone-pro.dts      | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+index ef754ea..2c761d9 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+@@ -56,6 +56,21 @@ backlight: backlight {
+ 		pwms = <&pwm0 0 50000 0>;
+ 	};
+ 
++	flash_led: led-controller {
++		compatible = "sgmicro,sgm3140";
++		vin-supply = <&vcc3v3_sys>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&flash_pins>;
++		enable-gpios = <&gpio4 RK_PC6 GPIO_ACTIVE_HIGH>;
++		flash-gpios = <&gpio1 RK_PA3 GPIO_ACTIVE_HIGH>;
++
++		led {
++			function = LED_FUNCTION_FLASH;
++			color = <LED_COLOR_ID_WHITE>;
++			flash-max-timeout-us = <250000>;
++		};
++	};
++
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 		pinctrl-names = "default";
+@@ -543,6 +558,12 @@ green_led_pin: green-led-pin {
+ 		blue_led_pin: blue-led-pin {
+ 			rockchip,pins = <4 RK_PD6 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
++
++		flash_pins: flash-pins {
++			rockchip,pins =
++				<1 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>,
++				<4 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
+ 	};
+ 
+ 	pmic {

@@ -1,0 +1,65 @@
+From: Arnaud Ferraris <aferraris@debian.org>
+Date: Thu, 28 Sep 2023 01:03:09 +0200
+Subject: arm64: dts: rk3399-pinephone-pro: enable LTE modem
+
+The modem is connected through USB, and also UART3. We also need the RI
+pin in order to wake the system up when a call arrives during suspend.
+
+Signed-off-by: Arnaud Ferraris <arnaud.ferraris@gmail.com>
+---
+ .../boot/dts/rockchip/rk3399-pinephone-pro.dts      | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+index 703a43b..dd98df8 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+@@ -74,7 +74,7 @@ led {
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&pwrbtn_pin>;
++		pinctrl-0 = <&pwrbtn_pin &ri_pin>;
+ 
+ 		key-power {
+ 			debounce-interval = <20>;
+@@ -83,6 +83,15 @@ key-power {
+ 			linux,code = <KEY_POWER>;
+ 			wakeup-source;
+ 		};
++
++		ring-indicator {
++			label = "Ring Indicator";
++			linux,can-disable;
++			linux,code = <KEY_WAKEUP>;
++			gpios = <&gpio0 RK_PA1 GPIO_ACTIVE_LOW>;
++			wakeup-event-action = <EV_ACT_ASSERTED>;
++			wakeup-source;
++		};
+ 	};
+ 
+ 	leds {
+@@ -588,6 +597,12 @@ flash_pins: flash-pins {
+ 		};
+ 	};
+ 
++	modem {
++		ri_pin: ri-pin {
++			rockchip,pins = <0 RK_PA1 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
+ 	pmic {
+ 		pmic_int_l: pmic-int-l {
+ 			rockchip,pins = <1 RK_PC5 RK_FUNC_GPIO &pcfg_pull_up>;
+@@ -731,6 +746,10 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
++&uart3 {
++	status = "okay";
++};
++
+ &usb_host0_ehci {
+ 	status = "okay";
+ };
