@@ -17,3 +17,5 @@ for-mainline/0016-arm64-dts-rk3399-pinephone-pro-enable-sound.patch
 for-mainline/0017-arm64-dts-rk3399-pinephone-pro-fix-volume-keys.patch
 for-mainline/0018-arm64-dts-rk3399-pinephone-pro-enable-SDR104-on-SD-c.patch
 for-mainline/0019-arm64-dts-rk3399-pinephone-pro-enable-cameras.patch
+debian/0020-wireless-add-debian-wireless-regdb-certificates.patch
+mobian/0021-arm64-configs-add-rockchip_defconfig.patch
