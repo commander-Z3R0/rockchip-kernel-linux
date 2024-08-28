@@ -1,3 +1,9 @@
+linux-6.11-rockchip (6.11~rc5+rockchip-1) unstable; urgency=medium
+
+  * d/patches: rebase on 6.11-rc5 and add missing patches for USB
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Wed, 28 Aug 2024 17:34:54 +0200
+
 linux-6.11-rockchip (6.11~rc2+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.11-rc2
