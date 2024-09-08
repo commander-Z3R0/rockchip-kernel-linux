@@ -10,44 +10,49 @@ Fixes "sysfs: cannot create duplicate filename
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 37 +++++++++++++++++++++++++++++--------
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c | 42 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 29 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index 43ca8f8..f12284a 100644
+index 301c58b..1cc8b88 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2409,15 +2409,22 @@ static int tcpm_register_source_caps(struct tcpm_port *port)
+@@ -2408,20 +2408,22 @@ static int tcpm_register_source_caps(struct tcpm_port *port)
+ {
  	struct usb_power_delivery_desc desc = { port->negotiated_rev };
  	struct usb_power_delivery_capabilities_desc caps = { };
- 	struct usb_power_delivery_capabilities *cap;
+-	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
++	struct usb_power_delivery_capabilities *cap;
 +	struct usb_power_delivery *partner_pd;
-+
-+	if (!port->partner_pd) {
-+		partner_pd = usb_power_delivery_register(NULL, &desc);
-+		if (IS_ERR(partner_pd))
-+			return PTR_ERR(partner_pd);
  
 -	if (!port->partner_pd)
 -		port->partner_pd = usb_power_delivery_register(NULL, &desc);
 -	if (IS_ERR(port->partner_pd))
 -		return PTR_ERR(port->partner_pd);
++	if (!port->partner_pd) {
++		partner_pd = usb_power_delivery_register(NULL, &desc);
++		if (IS_ERR(partner_pd))
++			return PTR_ERR(partner_pd);
++
 +		port->partner_pd = partner_pd;
 +	}
  
  	memcpy(caps.pdo, port->source_caps, sizeof(u32) * port->nr_source_caps);
  	caps.role = TYPEC_SOURCE;
  
+-	if (cap) {
+-		usb_power_delivery_unregister_capabilities(cap);
+-		port->partner_source_caps = NULL;
+-	}
 +	usb_power_delivery_unregister_capabilities(port->partner_source_caps);
 +	port->partner_source_caps = NULL;
-+
+ 
  	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
  	if (IS_ERR(cap))
- 		return PTR_ERR(cap);
-@@ -2432,11 +2439,15 @@ static int tcpm_register_sink_caps(struct tcpm_port *port)
+@@ -2437,15 +2439,22 @@ static int tcpm_register_sink_caps(struct tcpm_port *port)
  	struct usb_power_delivery_desc desc = { port->negotiated_rev };
  	struct usb_power_delivery_capabilities_desc caps = { };
- 	struct usb_power_delivery_capabilities *cap = port->partner_source_caps;
+ 	struct usb_power_delivery_capabilities *cap;
 +	struct usb_power_delivery *partner_pd;
  
 -	if (!port->partner_pd)
@@ -64,9 +69,6 @@ index 43ca8f8..f12284a 100644
  
  	memcpy(caps.pdo, port->sink_caps, sizeof(u32) * port->nr_sink_caps);
  	caps.role = TYPEC_SINK;
-@@ -2446,6 +2457,9 @@ static int tcpm_register_sink_caps(struct tcpm_port *port)
- 		port->partner_source_caps = NULL;
- 	}
  
 +	usb_power_delivery_unregister_capabilities(port->partner_sink_caps);
 +	port->partner_sink_caps = NULL;
@@ -74,7 +76,7 @@ index 43ca8f8..f12284a 100644
  	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
  	if (IS_ERR(cap))
  		return PTR_ERR(cap);
-@@ -6113,9 +6127,16 @@ static int tcpm_port_register_pd(struct tcpm_port *port)
+@@ -6112,9 +6121,16 @@ static int tcpm_port_register_pd(struct tcpm_port *port)
  	port->pd = usb_power_delivery_register(port->dev, &desc);
  	if (IS_ERR(port->pd)) {
  		ret = PTR_ERR(port->pd);
