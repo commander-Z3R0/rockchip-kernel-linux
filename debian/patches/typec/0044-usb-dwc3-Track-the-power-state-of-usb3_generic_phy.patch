@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 734de2a..18bc798 100644
+index ccc3895d..7267d31 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -197,10 +197,41 @@ static void __dwc3_set_mode(struct work_struct *work)
@@ -59,7 +59,7 @@ index 734de2a..18bc798 100644
  		/*
  		 * Wait for internal clocks to synchronized. DWC_usb31 and
  		 * DWC_usb32 may need at least 50ms (less for DWC_usb3). To
-@@ -867,6 +898,7 @@ static int dwc3_phy_power_on(struct dwc3 *dwc)
+@@ -875,6 +906,7 @@ static int dwc3_phy_power_on(struct dwc3 *dwc)
  			goto err_power_off_usb3_phy;
  	}
  
@@ -67,7 +67,7 @@ index 734de2a..18bc798 100644
  	return 0;
  
  err_power_off_usb3_phy:
-@@ -887,8 +919,10 @@ static void dwc3_phy_power_off(struct dwc3 *dwc)
+@@ -895,8 +927,10 @@ static void dwc3_phy_power_off(struct dwc3 *dwc)
  {
  	int i;
  
