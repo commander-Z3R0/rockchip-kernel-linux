@@ -1,3 +1,9 @@
+linux-6.6-rockchip (6.6.50+rockchip-1) unstable; urgency=medium
+
+  * Rebase on 6.6.50
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Sun, 08 Sep 2024 11:55:26 +0200
+
 linux-6.6-rockchip (6.6.47+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.6.47
