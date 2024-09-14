@@ -297,7 +297,7 @@ index 00000000..bee61a4
 +        };
 +    };
 diff --git a/MAINTAINERS b/MAINTAINERS
-index f09415b..6401a30 100644
+index ae4c0ce..93fe655 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
 @@ -19971,7 +19971,7 @@ M:	Sakari Ailus <sakari.ailus@linux.intel.com>
