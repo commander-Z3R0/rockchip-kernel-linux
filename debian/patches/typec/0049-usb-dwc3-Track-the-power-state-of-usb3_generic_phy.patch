@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 5b761a2..91c1179 100644
+index 2cd780c..a2b266b 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -866,7 +866,9 @@ static void dwc3_core_exit(struct dwc3 *dwc)
@@ -37,7 +37,7 @@ index 5b761a2..91c1179 100644
  	ret = dwc3_event_buffers_setup(dwc);
  	if (ret) {
  		dev_err(dwc->dev, "failed to setup event buffers\n");
-@@ -1359,6 +1363,7 @@ static int dwc3_core_init(struct dwc3 *dwc)
+@@ -1374,6 +1378,7 @@ static int dwc3_core_init(struct dwc3 *dwc)
  
  err4:
  	phy_power_off(dwc->usb3_generic_phy);
@@ -46,10 +46,10 @@ index 5b761a2..91c1179 100644
  err3:
  	phy_power_off(dwc->usb2_generic_phy);
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 472a6a7..bd898bc 100644
+index 251bc438..b8918db 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
-@@ -1167,6 +1167,7 @@ struct dwc3 {
+@@ -1168,6 +1168,7 @@ struct dwc3 {
  
  	struct phy		*usb2_generic_phy;
  	struct phy		*usb3_generic_phy;
