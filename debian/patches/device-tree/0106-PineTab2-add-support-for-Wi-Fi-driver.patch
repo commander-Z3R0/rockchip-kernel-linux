@@ -1,19 +1,18 @@
-From fe3c47f375c4c0d6925267eb05d7da829aeb61ac Mon Sep 17 00:00:00 2001
 From: Danct12 <danct12@disroot.org>
 Date: Thu, 4 Jan 2024 14:35:09 +0700
 Subject: [PATCH] arm64: dts: rockchip: pinetab2: Apply BES changes
 
 ---
- .../dts/rockchip/rk3566-pinetab2-v0.1.dts     |  2 +-
- .../dts/rockchip/rk3566-pinetab2-v2.0.dts     | 18 ++++++++-
- .../boot/dts/rockchip/rk3566-pinetab2.dtsi    | 37 +++++++++++++++++++
+ .../boot/dts/rockchip/rk3566-pinetab2-v0.1.dts     |  2 +-
+ .../boot/dts/rockchip/rk3566-pinetab2-v2.0.dts     | 18 ++++++++++-
+ arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi  | 37 ++++++++++++++++++++++
  3 files changed, 55 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
-index 5fe6ca5da9d31..615ae72c6e3f1 100644
+index 5fe6ca5d..615ae72 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
-@@ -24,5 +24,5 @@
+@@ -24,5 +24,5 @@ lcd0_rst_l: lcd0-rst-l {
  };
  
  &sdmmc1 {
@@ -21,7 +20,7 @@ index 5fe6ca5da9d31..615ae72c6e3f1 100644
 +	mmc-pwrseq = <&sdio_pwrseq>;
  };
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
-index 9349541cbbd0f..ee6db7e196308 100644
+index 9349541c..ee6db7e 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 @@ -7,6 +7,16 @@
@@ -41,7 +40,7 @@ index 9349541cbbd0f..ee6db7e196308 100644
  };
  
  &gpio_keys {
-@@ -41,8 +51,14 @@
+@@ -41,8 +51,14 @@ hall_int_l: hall-int-l {
  			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
  	};
@@ -58,10 +57,10 @@ index 9349541cbbd0f..ee6db7e196308 100644
 +	mmc-pwrseq = <&sdio_pwrseq &sdio_pwrkey>;
  };
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-index a9932ffeef922..b8918a91db5de 100644
+index db40281..f67b09b 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-@@ -134,6 +134,16 @@
+@@ -134,6 +134,16 @@ simple-audio-card,codec {
  		};
  	};
  
@@ -78,7 +77,7 @@ index a9932ffeef922..b8918a91db5de 100644
  	speaker_amp: speaker-amplifier {
  		compatible = "simple-audio-amplifier";
  		pinctrl-names = "default";
-@@ -227,6 +237,20 @@
+@@ -227,6 +237,20 @@ vcc_sys: vcc-sys-regulator {
  		vin-supply = <&vcc_bat>;
  	};
  
@@ -99,7 +98,7 @@ index a9932ffeef922..b8918a91db5de 100644
  	vdd1v2_dvp: vdd1v2-dvp-regulator {
  		compatible = "regulator-fixed";
  		regulator-name = "vdd1v2_dvp";
-@@ -779,6 +803,18 @@
+@@ -777,6 +801,18 @@ host_wake_wl: host-wake-wl {
  			rockchip,pins = <0 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
  
@@ -118,7 +117,7 @@ index a9932ffeef922..b8918a91db5de 100644
  		wifi_wake_host_h: wifi-wake-host-h {
  			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_down>;
  		};
-@@ -852,6 +888,7 @@
+@@ -850,6 +886,7 @@ &sdmmc1 {
  		     &sdmmc1_cmd
  		     &sdmmc1_clk>;
  	sd-uhs-sdr104;
