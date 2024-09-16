@@ -1,3 +1,14 @@
+linux-6.11-rockchip (6.11+rockchip-1) unstable; urgency=medium
+
+  [ Julian ]
+  * d/patches: add support for PineTab2 Wi-Fi driver
+  * d/patches: PineTab2: add device node for Wi-Fi driver
+
+  [ Arnaud Ferraris ]
+  * Rebase on 6.11
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 16 Sep 2024 11:16:59 +0200
+
 linux-6.11-rockchip (6.11~rc7+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.11-rc7
