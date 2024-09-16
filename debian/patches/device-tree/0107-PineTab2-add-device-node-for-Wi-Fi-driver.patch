@@ -1,19 +1,18 @@
-From 384870d21addcd7b833cd05ea8774ba46238f048 Mon Sep 17 00:00:00 2001
 From: Danct12 <danct12@disroot.org>
 Date: Thu, 4 Jan 2024 11:49:43 +0000
-Subject: [PATCH] arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600 device
- node
+Subject: [PATCH] arm64: dts: rockchip: pinetab2: Add Bestechnic BES2600
+ device node
 
 ---
- .../dts/rockchip/rk3566-pinetab2-v2.0.dts     |  8 +++++++
- .../boot/dts/rockchip/rk3566-pinetab2.dtsi    | 22 +++++++++++++++++++
+ .../boot/dts/rockchip/rk3566-pinetab2-v2.0.dts     |  8 ++++++++
+ arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi  | 22 ++++++++++++++++++++++
  2 files changed, 30 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
-index ee6db7e19630..411a5492219c 100644
+index ee6db7e..411a549 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
-@@ -19,6 +19,14 @@
+@@ -19,6 +19,14 @@ sdio_pwrkey: sdio-pwrkey {
  	};
  };
  
@@ -29,10 +28,10 @@ index ee6db7e19630..411a5492219c 100644
  	pinctrl-0 = <&kb_id_det>, <&hall_int_l>;
  
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-index b8918a91db5d..b6f9edc094d5 100644
+index f67b09b..be300af 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-@@ -891,6 +891,28 @@
+@@ -889,6 +889,28 @@ &sdmmc1_cmd
  	vmmc-supply = <&vcc_wl>;
  	vqmmc-supply = <&vcca1v8_pmu>;
  	status = "okay";
