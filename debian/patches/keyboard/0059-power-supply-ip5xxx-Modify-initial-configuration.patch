@@ -1,0 +1,77 @@
+From: Ondrej Jirman <megi@xff.cz>
+Date: Sat, 2 Apr 2022 03:15:45 +0200
+Subject: power: supply: ip5xxx: Modify initial configuration
+
+- double press to power off
+- disable auto-power on under load
+
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+---
+ drivers/power/supply/ip5xxx_power.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/power/supply/ip5xxx_power.c b/drivers/power/supply/ip5xxx_power.c
+index 698c017..7741939 100644
+--- a/drivers/power/supply/ip5xxx_power.c
++++ b/drivers/power/supply/ip5xxx_power.c
+@@ -205,6 +205,16 @@ static int ip5xxx_initialize(struct power_supply *psy)
+ 	if (ip5xxx->initialized)
+ 		return 0;
+ 
++	/*
++	 * Disable flashlight feature.
++	 */
++	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.wled.enable, 0);
++	if (ret)
++		return ret;
++
++	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.wled.detect_en, 0);
++	if (ret)
++		return ret;
+ 	/*
+ 	 * Disable shutdown under light load.
+ 	 * Enable power on when under load.
+@@ -214,19 +224,19 @@ static int ip5xxx_initialize(struct power_supply *psy)
+ 		if (ret)
+ 			return ret;
+ 	}
+-	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.boost.load_powerup_en, 1);
++	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.boost.load_powerup_en, 0);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/*
+-	 * Enable shutdown after a long button press (as configured below).
++	 * Enable shutdown after a double press (as configured below).
+ 	 */
+ 	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.btn.shdn_enable, 1);
+ 	if (ret)
+ 		return ret;
+ 
+ 	/*
+-	 * Power on automatically when VIN is removed.
++	 * Don't power on automatically when VIN is removed.
+ 	 */
+ 	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.boost.vin_pullout_en, 1);
+ 	if (ret)
+@@ -234,17 +244,17 @@ static int ip5xxx_initialize(struct power_supply *psy)
+ 
+ 	/*
+ 	 * Enable the NTC.
+-	 * Configure the button for two presses => LED, long press => shutdown.
++	 * Configure the button for two presses => shutdown, long press => LED.
+ 	 */
+ 	if (ip5xxx->regs.battery.ntc_dis) {
+ 		ret = ip5xxx_write(ip5xxx, ip5xxx->regs.battery.ntc_dis, 0);
+ 		if (ret)
+ 			return ret;
+ 	}
+-	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.btn.wled_mode, 1);
++	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.btn.wled_mode, 0);
+ 	if (ret)
+ 		return ret;
+-	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.btn.shdn_mode, 1);
++	ret = ip5xxx_write(ip5xxx, ip5xxx->regs.btn.shdn_mode, 0);
+ 	if (ret)
+ 		return ret;
+ 
