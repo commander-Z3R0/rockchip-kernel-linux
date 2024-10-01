@@ -1,3 +1,13 @@
+linux-6.11-rockchip (6.11.1+rockchip-1) unstable; urgency=medium
+
+  [ Julian ]
+  * d/patches: PineTab2: add ethernet node for Wi-Fi driver
+
+  [ Arnaud Ferraris ]
+  * Rebase on 6.11.1
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Tue, 01 Oct 2024 22:18:12 +0200
+
 linux-6.11-rockchip (6.11+rockchip-1) unstable; urgency=medium
 
   [ Julian ]
