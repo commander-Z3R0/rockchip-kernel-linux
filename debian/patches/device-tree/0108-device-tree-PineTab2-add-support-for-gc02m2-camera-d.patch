@@ -1,0 +1,103 @@
+From: Julian <juliannfairfax@protonmail.com>
+Date: Mon, 23 Sep 2024 18:22:54 +0000
+Subject: device-tree: PineTab2: add support for gc02m2 camera driver
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi | 59 +++++++++++++++++++++--
+ 1 file changed, 55 insertions(+), 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+index 23c8368..d65fe4a 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+@@ -294,6 +294,26 @@ &cru {
+ 
+ &csi_dphy {
+ 	status = "okay";
++	ports {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		port@0 {
++			reg = <0>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			mipi_in_ucam0: endpoint@0 {
++				reg = <0>;
++				remote-endpoint = <&gc02m2_out>;
++				data-lanes = <1>;
++			};
++			mipi_in_ucam1: endpoint@1 {
++				reg = <1>;
++				remote-endpoint = <&ov5648_out>;
++				data-lanes = <1 2>;
++			};
++		};
++	};
+ };
+ 
+ &dsi0 {
+@@ -614,14 +634,44 @@ vcm@c {
+ 		vcc-supply = <&vcc1v8_dvp>;
+ 	};
+ 
+-	camera@36 {
++gc02m2: camera@37 {
++		compatible = "galaxycore,gc02m2";
++		status = "okay";
++		reg = <0x37>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&cameraf_pdn_l &cameraf_rst_l>;
++
++		clocks = <&cru CLK_CIF_OUT>;
++		clock-names = "xvclk";
++		assigned-clock = <&cru CLK_CIF_OUT>;
++		assigned-clock-rates = <24000000>;
++
++		avdd-supply = <&vcc2v8_dvp>;
++		dvdd-supply = <&vdd1v2_dvp>;
++		dovdd-supply = <&vcc1v8_dvp>;
++		powerdown-gpios = <&gpio4 RK_PB2 GPIO_ACTIVE_LOW>;
++		reset-gpios = <&gpio4 RK_PB0 GPIO_ACTIVE_LOW>;
++
++		port {
++			gc02m2_out: endpoint {
++				bus-type = <4>;      /* MIPI CSI-2 D-PHY */
++				data-lanes = <1>;
++				remote-endpoint = <&mipi_in_ucam0>;
++				link-frequencies = /bits/ 64 <336000000>;
++			};
++		};
++	};
++
++	ov5648: camera@36 {
+ 		compatible = "ovti,ov5648";
++		status = "okay";
+ 		reg = <0x36>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&camerab_pdn_l &camerab_rst_l>;
+ 
+ 		clocks = <&cru CLK_CIF_OUT>;
+-		assigned-clocks = <&cru CLK_CIF_OUT>;
++		clock-names = "xvclk";
++		assigned-clock = <&cru CLK_CIF_OUT>;
+ 		assigned-clock-rates = <24000000>;
+ 
+ 		avdd-supply = <&vcc2v8_dvp>;
+@@ -631,13 +681,14 @@ camera@36 {
+ 		reset-gpios = <&gpio4 RK_PB1 GPIO_ACTIVE_LOW>;
+ 
+ 		port {
+-			endpoint {
++			ov5648_out: endpoint {
+ 				data-lanes = <1 2>;
+-				remote-endpoint = <0>;
++				remote-endpoint = <&mipi_in_ucam1>;
+ 				link-frequencies = /bits/ 64 <210000000 168000000>;
+ 			};
+ 		};
+ 	};
++
+ };
+ 
+ &i2c5 {
