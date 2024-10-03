@@ -1,0 +1,37 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 10 Mar 2023 10:05:34 +0100
+Subject: [dts pinenote.dtsi] at some point the rk817 charger driver switched
+ the required device node for the charger from "battery" to "charger". Add
+ this node for newer kernels (at least >= 6.2)
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 95986fd..cdb9fa6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -371,6 +371,7 @@ rk817: pmic@20 {
+ 		vcc8-supply = <&vcc_sys>;
+ 		vcc9-supply = <&dcdc_boost>;
+ 
++		// used for  kernel 5.17
+ 		battery {
+ 			monitored-battery = <&battery_cell>;
+ 			rockchip,resistor-sense-micro-ohms = <10000>;
+@@ -378,6 +379,14 @@ battery {
+ 			rockchip,sleep-filter-current-microamp = <100000>;
+ 		};
+ 
++		// newer kernels (at least >= 6.2)
++		rk817_charger: charger {
++		    monitored-battery = <&battery_cell>;
++		    rockchip,resistor-sense-micro-ohms = <10000>;
++		        rockchip,sleep-enter-current-microamp = <150000>;
++		    rockchip,sleep-filter-current-microamp = <100000>;
++		};
++
+ 		regulators {
+ 			vdd_logic: DCDC_REG1 {
+ 				regulator-name = "vdd_logic";

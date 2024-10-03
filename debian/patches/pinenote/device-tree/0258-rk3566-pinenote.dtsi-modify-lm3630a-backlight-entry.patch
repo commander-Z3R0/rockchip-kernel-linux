@@ -1,0 +1,42 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 1 Aug 2023 21:40:36 +0200
+Subject: rk3566-pinenote.dtsi: modify lm3630a backlight entry
+
+While still chasing various artifacts, it seems that limiting the
+max-brightness of the chip to 125, AND limiting the current to below 20
+mA, yields robust results.
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index be92183..7668124 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -599,16 +599,24 @@ led@0 {
+ 			reg = <0>;
+ 			label = "backlight_cool";
+ 			default-brightness = <0>;
++			max-brightness = <125>;
+ 			// anything between 5000 (5 mA) and 28250 in 750 muA steps
+-			ti,current-microamp = <10250>;
++			/* ti,current-microamp = <5750>; */
++			ti,current-microamp = <12500>;
++			/* ti,current-microamp = <19250>; */
++			/* ti,current-microamp = <27500>; */
+ 		};
+ 
+ 		led@1 {
+ 			reg = <1>;
+ 			label = "backlight_warm";
+ 			default-brightness = <0>;
++			max-brightness = <125>;
+ 			// anything between 5000 (5 mA) and 28250 in 750 muA steps
+-			ti,current-microamp = <10250>;
++			/* ti,current-microamp = <5750>; */
++			ti,current-microamp = <12500>;
++			/* ti,current-microamp = <19250>; */
++			/* ti,current-microamp = <27500>; */
+ 		};
+ 	};
+ 

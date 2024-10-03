@@ -1,0 +1,45 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sat, 4 Mar 2023 13:41:12 +0100
+Subject: [tps65185] when rebasing from v5.17-rc6-11023-gdadcf190596b to 6.2
+ the vdrive regulator, from time to time,
+ failed to resume within the allowed time (ca. 83 ms),
+ leading to a complete crash of the graphical stack and most of the kernel.
+
+My understanding of the problem is that sometimes the vdrive activation
+takes a bit longer, probably due to the active discharge feature of the
+tps65185 chip (the REG_ENABLE register shows that the VEE_EN holds at 1 over
+the whole waiting time and never going to 0, indicating that the chip is
+waiting for the discharge before proceeding with the full activation of
+all rails).
+
+We here simply add 1 second to the timeout for vdrive, which should give
+the driver enough freedom to handle long discharges.
+
+I the underlying problem is indeed the active discharge, then another
+option would be to add an off_on_delay to the vdrive description, which
+would make sure the regulator is kept turned off for a given minimal
+time before attempting to turn it on again:
+
+	.off_on_delay = 1000000,
+
+Note that this behavior was not observed on older (5.17) kernels due to
+a bug in the regulator code that effectively prevented the
+activation-timeout from being triggered. See bug fix commit
+8d8e16592022c9650df8aedfe6552ed478d7135b
+---
+ drivers/regulator/tps65185-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index 9f92361..b1a4f43 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -187,7 +187,7 @@ static int tps65185_vdrive_enable_time(struct regulator_dev *rdev)
+ {
+ 	struct tps65185 *tps = rdev_get_drvdata(rdev);
+ 
+-	return tps->total_down_delay_us + tps->total_up_delay_us + 50000;
++	return tps->total_down_delay_us + tps->total_up_delay_us + 50000 + 1000000;
+ }
+ 
+ static int tps65185_vdrive_get_status(struct regulator_dev *rdev)

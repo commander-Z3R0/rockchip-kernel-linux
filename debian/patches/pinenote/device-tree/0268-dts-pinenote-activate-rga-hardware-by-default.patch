@@ -1,0 +1,20 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 5 Jul 2024 20:40:45 +0800
+Subject: dts: pinenote: activate rga hardware by default
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 2a7b82c..f28bd91 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -1021,3 +1021,7 @@ usb2phy0_typec_hs: endpoint {
+ 		};
+ 	};
+ };
++
++&rga {
++	status = "okay";
++};

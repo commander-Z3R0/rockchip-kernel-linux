@@ -1,0 +1,21 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Mon, 4 Mar 2024 21:06:01 +0100
+Subject: ws8100-pen: fix output of scan results
+
+---
+ drivers/input/misc/ws8100-pen.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/input/misc/ws8100-pen.c b/drivers/input/misc/ws8100-pen.c
+index b1efcde..ce6a31d 100644
+--- a/drivers/input/misc/ws8100-pen.c
++++ b/drivers/input/misc/ws8100-pen.c
+@@ -599,7 +599,7 @@ static ssize_t scan_show(struct device *dev,
+ 			pen->scan_result_count);
+ 
+ 	for (i = 0; i < pen->scan_result_count; ++i)
+-		count += sprintf(buf, "%pM\n", pen->scan_results[i]);
++		count = sprintf(buf, "%s%pM\n", buf, pen->scan_results[i]);
+ 
+ 	mutex_unlock(&pen->scan_results_mutex);
+ 

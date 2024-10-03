@@ -1,0 +1,33 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sun, 24 Dec 2023 20:54:46 +0100
+Subject: Pinenote: For later reference,
+ add the memory-region used by the rockchip-uboot for logos and framebuffers
+
+---
+ arch/arm64/boot/dts/rockchip/rk356x.dtsi | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+index 865d091..79fdbd6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+@@ -170,6 +170,19 @@ opp-1800000000 {
+ 		};
+ 	};
+ 
++	/* reserved-memory { */
++	/*      #address-cells = <0x00000002>; */
++	 /* #size-cells = <0x00000002>; */
++	/*      ranges; */
++
++	 /* ebcframebuffer: buffer@10900000 { */
++	/*              compatible = "shared-dma-pool"; */
++	/*              no-map; */
++	/*              reg = <0x00000000 0x10900000 0x00000000 0x02000000>; */
++	 /* }; */
++	/* }; */
++
++
+ 	display_subsystem: display-subsystem {
+ 		compatible = "rockchip,display-subsystem";
+ 		ports = <&vop_out>;

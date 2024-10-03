@@ -1,0 +1,49 @@
+From: Samuel Holland <samuel@sholland.org>
+Date: Sun, 30 Jan 2022 13:25:55 -0600
+Subject: arm64: dts: rockchip: pinenote: Add touchscreen
+
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 0a11809..0eb24ff 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -643,6 +643,18 @@ accelerometer@18 {
+ 		vdd-supply = <&vcc_3v3>;
+ 		vddio-supply = <&vcc_3v3>;
+ 	};
++
++	touchscreen@24 {
++		compatible = "cypress,tt21000";
++		hid-descr-addr = <0x1>;
++		reg = <0x24>;
++		interrupt-parent = <&gpio0>;
++		interrupts = <RK_PA6 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-0 = <&ts_int_l>, <&ts_rst_l>;
++		pinctrl-names = "default";
++		reset-gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_LOW>;
++		vdd-supply = <&vcc_3v3_pmu>;
++	};
+ };
+ 
+ &i2s1_8ch {
+@@ -777,6 +789,16 @@ tcpc_int_l: tcpc-int-l {
+ 		};
+ 	};
+ 
++	touchscreen {
++		ts_int_l: ts-int-l {
++			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++
++		ts_rst_l: ts-rst-l {
++			rockchip,pins = <0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
+ 	vcc-wl {
+ 		vcc_wl_pin: vcc-wl-pin {
+ 			rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;

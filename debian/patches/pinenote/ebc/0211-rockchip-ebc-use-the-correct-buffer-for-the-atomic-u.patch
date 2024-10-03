@@ -1,0 +1,22 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 5 Jul 2024 19:45:42 +0800
+Subject: rockchip-ebc: use the correct buffer for the atomic update in y4
+ mode
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index a2d6d2b..bc397da 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -1897,7 +1897,7 @@ static bool rockchip_ebc_blit_fb_r4(const struct rockchip_ebc_ctx *ctx,
+ 	width = x2_bytes - x1_bytes;
+ 
+ 	src = vaddr + src_clip->y1 * src_pitch + x1_bytes;
+-	dst = ctx->final + dst_clip->y1 * dst_pitch + dst_clip->x1 / 2;
++	dst = ctx->final_atomic_update + dst_clip->y1 * dst_pitch + dst_clip->x1 / 2;
+ 
+ 	for (y = src_clip->y1; y < src_clip->y2; y++) {
+ 		memcpy(dst, src, width);

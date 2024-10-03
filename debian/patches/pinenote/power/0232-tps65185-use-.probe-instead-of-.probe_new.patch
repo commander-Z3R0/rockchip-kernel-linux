@@ -1,0 +1,21 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sun, 24 Dec 2023 21:27:15 +0100
+Subject: [tps65185] use .probe instead of .probe_new
+
+---
+ drivers/regulator/tps65185-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index 17d1936..a2a594c 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -768,7 +768,7 @@ static const struct of_device_id tps65185_of_match[] = {
+ MODULE_DEVICE_TABLE(of, tps65185_of_match);
+ 
+ static struct i2c_driver tps65185_driver = {
+-	.probe_new	= tps65185_probe,
++	.probe	= tps65185_probe,
+ 	.driver		= {
+ 		.name		= "tps65185",
+ 		.pm		= &tps65185_pm,

@@ -1,0 +1,36 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sun, 21 Apr 2024 19:41:33 +0200
+Subject: media: v4l2-ctrls: Reserve controls for rockchip-rga
+
+Reserve controls for the rockchip rga unit. The unit is capable of a few
+operations that go beyond the standard v4l2 controls, such as dithering
+and conversion to Y4, useful for eink displays. 16 controls are reserved
+for these additional features.
+---
+ include/uapi/linux/v4l2-controls.h | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
+
+diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
+index 974fd25..59b96ce 100644
+--- a/include/uapi/linux/v4l2-controls.h
++++ b/include/uapi/linux/v4l2-controls.h
+@@ -204,16 +204,11 @@ enum v4l2_colorfx {
+ #define V4L2_CID_USER_ASPEED_BASE		(V4L2_CID_USER_BASE + 0x11a0)
+ 
+ /*
+- * The base for Nuvoton NPCM driver controls.
+- * We reserve 16 controls for this driver.
+- */
+-#define V4L2_CID_USER_NPCM_BASE			(V4L2_CID_USER_BASE + 0x11b0)
+-
+-/*
+- * The base for THine THP7312 driver controls.
++ * The base for RGA driver controls.
+  * We reserve 32 controls for this driver.
++ * hex(int("0x11a0", 16) + 16)
+  */
+-#define V4L2_CID_USER_THP7312_BASE		(V4L2_CID_USER_BASE + 0x11c0)
++#define V4L2_CID_USER_RGA_BASE		(V4L2_CID_USER_BASE + 0x11b0)
+ 
+ /* MPEG-class control IDs */
+ /* The MPEG controls are applicable to all codec controls

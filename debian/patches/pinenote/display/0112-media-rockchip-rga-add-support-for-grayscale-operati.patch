@@ -1,0 +1,278 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 17 May 2024 19:59:25 +0200
+Subject: media: rockchip: rga: add support for grayscale operations
+
+Add support for conversion to grayscale (Y4) and the dithering-down mode
+to the v4l2 mem2mem driver.
+
+Add corresponding v4l2 ctrl functionality to control the corresponding
+parameters (query with v4l2-ctl --all).
+---
+ drivers/media/platform/rockchip/rga/rga-hw.c |  11 +++
+ drivers/media/platform/rockchip/rga/rga-hw.h |  11 ++-
+ drivers/media/platform/rockchip/rga/rga.c    | 104 ++++++++++++++++++++++++++-
+ drivers/media/platform/rockchip/rga/rga.h    |  13 ++++
+ 4 files changed, 137 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.c b/drivers/media/platform/rockchip/rga/rga-hw.c
+index 11c3d72..784276a 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.c
++++ b/drivers/media/platform/rockchip/rga/rga-hw.c
+@@ -213,6 +213,11 @@ static void rga_cmd_set_trans_info(struct rga_ctx *ctx)
+ 		}
+ 	}
+ 
++	dst_info.data.sw_dst_fmt_yuv400_en = ctx->yuv400_enable;
++	dst_info.data.sw_dst_fmt_y4_en = ctx->y4_enable;
++	dst_info.data.dither_down_en = ctx->dither_down_enable;
++	dst_info.data.dither_down_mode = ctx->dither_down_mode;
++
+ 	if (ctx->vflip)
+ 		src_info.data.mir_mode |= RGA_SRC_MIRR_MODE_X;
+ 
+@@ -234,6 +239,7 @@ static void rga_cmd_set_trans_info(struct rga_ctx *ctx)
+ 		break;
+ 	}
+ 
++
+ 	/*
+ 	 * Calculate the up/down scaling mode/factor.
+ 	 *
+@@ -293,6 +299,7 @@ static void rga_cmd_set_trans_info(struct rga_ctx *ctx)
+ 	src_act_info.data.act_width = src_w - 1;
+ 
+ 	dst_vir_info.data.vir_stride = ctx->out.stride >> 2;
++
+ 	dst_act_info.data.act_height = dst_h - 1;
+ 	dst_act_info.data.act_width = dst_w - 1;
+ 
+@@ -407,6 +414,10 @@ static void rga_cmd_set_mode(struct rga_ctx *ctx)
+ 	dest[(RGA_ALPHA_CTRL1 - RGA_MODE_BASE_REG) >> 2] = alpha_ctrl1.val;
+ 
+ 	dest[(RGA_MODE_CTRL - RGA_MODE_BASE_REG) >> 2] = mode.val;
++
++	// LUTS Y4
++	dest[(RGA_RST_Y4MAP_LUT0 - RGA_MODE_BASE_REG) >> 2] = ctx->y4map_lut0;
++	dest[(RGA_RST_Y4MAP_LUT1 - RGA_MODE_BASE_REG) >> 2] = ctx->y4map_lut1;
+ }
+ 
+ static void rga_cmd_set(struct rga_ctx *ctx,
+diff --git a/drivers/media/platform/rockchip/rga/rga-hw.h b/drivers/media/platform/rockchip/rga/rga-hw.h
+index e8917e5..adbeb0b 100644
+--- a/drivers/media/platform/rockchip/rga/rga-hw.h
++++ b/drivers/media/platform/rockchip/rga/rga-hw.h
+@@ -59,6 +59,8 @@
+ #define RGA_PAT_CON 0x015c
+ #define RGA_ROP_CON0 0x0160
+ #define RGA_ROP_CON1 0x0164
++#define RGA_RST_Y4MAP_LUT0 0x0160
++#define RGA_RST_Y4MAP_LUT1 0x0164
+ #define RGA_MASK_BASE 0x0168
+ 
+ #define RGA_MMU_CTRL1 0x016C
+@@ -321,8 +323,15 @@ union rga_dst_info {
+ 		/* [16:18] */
+ 		unsigned int csc_mode:2;
+ 		unsigned int csc_clip:1;
++		unsigned int sw_dst_csc_mode_2:1;
++		unsigned int sw_src1_csc_mode:2;
++		unsigned int sw_src1_csc_clip:1;
++		unsigned int reserved_1:1;
++		unsigned int sw_dst_fmt_yuv400_en:1;
++		unsigned int sw_dst_fmt_y4_en:1;
++		unsigned int sw_dst_nn_quantize_en:1;
+ 		/* [19:31] */
+-		unsigned int reserved:13;
++		unsigned int reserved:6;
+ 	} data;
+ };
+ 
+diff --git a/drivers/media/platform/rockchip/rga/rga.c b/drivers/media/platform/rockchip/rga/rga.c
+index 0e768f3..eb2fe6e0 100644
+--- a/drivers/media/platform/rockchip/rga/rga.c
++++ b/drivers/media/platform/rockchip/rga/rga.c
+@@ -135,17 +135,55 @@ static int rga_s_ctrl(struct v4l2_ctrl *ctrl)
+ 	spin_lock_irqsave(&ctx->rga->ctrl_lock, flags);
+ 	switch (ctrl->id) {
+ 	case V4L2_CID_HFLIP:
++		printk(KERN_INFO "V4L2_CID_HFLIP: %i -> %i\n", ctx->hflip, ctrl->val);
++		if (ctx->dither_down_enable){
++			// dither does not work with h/v-flip
++			spin_unlock_irqrestore(&ctx->rga->ctrl_lock, flags);
++			return -EINVAL;
++		}
+ 		ctx->hflip = ctrl->val;
+ 		break;
+ 	case V4L2_CID_VFLIP:
++		printk(KERN_INFO "V4L2_CID_VFLIP: %i -> %i\n", ctx->vflip, ctrl->val);
++		if (ctx->dither_down_enable){
++			// dither does not work with h/v-flip
++			spin_unlock_irqrestore(&ctx->rga->ctrl_lock, flags);
++			return -EINVAL;
++		}
+ 		ctx->vflip = ctrl->val;
+ 		break;
+ 	case V4L2_CID_ROTATE:
++		if (ctx->dither_down_enable){
++			// dither does not work with rotation
++			spin_unlock_irqrestore(&ctx->rga->ctrl_lock, flags);
++			return -EINVAL;
++		}
+ 		ctx->rotate = ctrl->val;
+ 		break;
+ 	case V4L2_CID_BG_COLOR:
+ 		ctx->fill_color = ctrl->val;
+ 		break;
++	case RGA_V4L2_CID_Y400_ENABLE:
++		printk(KERN_INFO "RGA_V4L2_CID_Y400_ENABLE: %i -> %i\n", ctx->yuv400_enable, ctrl->val);
++		ctx->yuv400_enable = ctrl->val;
++		break;
++	case RGA_V4L2_CID_DITHER_DOWN_ENABLE:
++		printk(KERN_INFO "RGA_V4L2_CID_DITHER_DOWN_ENABLE: %i -> %i\n", ctx->dither_down_enable, ctrl->val);
++		if (ctx->vflip || ctx->hflip || ctx->rotate != 0){
++			// dither does not work with rotation or flips
++			spin_unlock_irqrestore(&ctx->rga->ctrl_lock, flags);
++			return -EINVAL;
++		}
++		ctx->dither_down_enable = ctrl->val;
++		break;
++	case RGA_V4L2_CID_DITHER_DOWN_MODE:
++		printk(KERN_INFO "RGA_V4L2_CID_DITHER_DOWN_MODE: %i->%i\n", ctx->dither_down_mode, ctrl->val);
++		ctx->dither_down_mode = ctrl->val;
++		break;
++	case RGA_V4L2_CID_Y4_ENABLE:
++		printk(KERN_INFO "RGA_V4L2_CID_Y4_ENABLE: %u\n", ctrl->val);
++		ctx->y4_enable = ctrl->val;
++		break;
+ 	}
+ 	spin_unlock_irqrestore(&ctx->rga->ctrl_lock, flags);
+ 	return 0;
+@@ -155,11 +193,56 @@ static const struct v4l2_ctrl_ops rga_ctrl_ops = {
+ 	.s_ctrl = rga_s_ctrl,
+ };
+ 
++
++static const struct v4l2_ctrl_config ctrl_y400_enable = {
++	.ops = &rga_ctrl_ops,
++	.id = RGA_V4L2_CID_Y400_ENABLE,
++	.name = "Enable Y400 conversion",
++	.type = V4L2_CTRL_TYPE_INTEGER,
++	.min = 0,
++	.max = 1,
++	.step = 1,
++	.def = 0,
++};
++
++static const struct v4l2_ctrl_config ctrl_dithering_down_enable = {
++	.ops = &rga_ctrl_ops,
++	.id = RGA_V4L2_CID_DITHER_DOWN_ENABLE,
++	.name = "Enable dither down",
++	.type = V4L2_CTRL_TYPE_INTEGER,
++	.min = 0,
++	.max = 1,
++	.step = 1,
++	.def = 0,
++};
++
++static const struct v4l2_ctrl_config ctrl_dithering_down_mode = {
++	.ops = &rga_ctrl_ops,
++	.id = RGA_V4L2_CID_DITHER_DOWN_MODE,
++	.name = "Dither down mode",
++	.type = V4L2_CTRL_TYPE_INTEGER,
++	.min = 0,
++	.max = 4,
++	.step = 1,
++	.def = 0,
++};
++
++static const struct v4l2_ctrl_config ctrl_y4_enable = {
++	.ops = &rga_ctrl_ops,
++	.id = RGA_V4L2_CID_Y4_ENABLE,
++	.name = "Enable Y4 conversion",
++	.type = V4L2_CTRL_TYPE_INTEGER,
++	.min = 0,
++	.max = 1,
++	.step = 1,
++	.def = 0,
++};
++
+ static int rga_setup_ctrls(struct rga_ctx *ctx)
+ {
+ 	struct rockchip_rga *rga = ctx->rga;
+ 
+-	v4l2_ctrl_handler_init(&ctx->ctrl_handler, 4);
++	v4l2_ctrl_handler_init(&ctx->ctrl_handler, 8);
+ 
+ 	v4l2_ctrl_new_std(&ctx->ctrl_handler, &rga_ctrl_ops,
+ 			  V4L2_CID_HFLIP, 0, 1, 1, 0);
+@@ -173,6 +256,11 @@ static int rga_setup_ctrls(struct rga_ctx *ctx)
+ 	v4l2_ctrl_new_std(&ctx->ctrl_handler, &rga_ctrl_ops,
+ 			  V4L2_CID_BG_COLOR, 0, 0xffffffff, 1, 0);
+ 
++	v4l2_ctrl_new_custom(&ctx->ctrl_handler, &ctrl_y400_enable, NULL);
++	v4l2_ctrl_new_custom(&ctx->ctrl_handler, &ctrl_dithering_down_enable, NULL);
++	v4l2_ctrl_new_custom(&ctx->ctrl_handler, &ctrl_dithering_down_mode, NULL);
++	v4l2_ctrl_new_custom(&ctx->ctrl_handler, &ctrl_y4_enable, NULL);
++
+ 	if (ctx->ctrl_handler.error) {
+ 		int err = ctx->ctrl_handler.error;
+ 
+@@ -311,6 +399,17 @@ static struct rga_fmt formats[] = {
+ 		.y_div = 2,
+ 		.x_div = 2,
+ 	},
++	{
++		.fourcc = V4L2_PIX_FMT_Y4,
++		.color_swap = RGA_COLOR_NONE_SWAP,
++		/* hard will switch from yuv420P to yuv400 when y4 conversion is
++		 * activated using the relevant registers*/
++		.hw_format = RGA_COLOR_FMT_YUV420P,
++		.depth = 4,
++		.uv_factor = 1,
++		.y_div = 1,
++		.x_div = 1,
++	},
+ 	{
+ 		.fourcc = V4L2_PIX_FMT_YUV422P,
+ 		.color_swap = RGA_COLOR_NONE_SWAP,
+@@ -965,6 +1064,9 @@ static const struct of_device_id rockchip_rga_match[] = {
+ 	{
+ 		.compatible = "rockchip,rk3399-rga",
+ 	},
++	{
++		.compatible = "rockchip,rk356x-rga",
++	},
+ 	{},
+ };
+ 
+diff --git a/drivers/media/platform/rockchip/rga/rga.h b/drivers/media/platform/rockchip/rga/rga.h
+index 8105bb2..6be42a2 100644
+--- a/drivers/media/platform/rockchip/rga/rga.h
++++ b/drivers/media/platform/rockchip/rga/rga.h
+@@ -12,6 +12,12 @@
+ #include <media/v4l2-device.h>
+ 
+ #define RGA_NAME "rockchip-rga"
++// define custom v4l2 control ids so we can control the Y4/dithering options
++// via ioctl
++#define RGA_V4L2_CID_Y400_ENABLE (V4L2_CID_USER_RGA_BASE + 0)
++#define RGA_V4L2_CID_DITHER_DOWN_ENABLE (V4L2_CID_USER_RGA_BASE + 1)
++#define RGA_V4L2_CID_DITHER_DOWN_MODE (V4L2_CID_USER_RGA_BASE + 2)
++#define RGA_V4L2_CID_Y4_ENABLE (V4L2_CID_USER_RGA_BASE + 3)
+ 
+ struct rga_fmt {
+ 	u32 fourcc;
+@@ -66,6 +72,13 @@ struct rga_ctx {
+ 	u32 vflip;
+ 	u32 rotate;
+ 	u32 fill_color;
++
++	u32 y4map_lut0;
++	u32 y4map_lut1;
++	u32 yuv400_enable;
++	u32 y4_enable;
++	u32 dither_down_enable;
++	u32 dither_down_mode;
+ };
+ 
+ struct rockchip_rga {

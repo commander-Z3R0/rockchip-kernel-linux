@@ -1,0 +1,28 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 1 Aug 2023 21:38:27 +0200
+Subject: [tps65185] reactivate all irqs after resume
+
+---
+ drivers/regulator/tps65185-regulator.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index 2472ecd..3d8b2f2 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -733,13 +733,13 @@ static int __maybe_unused tps65185_resume(struct device *dev)
+ 		return dev_err_probe(dev, ret, "Failed to set config at resume\n");
+ 
+ 	// disable all INT_EN1 interrupts
+-	tps->int_en1 = 0;
++	tps->int_en1 = 0xff;
+ 	ret = regmap_write(tps->regmap, TPS65185_REG_INT_EN1, tps->int_en1);
+ 	if (ret)
+ 		return ret;
+ 
+ 	// only enable temperature-is-ready irq
+-	tps->int_en2 = TPS65185_INT2_EOC;
++	tps->int_en2 = 0xff;
+ 	ret = regmap_write(tps->regmap, TPS65185_REG_INT_EN2, tps->int_en2);
+ 	if (ret)
+ 		return ret;

@@ -1,0 +1,34 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sat, 26 Nov 2022 11:33:40 +0100
+Subject: allocate buffers as GFP_DMA;
+ this makes sure buffers are located within the 32-bit memory space. This
+ fixes ebc issues on the Quartz64-A with 8 Gb ram
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index 7659e08..0f18bbd 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -386,11 +386,14 @@ static struct rockchip_ebc_ctx *rockchip_ebc_ctx_alloc(u32 width, u32 height)
+ 	if (!ctx)
+ 		return NULL;
+ 
+-	ctx->prev = kmalloc(gray4_size, GFP_KERNEL);
+-	ctx->next = kmalloc(gray4_size, GFP_KERNEL);
+-	ctx->final = kmalloc(gray4_size, GFP_KERNEL);
+-	ctx->phase[0] = kmalloc(phase_size, GFP_KERNEL);
+-	ctx->phase[1] = kmalloc(phase_size, GFP_KERNEL);
++	ctx->prev = kmalloc(gray4_size, GFP_KERNEL | GFP_DMA);
++	ctx->next = kmalloc(gray4_size, GFP_KERNEL | GFP_DMA);
++	ctx->final = kmalloc(gray4_size, GFP_KERNEL | GFP_DMA);
++	ctx->phase[0] = kmalloc(phase_size, GFP_KERNEL | GFP_DMA);
++	// todo: investigate if we would need something like __GFP_DMA32 (which
++	// apparently is not allowed...)
++	// https://lkml.org/lkml/2022/4/5/2876
++	ctx->phase[1] = kmalloc(phase_size, GFP_KERNEL | GFP_DMA);
+ 	if (!ctx->prev || !ctx->next || !ctx->final ||
+ 	    !ctx->phase[0] || !ctx->phase[1]) {
+ 		rockchip_ebc_ctx_free(ctx);

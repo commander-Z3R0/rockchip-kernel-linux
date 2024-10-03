@@ -1,0 +1,31 @@
+From: Maximilian Weigand <mweigand@geo.uni-bonn.de>
+Date: Fri, 30 Sep 2022 13:12:49 +0200
+Subject: [rockchip_ebc] modify the dithering pattern so that black and white
+ colors are presented nicely and accept some distortions in the center of the
+ colors.
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index 88164ac..efb00d3 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -1552,8 +1552,15 @@ static bool rockchip_ebc_blit_fb_xrgb8888(const struct rockchip_ebc_ctx *ctx,
+ 	unsigned int start_y;
+ 	unsigned int end_y2;
+ 
++	// original pattern
++	/* int pattern[4][4] = { */
++	/* 	{0, 8, 2, 10}, */
++	/* 	{12, 4, 14, 6}, */
++	/* 	{3, 11, 1,  9}, */
++	/* 	{15, 7, 13, 5}, */
++	/* }; */
+ 	int pattern[4][4] = {
+-		{0, 8, 2, 10},
++		{7, 8, 2, 10},
+ 		{12, 4, 14, 6},
+ 		{3, 11, 1,  9},
+ 		{15, 7, 13, 5},

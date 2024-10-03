@@ -1,0 +1,82 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sat, 4 Mar 2023 14:21:43 +0100
+Subject: [pinenote dts files] fix a few details that were lost when sorting
+ out the 6.2 branch
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 12 ++++++++++--
+ arch/arm64/boot/dts/rockchip/rk356x.dtsi          | 10 ++++++++++
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 5682fa2..95986fd 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -319,7 +319,7 @@ &eink {
+ 
+ &gpu {
+ 	mali-supply = <&vdd_gpu_npu>;
+-	// status = "okay";
++	status = "okay";
+ };
+ 
+ &rk_rga{
+@@ -594,6 +594,7 @@ wusb3801: tcpc@60 {
+ 		interrupts = <RK_PA4 IRQ_TYPE_LEVEL_LOW>;
+ 		pinctrl-0 = <&tcpc_int_l>;
+ 		pinctrl-names = "default";
++		status = "okay";
+ 
+ 		connector {
+ 			compatible = "usb-c-connector";
+@@ -618,7 +619,6 @@ typec_hs_usb2phy0: endpoint {
+ 				};
+ 			};
+ 		};
+-		status = "okay";
+ 	};
+ 
+ 	/* TODO: write binding */
+@@ -702,6 +702,14 @@ touchscreen@24 {
+ 		pinctrl-names = "default";
+ 		reset-gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_LOW>;
+ 		vdd-supply = <&vcc_3v3_pmu>;
++
++        touchscreen-max-pressure = <46>;
++		touchscreen-min-x = <10>;
++		touchscreen-min-y = <5>;
++		touchscreen-size-x = <1863>;
++		touchscreen-size-y = <1399>;
++		touchscreen-x-mm = <1864>;
++		touchscreen-y-mm = <1400>;
+ 	};
+ };
+ 
+diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+index 4f28b89..865d091 100644
+--- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+@@ -643,6 +643,7 @@ vpu: video-codec@fdea0400 {
+ 		clock-names = "aclk", "hclk";
+ 		iommus = <&vdpu_mmu>;
+ 		power-domains = <&power RK3568_PD_VPU>;
++	};
+ 
+ 	rk_rga: rk_rga@fdeb0000 {
+ 		compatible = "rockchip,rk356x-rga";
+@@ -675,6 +676,15 @@ ebc: ebc@fdec0000 {
+ 		status = "disabled";
+ 	};
+ 
++	eink: eink@fdf00000 {
++	    compatible = "rockchip,rk3568-eink-tcon";
++	    reg = <0x0 0xfdf00000 0x0 0x74>;
++	    clocks = <&cru PCLK_EINK>, <&cru HCLK_EINK>;
++	    clock-names = "pclk", "hclk";
++	    interrupts = <GIC_SPI 178 IRQ_TYPE_LEVEL_HIGH>;
++	    status = "disabled";
++	};
++
+ 	vdpu_mmu: iommu@fdea0800 {
+ 		compatible = "rockchip,rk3568-iommu";
+ 		reg = <0x0 0xfdea0800 0x0 0x40>;

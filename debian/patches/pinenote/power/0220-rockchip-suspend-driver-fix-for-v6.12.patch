@@ -1,0 +1,98 @@
+From: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Date: Thu, 3 Oct 2024 15:42:08 +0200
+Subject: [rockchip suspend driver] fix for v6.12
+
+comment out code that breaks on v6.12 AND is not currently used for the
+PineNote.
+
+Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+---
+ drivers/soc/rockchip/rockchip_pm_config.c | 72 +++++++++++++++----------------
+ 1 file changed, 36 insertions(+), 36 deletions(-)
+
+diff --git a/drivers/soc/rockchip/rockchip_pm_config.c b/drivers/soc/rockchip/rockchip_pm_config.c
+index 4a735bb..6552418 100644
+--- a/drivers/soc/rockchip/rockchip_pm_config.c
++++ b/drivers/soc/rockchip/rockchip_pm_config.c
+@@ -107,45 +107,45 @@ static int parse_on_off_regulator(struct device_node *node, enum rk_pm_state sta
+ 	on_list = on_off_regs_list[state].on_reg_list;
+ 	off_list = on_off_regs_list[state].off_reg_list;
+ 
+-	if (of_find_property(node, on_prop_name, NULL)) {
+-		for (i = 0, j = 0;
+-		     (dn = of_parse_phandle(node, on_prop_name, i));
+-		     i++) {
+-			reg = of_find_regulator_by_node(dn);
+-			if (reg == NULL) {
+-				pr_warn("failed to find regulator %s for %s\n",
+-					dn->name, on_prop_name);
+-			} else {
+-				pr_debug("%s on regulator=%s\n", __func__,
+-					 reg->desc->name);
+-				on_list[j++] = reg;
+-			}
+-			of_node_put(dn);
++	// if (of_find_property(node, on_prop_name, NULL)) {
++	// 	for (i = 0, j = 0;
++	// 	     (dn = of_parse_phandle(node, on_prop_name, i));
++	// 	     i++) {
++	// 		reg = of_find_regulator_by_node(dn);
++	// 		if (reg == NULL) {
++	// 			pr_warn("failed to find regulator %s for %s\n",
++	// 				dn->name, on_prop_name);
++	// 		} else {
++	// 			pr_debug("%s on regulator=%s\n", __func__,
++	// 				 reg->desc->name);
++	// 			on_list[j++] = reg;
++	// 		}
++	// 		of_node_put(dn);
+ 
+-			if (j >= MAX_ON_OFF_REG_NUM)
+-				return 0;
+-		}
+-	}
++	// 		if (j >= MAX_ON_OFF_REG_NUM)
++	// 			return 0;
++	// 	}
++	// }
+ 
+-	if (of_find_property(node, off_prop_name, NULL)) {
+-		for (i = 0, j = 0;
+-		     (dn = of_parse_phandle(node, off_prop_name, i));
+-		     i++) {
+-			reg = of_find_regulator_by_node(dn);
+-			if (reg == NULL) {
+-				pr_warn("failed to find regulator %s for %s\n",
+-					dn->name, off_prop_name);
+-			} else {
+-				pr_debug("%s off regulator=%s\n", __func__,
+-					 reg->desc->name);
+-				off_list[j++] = reg;
+-			}
+-			of_node_put(dn);
++	// if (of_find_property(node, off_prop_name, NULL)) {
++	// 	for (i = 0, j = 0;
++	// 	     (dn = of_parse_phandle(node, off_prop_name, i));
++	// 	     i++) {
++	// 		reg = of_find_regulator_by_node(dn);
++	// 		if (reg == NULL) {
++	// 			pr_warn("failed to find regulator %s for %s\n",
++	// 				dn->name, off_prop_name);
++	// 		} else {
++	// 			pr_debug("%s off regulator=%s\n", __func__,
++	// 				 reg->desc->name);
++	// 			off_list[j++] = reg;
++	// 		}
++	// 		of_node_put(dn);
+ 
+-			if (j >= MAX_ON_OFF_REG_NUM)
+-				return 0;
+-		}
+-	}
++	// 		if (j >= MAX_ON_OFF_REG_NUM)
++	// 			return 0;
++	// 	}
++	// }
+ 
+ 	return 0;
+ }

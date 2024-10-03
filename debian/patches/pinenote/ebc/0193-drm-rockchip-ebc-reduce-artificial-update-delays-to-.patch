@@ -1,0 +1,37 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sun, 4 Jun 2023 20:58:20 +0200
+Subject: drm/rockchip: ebc: reduce artificial update delays to 1 ms
+
+Previously, artificial delays were introduced in the panel_atomic_update
+function to yield better interactions with the refresh thread, and, more
+importantly, to reduce artifacting/ghosting for larger screen updates.
+With the last commit that changed the dclk clock of the ebc chip to 200
+MHz, this is not really required anymore. Therefore, reduce delays to 1
+ms.
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index e62d506..6ae6524 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -221,15 +221,15 @@ MODULE_PARM_DESC(split_area_limit, "how many fb blits to allow. -1 does not limi
+ 
+ /* delay parameters used to delay the return of plane_atomic_atomic */
+ /* see plane_atomic_update function for specific usage of these parameters */
+-static int delay_a = 2000;
++static int delay_a = 1000;
+ module_param(delay_a, int, S_IRUGO|S_IWUSR);
+ MODULE_PARM_DESC(delay_a, "delay_a");
+ 
+-static int delay_b = 15000;
++static int delay_b = 1000;
+ module_param(delay_b, int, S_IRUGO|S_IWUSR);
+ MODULE_PARM_DESC(delay_b, "delay_b");
+ 
+-static int delay_c = 2000;
++static int delay_c = 1000;
+ module_param(delay_c, int, S_IRUGO|S_IWUSR);
+ MODULE_PARM_DESC(delay_c, "delay_c");
+ 

@@ -1,0 +1,29 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 6 Dec 2022 10:50:10 +0100
+Subject: [pinenote dts] add note why the v3p3 regulator should be always on
+ (at least in v1.1 and v1.2) based on information from smaeul
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 3bb38a6..2df9dca 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -642,6 +642,15 @@ ebc_pmic: pmic@68 {
+ 		regulators {
+ 			v3p3: v3p3 {
+ 				regulator-name = "v3p3";
++				/* At least pinenote v1.1 and v1.2: Information provided by
++				 * smaeul (Samuel Holland): Allowing this regulator to turn off
++				 * can lead to interrupt storms
++				 * While writing a driver for the TPS65185, I ran into an
++				 * interrupt storm. The reason is that EBC_PMIC_INT is pulled
++				 * up to VCC_EINK1 through R2003. But this is the output of the
++				 * V3P3 switch. So that means the IRQ cannot be enabled while
++				 * V3P3 is turned off.
++				*/
+ 				regulator-always-on;
+ 				regulator-min-microvolt = <3300000>;
+ 				regulator-max-microvolt = <3300000>;

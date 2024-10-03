@@ -1,0 +1,25 @@
+From: Samuel Holland <samuel@sholland.org>
+Date: Sun, 30 Jan 2022 13:20:32 -0600
+Subject: arm64: dts: rockchip: pinenote: Enable the GPU
+
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 32cbf56..ddea695 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -241,8 +241,9 @@ &cpu3 {
+ 	cpu-supply = <&vdd_cpu>;
+ };
+ 
+-&rk_rga{
+-       status = "okay";
++&gpu {
++	mali-supply = <&vdd_gpu_npu>;
++	// status = "okay";
+ };
+ 
+ &i2c0 {

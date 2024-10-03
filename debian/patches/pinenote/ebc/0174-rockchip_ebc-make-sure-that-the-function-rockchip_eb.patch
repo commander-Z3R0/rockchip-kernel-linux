@@ -1,0 +1,27 @@
+From: Maximilian Weigand <mweigand@geo.uni-bonn.de>
+Date: Thu, 29 Sep 2022 20:00:27 +0200
+Subject: [rockchip_ebc] make sure that the function
+ rockchip_ebc_partial_refresh stops when the kthread is stopped. Previously,
+ adding printk statements to the function could lead to endless loops where
+ new clips where added faster than being drawing
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index 7a7819c..0471289 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -981,6 +981,11 @@ static void rockchip_ebc_partial_refresh(struct rockchip_ebc *ebc,
+ 		if (!wait_for_completion_timeout(&ebc->display_end,
+ 						 EBC_FRAME_TIMEOUT))
+ 			drm_err(drm, "Frame %d timed out!\n", frame);
++
++
++		if (kthread_should_stop()) {
++			break;
++		};
+ 	}
+ 	dma_unmap_single(dev, phase_handles[0], ctx->gray4_size, DMA_TO_DEVICE);
+ 	dma_unmap_single(dev, phase_handles[1], ctx->gray4_size, DMA_TO_DEVICE);

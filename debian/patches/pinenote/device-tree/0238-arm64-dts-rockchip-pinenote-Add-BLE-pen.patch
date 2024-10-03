@@ -1,0 +1,77 @@
+From: Samuel Holland <samuel@sholland.org>
+Date: Sun, 30 Jan 2022 13:23:40 -0600
+Subject: arm64: dts: rockchip: pinenote: Add BLE pen
+
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 50 +++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index ae2536c..2c877fe 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -129,6 +129,33 @@ link1_codec: codec {
+ 		};
+ 	};
+ 
++	spi-gpio {
++		compatible = "spi-gpio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		pinctrl-0 = <&ble_spi_pins>;
++		pinctrl-names = "default";
++		mosi-gpios = <&gpio3 RK_PC1 GPIO_ACTIVE_HIGH>;
++		sck-gpios = <&gpio3 RK_PC3 GPIO_ACTIVE_HIGH>;
++		num-chipselects = <0>;
++		status = "okay";
++
++		/* TODO: write binding */
++		bluetooth@0 {
++			compatible = "pine64,pinenote-ws8100-pen";
++			reg = <0>;
++			cs-gpios = <&gpio3 RK_PC2 GPIO_ACTIVE_HIGH>;
++			host_state-gpios = <&gpio1 RK_PD6 GPIO_ACTIVE_HIGH>;
++			interrupt-parent = <&gpio0>;
++			interrupts = <RK_PB5 IRQ_TYPE_EDGE_RISING>;
++			pinctrl-0 = <&ble_host_state_h>, <&ble_int_l>, <&ble_rst_h>;
++			pinctrl-names = "default";
++			reset-gpios = <&gpio3 RK_PC0 GPIO_ACTIVE_HIGH>;
++			spi-3wire;
++			spi-max-frequency = <10000>;
++		};
++	};
++
+ 	vbat_4g: vbat-4g {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vbat_4g";
+@@ -547,6 +574,29 @@ backlight_hwen_h: backlight-hwen-h {
+ 		};
+ 	};
+ 
++	ble {
++		ble_host_state_h: ble-host-state-h {
++			rockchip,pins = <1 RK_PD6 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++
++		ble_int_l: ble-int-l {
++			rockchip,pins = <0 RK_PB5 RK_FUNC_GPIO &pcfg_pull_down>;
++		};
++
++		ble_rst_h: ble-rst-h {
++			rockchip,pins = <3 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++
++		ble_spi_pins: ble-spi-pins {
++			rockchip,pins = /* data */
++					<3 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>,
++					/* cs */
++					<3 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>,
++					/* clk */
++					<3 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
+ 	bt {
+ 		bt_enable_h: bt-enable-h {
+ 			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;

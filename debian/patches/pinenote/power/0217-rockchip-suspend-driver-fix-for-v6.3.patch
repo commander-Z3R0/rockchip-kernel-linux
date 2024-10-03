@@ -1,0 +1,33 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sat, 4 Mar 2023 14:19:25 +0100
+Subject: [rockchip suspend driver] fix for v6.3
+
+pm_power_off_prepare was removed from the kernel, so comment out the
+corresponding parts in the rockchip suspend driver
+
+Signed-off-by: Maximilian Weigand <mweigand@mweigand.net>
+---
+ drivers/soc/rockchip/rockchip_pm_config.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/soc/rockchip/rockchip_pm_config.c b/drivers/soc/rockchip/rockchip_pm_config.c
+index 7d1286c..0f18684 100644
+--- a/drivers/soc/rockchip/rockchip_pm_config.c
++++ b/drivers/soc/rockchip/rockchip_pm_config.c
+@@ -230,11 +230,11 @@ static int pm_config_probe(struct platform_device *pdev)
+ 					 apios_suspend,
+ 					 0);
+ 
+-	if (!of_property_read_u32_array(node,
+-					"rockchip,virtual-poweroff",
+-					&virtual_poweroff_en, 1) &&
+-	    virtual_poweroff_en)
+-		pm_power_off_prepare = rockchip_pm_virt_pwroff_prepare;
++	/* if (!of_property_read_u32_array(node, */
++	/* 				"rockchip,virtual-poweroff", */
++	/* 				&virtual_poweroff_en, 1) && */
++	/*     virtual_poweroff_en) */
++	/* 	pm_power_off_prepare = rockchip_pm_virt_pwroff_prepare; */
+ 
+ 	for (i = RK_PM_MEM; i < RK_PM_STATE_MAX; i++)
+ 		parse_on_off_regulator(node, i);

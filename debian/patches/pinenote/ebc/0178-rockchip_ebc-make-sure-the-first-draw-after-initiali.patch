@@ -1,0 +1,23 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Thu, 3 Nov 2022 17:28:45 +0100
+Subject: [rockchip_ebc] make sure the first draw after initialization is a
+ global refresh - I believe this solves some issues with inverted terminal
+ output and artifacts in GNOME before the first global refresh. Not sure if
+ this is a permanent fix, but at least a workaround...
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index d285bf4..431b355 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -2145,6 +2145,7 @@ static int rockchip_ebc_probe(struct platform_device *pdev)
+ 
+ 	ebc = devm_drm_dev_alloc(dev, &rockchip_ebc_drm_driver,
+ 				 struct rockchip_ebc, drm);
++	ebc->one_full_refresh = true;
+ 
+ 	spin_lock_init(&ebc->refresh_once_lock);
+ 

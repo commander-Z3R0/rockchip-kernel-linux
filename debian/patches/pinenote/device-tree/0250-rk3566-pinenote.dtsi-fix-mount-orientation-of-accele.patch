@@ -1,0 +1,25 @@
+From: Maximilian Weigand <mweigand@geo.uni-bonn.de>
+Date: Mon, 22 Aug 2022 13:23:53 +0200
+Subject: rk3566-pinenote.dtsi: fix mount orientation of accelerometer when
+ panel_reflection=1 is used with the ebc driver
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 0f58fee..8c725d8 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -670,6 +670,11 @@ accelerometer@18 {
+ 		st,drdy-int-pin = <1>;
+ 		vdd-supply = <&vcc_3v3>;
+ 		vddio-supply = <&vcc_3v3>;
++		// if we use panel-reflection=1 from the ebc driver, then the
++		// accelerometer must be rotated
++ 		mount-matrix = "-1", "0", "0",
++ 					   "0", "1", "0",
++ 					   "0", "0", "1";
+ 	};
+ 
+ 	touchscreen@24 {

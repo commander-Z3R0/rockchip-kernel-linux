@@ -1,0 +1,29 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Thu, 16 Mar 2023 14:27:58 +0100
+Subject: [tps65185] enable all irq bits for better debugging of visual
+ artifacts on the PineNote
+
+---
+ drivers/regulator/tps65185-regulator.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index b1a4f43..c93e020 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -674,12 +674,13 @@ static int tps65185_probe(struct i2c_client *client)
+ 		return dev_err_probe(dev, ret, "Failed to register IIO device\n");
+ 
+ 	// disable all INT_EN1 interrupts
+-	tps->int_en1 = 0;
++	tps->int_en1 = 0xff;
+ 	ret = regmap_write(tps->regmap, TPS65185_REG_INT_EN1, tps->int_en1);
+ 	if (ret)
+ 		return ret;
+ 
+-	tps->int_en2 = TPS65185_INT2_EOC;
++	//tps->int_en2 = TPS65185_INT2_EOC;
++	tps->int_en2 = 0xff;
+ 	ret = regmap_write(tps->regmap, TPS65185_REG_INT_EN2, tps->int_en2);
+ 	if (ret)
+ 		return ret;

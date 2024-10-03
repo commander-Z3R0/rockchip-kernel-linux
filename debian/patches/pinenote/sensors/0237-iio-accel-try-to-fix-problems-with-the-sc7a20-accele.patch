@@ -1,0 +1,132 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sat, 25 May 2024 19:35:57 +0200
+Subject: iio: accel: try to fix problems with the sc7a20 accelerometer after
+ resume
+
+Previously, when resuming from sleep, the PineNote would emit the
+following stack trace caused by some kind of mishandling of the irq of
+the accelerometer
+
+pinenote kernel: irq 79: nobody cared (try booting with the "irqpoll" option)
+pinenote kernel: CPU: 0 PID: 310 Comm: irq/79-sc7a20-t Not tainted 5.17.0-rc6-next-20220304-pinenote-202307051629 #1
+pinenote kernel: Hardware name: Pine64 PineNote v1.2 (DT)
+pinenote kernel: Call trace:
+pinenote kernel:  dump_backtrace.part.0+0xc4/0xd0
+pinenote kernel:  show_stack+0x14/0x60
+pinenote kernel:  dump_stack_lvl+0x60/0x78
+pinenote kernel:  dump_stack+0x14/0x2c
+pinenote kernel:  __report_bad_irq+0x48/0x158
+pinenote kernel:  note_interrupt+0x2f4/0x3f0
+pinenote kernel:  handle_irq_event+0xd4/0x160
+pinenote kernel:  handle_level_irq+0xd4/0x200
+pinenote kernel:  generic_handle_irq+0x2c/0x40
+pinenote kernel:  rockchip_irq_demux+0xa4/0x224
+pinenote kernel:  generic_handle_domain_irq+0x38/0x5c
+pinenote kernel:  gic_handle_irq+0xac/0x124
+pinenote kernel:  call_on_irq_stack+0x2c/0x38
+pinenote kernel:  do_interrupt_handler+0x78/0x84
+pinenote kernel:  el1_interrupt+0x30/0x50
+pinenote kernel:  el1h_64_irq_handler+0x14/0x20
+pinenote kernel:  el1h_64_irq+0x64/0x68
+pinenote kernel:  irq_finalize_oneshot.part.0+0x94/0x160
+pinenote kernel:  irq_thread_fn+0x5c/0x90
+pinenote kernel:  irq_thread+0x170/0x21c
+pinenote kernel:  kthread+0xd4/0xdc
+pinenote kernel:  ret_from_fork+0x10/0x20
+pinenote kernel: handlers:
+pinenote kernel: [<00000000117b7317>] st_sensors_irq_handler [st_sensors] threaded [<00000000e2a480c4>] st_sensors_irq_thread [st_sensors]
+pinenote kernel: Disabling IRQ #79
+
+It seems that the irq handler was triggered after the actual irq was
+already disabled for sleep by the system, leading to the irq handler not
+actually handling those irqs. I may be wrong with that interpretation...
+
+Sometimes this lead to the accelerometer not working after resume.
+
+In order to prevent spurious irqs during the standby/resume cycle,
+explicitly turn off the device and irq during suspend, and resume by
+hand when the system resumes.
+
+Signed-off-by: Maximilian Weigand <mweigand@mweigand.net>
+---
+ drivers/iio/accel/st_accel_i2c.c                   | 40 ++++++++++++++++++++++
+ drivers/iio/common/st_sensors/st_sensors_trigger.c | 10 ++++++
+ 2 files changed, 50 insertions(+)
+
+diff --git a/drivers/iio/accel/st_accel_i2c.c b/drivers/iio/accel/st_accel_i2c.c
+index 329a4d6..947cec9 100644
+--- a/drivers/iio/accel/st_accel_i2c.c
++++ b/drivers/iio/accel/st_accel_i2c.c
+@@ -202,11 +202,51 @@ static int st_accel_i2c_probe(struct i2c_client *client)
+ 	return st_accel_common_probe(indio_dev);
+ }
+ 
++static int __maybe_unused st_accel_suspend(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++	struct iio_dev *indio_dev;
++	int ret;
++	struct st_sensor_data *sdata;
++
++	indio_dev = i2c_get_clientdata(client);
++	sdata = iio_priv(indio_dev);
++	pr_info("%s", __func__);
++	st_sensors_set_enable(indio_dev, false);
++	st_sensors_set_dataready_irq(indio_dev, false);
++	disable_irq(sdata->irq);
++
++	return 0;
++}
++
++static int __maybe_unused st_accel_resume(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++	struct iio_dev *indio_dev;
++	struct st_sensor_data *sdata;
++	int ret;
++
++	indio_dev = i2c_get_clientdata(client);
++	sdata = iio_priv(indio_dev);
++
++	pr_info("%s", __func__);
++	st_sensors_set_enable(indio_dev, true);
++	st_sensors_set_dataready_irq(indio_dev, true);
++	// enabling the irq here will reduce the number of spurious irqs, and the
++	// device will keep on working after resume.
++	// Still not enough...
++	enable_irq(sdata->irq);
++	return 0;
++}
++
++static SIMPLE_DEV_PM_OPS(st_accel_pm, st_accel_suspend, st_accel_resume);
++
+ static struct i2c_driver st_accel_driver = {
+ 	.driver = {
+ 		.name = "st-accel-i2c",
+ 		.of_match_table = st_accel_of_match,
+ 		.acpi_match_table = st_accel_acpi_match,
++		.pm		= &st_accel_pm,
+ 	},
+ 	.probe = st_accel_i2c_probe,
+ 	.id_table = st_accel_id_table,
+diff --git a/drivers/iio/common/st_sensors/st_sensors_trigger.c b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+index a0df925..461d0fc 100644
+--- a/drivers/iio/common/st_sensors/st_sensors_trigger.c
++++ b/drivers/iio/common/st_sensors/st_sensors_trigger.c
+@@ -87,6 +87,16 @@ static irqreturn_t st_sensors_irq_thread(int irq, void *p)
+ 	    st_sensors_new_samples_available(indio_dev, sdata)) {
+ 		iio_trigger_poll_nested(p);
+ 	} else {
++		pr_info(
++			"st_sensors_irq_thread: %i returning IRQ_NONE (%i/%i/%i/%u) %s",
++			irq,
++		   	sdata->hw_irq_trigger,
++			st_sensors_new_samples_available(indio_dev, sdata),
++			sdata->num_data_channels,
++			sdata->odr,
++			trig->name
++		);
++		/* return IRQ_HANDLED; */
+ 		dev_dbg(indio_dev->dev.parent, "spurious IRQ\n");
+ 		return IRQ_NONE;
+ 	}

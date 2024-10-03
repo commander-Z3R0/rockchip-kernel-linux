@@ -1,0 +1,25 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 6 Oct 2023 09:48:17 +0200
+Subject: Input: cyttsp5: correctly apply requested power state
+
+Properly apply the requested power state (sleep/wake) instead of always
+sleeping.
+
+Signed-off-by: Maximilian Weigand <mweigand@mweigand.net>
+---
+ drivers/input/touchscreen/cyttsp5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/input/touchscreen/cyttsp5.c b/drivers/input/touchscreen/cyttsp5.c
+index f2a9e70..d8715c0 100644
+--- a/drivers/input/touchscreen/cyttsp5.c
++++ b/drivers/input/touchscreen/cyttsp5.c
+@@ -631,7 +631,7 @@ static int cyttsp5_power_control(struct cyttsp5 *ts, bool on)
+ 	int rc;
+ 
+ 	SET_CMD_REPORT_TYPE(cmd[0], 0);
+-	SET_CMD_REPORT_ID(cmd[0], HID_POWER_SLEEP);
++	SET_CMD_REPORT_ID(cmd[0], state);
+ 	SET_CMD_OPCODE(cmd[1], HID_CMD_SET_POWER);
+ 
+ 	rc = cyttsp5_write(ts, HID_COMMAND_REG, cmd, sizeof(cmd));

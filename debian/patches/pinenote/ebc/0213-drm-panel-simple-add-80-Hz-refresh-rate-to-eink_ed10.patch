@@ -1,0 +1,53 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 5 Jul 2024 19:18:17 +0800
+Subject: drm: panel-simple: add 80 Hz refresh rate to eink_ed103tc2_mode
+
+At the moment the refresh rate is only relevant for the compositors
+ and drives the possible rate of atomic updates.
+---
+ drivers/gpu/drm/panel/panel-simple.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 12503af..c8acf4d 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -2227,6 +2227,29 @@ static const struct drm_display_mode eink_ed103tc2_mode[] ={
+ 			 DRM_MODE_FLAG_HSKEW | DRM_MODE_FLAG_CLKDIV2 |
+ 			DRM_MODE_TYPE_PREFERRED,
+ 	},
++	// 80 Hz
++	{
++		.clock = 251005,
++		.hdisplay = 1872,
++		.hsync_start = 1872 + 56,
++		.hsync_end = 1872 + 56 + 144,
++		.htotal = 1872 + 56 + 144 + 136,
++		.hskew = 64,
++		/* .hskew = 0, */ // <- does not work
++		/* .hskew = 10, */
++		/* .hskew = 20, */
++		/* .hskew = 30, */
++		/* .hskew = 40, */
++		/* .hskew = 50, */
++		/* .hskew = 60, */
++		/* .hskew = 70, */
++		.vdisplay = 1404,
++		.vsync_start = 1404 + 12,
++		.vsync_end = 1404 + 12 + 1,
++		.vtotal = 1404 + 12 + 1 + 4,
++		.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_NVSYNC |
++			 DRM_MODE_FLAG_HSKEW | DRM_MODE_FLAG_CLKDIV2
++	},
+ 
+ /* 	/1* modes that actually take the .clock seriously *1/ */
+ /* 	{ */
+@@ -2286,7 +2309,7 @@ static const struct drm_display_mode eink_ed103tc2_mode[] ={
+ 
+ static const struct panel_desc eink_ed103tc2 = {
+ 	.modes = eink_ed103tc2_mode,
+-	.num_modes = 8,
++	.num_modes = 9,
+ 	.bpc = 4,
+ 	.size = {
+ 		.width = 210,

@@ -1,0 +1,21 @@
+From: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Date: Thu, 3 Oct 2024 15:40:55 +0200
+Subject: rockchip-sip: fix build for 6.12
+
+Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+---
+ drivers/firmware/rockchip_sip.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/firmware/rockchip_sip.c b/drivers/firmware/rockchip_sip.c
+index 1e1d8ca..7fe034d 100644
+--- a/drivers/firmware/rockchip_sip.c
++++ b/drivers/firmware/rockchip_sip.c
+@@ -24,6 +24,7 @@
+ #include <linux/ptrace.h>
+ #include <linux/sched/clock.h>
+ #include <linux/slab.h>
++#include <linux/vmalloc.h>
+ 
+ #ifdef CONFIG_64BIT
+ #define PSCI_FN_NATIVE(version, name)	PSCI_##version##_FN64_##name

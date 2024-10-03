@@ -1,0 +1,21 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 1 Aug 2023 21:38:04 +0200
+Subject: [tps65185] remove unused variables
+
+---
+ drivers/regulator/tps65185-regulator.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index c93e020..2472ecd 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -722,8 +722,6 @@ static int __maybe_unused tps65185_resume(struct device *dev)
+ 
+ 	struct tps65185 *tps;
+ 	int ret;
+-	int irq;
+-	int irq2;
+ 
+ 	tps = i2c_get_clientdata(client);
+ 

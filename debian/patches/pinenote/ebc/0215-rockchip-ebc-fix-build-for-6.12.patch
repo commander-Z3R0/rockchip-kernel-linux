@@ -1,0 +1,70 @@
+From: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Date: Thu, 3 Oct 2024 15:42:59 +0200
+Subject: rockchip-ebc: fix build for 6.12
+
+Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+---
+ drivers/gpu/drm/rockchip/Kconfig        | 1 +
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 9 +++------
+ 2 files changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/gpu/drm/rockchip/Kconfig b/drivers/gpu/drm/rockchip/Kconfig
+index 12db56a..fefba90 100644
+--- a/drivers/gpu/drm/rockchip/Kconfig
++++ b/drivers/gpu/drm/rockchip/Kconfig
+@@ -121,6 +121,7 @@ config DRM_ROCKCHIP_EBC
+ 	select DRM_EPD_HELPER
+ 	select DRM_GEM_SHMEM_HELPER
+ 	select DRM_KMS_HELPER
++	select DRM_TTM_HELPER
+ 	help
+ 	  This selects DRM/KMS support for the Rockchip E-Book Controller (EBC).
+ 	  Choose this option if you have a Rockchip SoC and an electrophoretic
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index 734d920..eb7eed3 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -35,7 +35,7 @@
+ #include <drm/drm_plane_helper.h>
+ #include <drm/drm_simple_kms_helper.h>
+ #include <drm/rockchip_ebc_drm.h>
+-#include <drm/drm_fbdev_generic.h>
++#include <drm/drm_fbdev_ttm.h>
+ #include <drm/drm_framebuffer.h>
+ 
+ #define EBC_DSP_START			0x0000
+@@ -414,7 +414,6 @@ static const struct drm_ioctl_desc ioctls[DRM_COMMAND_END - DRM_COMMAND_BASE] =
+ };
+ 
+ static const struct drm_driver rockchip_ebc_drm_driver = {
+-	.lastclose		= drm_fb_helper_lastclose,
+ 	DRM_GEM_SHMEM_DRIVER_OPS,
+ 	.major			= 0,
+ 	.minor			= 3,
+@@ -2399,7 +2398,7 @@ static int rockchip_ebc_drm_init(struct rockchip_ebc *ebc)
+ 	if (ret)
+ 		return ret;
+ 
+-	drm_fbdev_generic_setup(drm, 0);
++	drm_fbdev_ttm_setup(drm, 0);
+ 
+ 	// check if there is a default off-screen
+ 	if (!request_firmware(&default_offscreen, "rockchip/rockchip_ebc_default_screen.bin", drm->dev))
+@@ -2656,7 +2655,7 @@ static int rockchip_ebc_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int rockchip_ebc_remove(struct platform_device *pdev)
++static void rockchip_ebc_remove(struct platform_device *pdev)
+ {
+ 	struct rockchip_ebc *ebc = platform_get_drvdata(pdev);
+ 	struct device *dev = &pdev->dev;
+@@ -2669,8 +2668,6 @@ static int rockchip_ebc_remove(struct platform_device *pdev)
+ 	pm_runtime_disable(dev);
+ 	if (!pm_runtime_status_suspended(dev))
+ 		rockchip_ebc_runtime_suspend(dev);
+-
+-	return 0;
+ }
+ 
+ static void rockchip_ebc_shutdown(struct platform_device *pdev)

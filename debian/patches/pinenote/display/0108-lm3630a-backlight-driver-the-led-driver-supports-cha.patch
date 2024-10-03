@@ -1,0 +1,110 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Wed, 4 Jan 2023 20:13:50 +0100
+Subject: lm3630a backlight driver: the led driver supports changing the
+ switching frequency of the boost converter by two means: the base switching
+ frequency can be changed from 500 kHz to 1 MHz,
+ or a frequency shift can be activated,
+ leading to switching frequencies of 560 kHz or 1.12 Mhz,
+ respectively. This patch add devicetree support for these two configuration
+ options.
+
+---
+ .../bindings/leds/backlight/lm3630a-backlight.yaml         | 13 +++++++++++++
+ drivers/video/backlight/lm3630a_bl.c                       | 14 +++++++++++++-
+ include/linux/platform_data/lm3630a_bl.h                   |  6 ++++++
+ 3 files changed, 32 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/leds/backlight/lm3630a-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/lm3630a-backlight.yaml
+index 3c9b405..6915884 100644
+--- a/Documentation/devicetree/bindings/leds/backlight/lm3630a-backlight.yaml
++++ b/Documentation/devicetree/bindings/leds/backlight/lm3630a-backlight.yaml
+@@ -33,6 +33,19 @@ properties:
+     description: GPIO to use to enable/disable the backlight (HWEN pin).
+     maxItems: 1
+ 
++  boost_use_1mhz:
++    description: |
++      boolean, if present, change the boost converter switching frequency from
++      the default 500 kHz to 1 MHz
++    type: boolean
++
++  boost_frequency_shift:
++    description: |
++      boolean, if present, change boost converter switching frequency fromm 500
++      kHz to 560 kHz or from 1 Mhz to 1.12 Mhz, depending on the boost
++      converter switching frequency
++    type: boolean
++
+ required:
+   - compatible
+   - reg
+diff --git a/drivers/video/backlight/lm3630a_bl.c b/drivers/video/backlight/lm3630a_bl.c
+index 37651c2..c601a93 100644
+--- a/drivers/video/backlight/lm3630a_bl.c
++++ b/drivers/video/backlight/lm3630a_bl.c
+@@ -85,6 +85,7 @@ static int lm3630a_chip_init(struct lm3630a_chip *pchip)
+ {
+ 	int rval;
+ 	struct lm3630a_platform_data *pdata = pchip->pdata;
++	int value;
+ 
+ 	usleep_range(1000, 2000);
+ 	/* set Filter Strength Register */
+@@ -92,7 +93,13 @@ static int lm3630a_chip_init(struct lm3630a_chip *pchip)
+ 	/* set Cofig. register */
+ 	rval |= lm3630a_update(pchip, REG_CONFIG, 0x07, pdata->pwm_ctrl);
+ 	/* set boost control */
+-	rval |= lm3630a_write(pchip, REG_BOOST, 0x38);
++	value = 0x38;  // default
++	if (pdata->boost_use_1mhz)
++		value |= LM3630A_BOOST_USE_1MHZ;
++	if (pdata->boost_shift_freq)
++		value |= LM3630A_BOOST_SHIFT;
++	rval |= lm3630a_write(pchip, REG_BOOST, value);
++
+ 	/* set current A */
+ 	rval |= lm3630a_update(pchip, REG_I_A, 0x1F, 0x1F);
+ 	/* set current B */
+@@ -530,6 +537,11 @@ static int lm3630a_probe(struct i2c_client *client)
+ 		pdata->leda_init_brt = LM3630A_MAX_BRIGHTNESS;
+ 		pdata->ledb_init_brt = LM3630A_MAX_BRIGHTNESS;
+ 
++		pdata->boost_shift_freq = device_property_read_bool(
++			pchip->dev, "boost_frequency_shift");
++		pdata->boost_use_1mhz = device_property_read_bool(
++			pchip->dev, "boost_use_1mhz");
++
+ 		rval = lm3630a_parse_node(pchip, pdata);
+ 		if (rval) {
+ 			dev_err(&client->dev, "fail : parse node\n");
+diff --git a/include/linux/platform_data/lm3630a_bl.h b/include/linux/platform_data/lm3630a_bl.h
+index 530be93..3991896 100644
+--- a/include/linux/platform_data/lm3630a_bl.h
++++ b/include/linux/platform_data/lm3630a_bl.h
+@@ -33,6 +33,8 @@ enum lm3630a_ledb_ctrl {
+ };
+ 
+ #define LM3630A_MAX_BRIGHTNESS 255
++#define LM3630A_BOOST_USE_1MHZ BIT(0)
++#define LM3630A_BOOST_SHIFT BIT(1)
+ /*
+  *@leda_label    : optional led a label.
+  *@leda_init_brt : led a init brightness. 4~255
+@@ -44,6 +46,8 @@ enum lm3630a_ledb_ctrl {
+  *@ledb_ctrl     : led b disable, enable linear, enable exponential
+  *@pwm_period    : pwm period
+  *@pwm_ctrl      : pwm disable, bank a or b, active high or low
++ *@boost_shift_freq : activate the frequency shift of the boost converter
++ *@boost_use_1mhz : switch boost converter frequency from 500kHz to 1MHz
+  */
+ struct lm3630a_platform_data {
+ 
+@@ -60,6 +64,8 @@ struct lm3630a_platform_data {
+ 	/* pwm config. */
+ 	unsigned int pwm_period;
+ 	enum lm3630a_pwm_ctrl pwm_ctrl;
++	bool boost_shift_freq;
++	bool boost_use_1mhz;
+ };
+ 
+ #endif /* __LINUX_LM3630A_H */

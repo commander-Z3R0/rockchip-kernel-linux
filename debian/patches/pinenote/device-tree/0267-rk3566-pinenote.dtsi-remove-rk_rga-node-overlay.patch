@@ -1,0 +1,23 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 5 Jul 2024 19:56:39 +0800
+Subject: rk3566-pinenote.dtsi: remove rk_rga node overlay
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index f04a5ca..2a7b82c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -343,10 +343,6 @@ &gpu {
+ 	status = "okay";
+ };
+ 
+-&rk_rga{
+-       status = "disabled";
+-};
+-
+ &i2c0 {
+ 	status = "okay";
+ 

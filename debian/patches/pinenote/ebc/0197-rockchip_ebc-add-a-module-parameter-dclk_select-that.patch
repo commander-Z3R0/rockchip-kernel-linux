@@ -1,0 +1,59 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 25 Jul 2023 21:37:23 +0200
+Subject: [rockchip_ebc] add a module parameter "dclk_select" that lets you
+ change the panel clock independently from the display mode clock setting.
+
+* -1 reverts back to the old behaviour and selects the dclk clock using
+  the .clock entry from the display mode
+* 1 will set the dclk clock to 200 Mhz (this should always work)
+* 2 will set the dclk clock to 250 Mhz (will only work if the
+  corresponding clock configurations took place, most probably by using
+the rockchip u-boot)
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index ebe7902..11e7f02 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -252,6 +252,10 @@ static bool prepare_prev_before_a2 = false;
+ module_param(prepare_prev_before_a2, bool, 0644);
+ MODULE_PARM_DESC(prepare_prev_before_a2, "Convert prev buffer to bw when switchting to the A2 waveform");
+ 
++static int dclk_select = 0;
++module_param(dclk_select, int, 0644);
++MODULE_PARM_DESC(dclk_select, "-1: use dclk from mode, 0: 200 MHz (default), 1: 250");
++
+ static int temp_override = 0;
+ module_param(temp_override, int, S_IRUGO|S_IWUSR);
+ MODULE_PARM_DESC(temp_override, "Values > 0 override the temperature");
+@@ -1376,7 +1380,12 @@ static void rockchip_ebc_crtc_mode_set_nofb(struct drm_crtc *crtc)
+ 	hsync_width = sdck.hsync_end - sdck.hsync_start;
+ 	vsync_width = mode.vsync_end - mode.vsync_start;
+ 
+-	clk_set_rate(ebc->dclk, mode.clock * 1000);
++	if (dclk_select == -1)
++		clk_set_rate(ebc->dclk, mode.clock * 1000);
++	else if (dclk_select == 0)
++		clk_set_rate(ebc->dclk, 200000000);
++	else if (dclk_select == 1)
++		clk_set_rate(ebc->dclk, 250000000);
+ 
+ 	ebc->dsp_start = EBC_DSP_START_DSP_SDCE_WIDTH(sdck.hdisplay) |
+ 			 EBC_DSP_START_SW_BURST_CTRL;
+@@ -1446,7 +1455,13 @@ static int rockchip_ebc_crtc_atomic_check(struct drm_crtc *crtc,
+ 	if (crtc_state->enable) {
+ 		struct drm_display_mode *mode = &crtc_state->adjusted_mode;
+ 
+-		long rate = mode->clock * 1000;
++		long rate = 200000000;
++		if (dclk_select == -1)
++			rate = mode->clock * 1000;
++		else if (dclk_select == 0)
++			rate = 200000000;
++		else if (dclk_select == 1)
++			rate = 250000000;
+ 
+ 		rate = clk_round_rate(ebc->dclk, rate);
+ 		if (rate < 0)

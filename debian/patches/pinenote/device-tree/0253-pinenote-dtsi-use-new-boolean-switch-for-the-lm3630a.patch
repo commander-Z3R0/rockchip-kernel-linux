@@ -1,0 +1,32 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Wed, 4 Jan 2023 20:23:31 +0100
+Subject: [pinenote dtsi] use new boolean switch for the lm3630a backlight
+ driver to activate the frequency shift for the boost converter switching
+ frequency from 500 kHz to 560 kHz. This reduces observed flickering of the
+ backlight during certain operations (one extreme flickering state was
+ observed for warm backlight brightness 186 and cold backlight brightness
+ 255).
+
+Flickering can be even more reduced by activating the 1 Mhz switching
+frequency (boolean currently commented out). However, activating this
+option is associated with a reduced efficiency of the driver. Also, any
+potential side effects associated with the Pinenote hardware should be
+checked by someone with more in-depth knowledge of the Pinenote
+hardware.
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 2df9dca..5682fa2 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -571,6 +571,8 @@ led-controller@36 {
+ 		pinctrl-names = "default";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
++		boost_frequency_shift;
++		/* boost_use_1mhz; */
+ 
+ 		led@0 {
+ 			reg = <0>;

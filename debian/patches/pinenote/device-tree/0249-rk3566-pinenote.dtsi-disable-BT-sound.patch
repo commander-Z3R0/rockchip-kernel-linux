@@ -1,0 +1,59 @@
+From: Maximilian Weigand <mweigand@geo.uni-bonn.de>
+Date: Mon, 22 Aug 2022 13:21:42 +0200
+Subject: rk3566-pinenote.dtsi: disable BT sound
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 40 +++++++++++------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 1b937be..0f58fee 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -63,26 +63,26 @@ bt_sco_codec: bt-sco-codec {
+ 		#sound-dai-cells = <1>;
+ 	};
+ 
+-	bt-sound {
+-		compatible = "simple-audio-card";
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-		simple-audio-card,name = "PineNote Bluetooth";
+-
+-		simple-audio-card,dai-link@0 {
+-			format = "i2s";
+-			frame-master = <&bt_link0_cpu>;
+-			bitclock-master = <&bt_link0_cpu>;
+-
+-			bt_link0_cpu: cpu {
+-				sound-dai = <&i2s2_2ch>;
+-			};
+-
+-			bt_link0_codec: codec {
+-				sound-dai = <&bt_sco_codec 0>;
+-			};
+-		};
+-	};
++//	bt-sound {
++//		compatible = "simple-audio-card";
++//		#address-cells = <1>;
++//		#size-cells = <0>;
++//		simple-audio-card,name = "PineNote Bluetooth";
++//
++//		simple-audio-card,dai-link@0 {
++//			format = "i2s";
++//			frame-master = <&bt_link0_cpu>;
++//			bitclock-master = <&bt_link0_cpu>;
++//
++//			bt_link0_cpu: cpu {
++//				sound-dai = <&i2s2_2ch>;
++//			};
++//
++//			bt_link0_codec: codec {
++//				sound-dai = <&bt_sco_codec 0>;
++//			};
++//		};
++//	};
+ 
+ 	dmic_codec: dmic-codec {
+ 		compatible = "dmic-codec";

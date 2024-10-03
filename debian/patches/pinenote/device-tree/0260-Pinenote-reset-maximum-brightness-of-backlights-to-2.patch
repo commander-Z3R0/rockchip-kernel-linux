@@ -1,0 +1,32 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Fri, 8 Dec 2023 21:39:57 +0100
+Subject: Pinenote: reset maximum brightness of backlights to 255 - we assume
+ that fixing the overvoltage settings also fixed the problems with the
+ backlight
+
+---
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index bbd68f46..caa5bd3 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -599,7 +599,7 @@ led@0 {
+ 			reg = <0>;
+ 			label = "backlight_cool";
+ 			default-brightness = <0>;
+-			max-brightness = <125>;
++			max-brightness = <255>;
+ 			// anything between 5000 (5 mA) and 28250 in 750 muA steps
+ 			/* ti,current-microamp = <5750>; */
+ 			ti,current-microamp = <12500>;
+@@ -611,7 +611,7 @@ led@1 {
+ 			reg = <1>;
+ 			label = "backlight_warm";
+ 			default-brightness = <0>;
+-			max-brightness = <125>;
++			max-brightness = <255>;
+ 			// anything between 5000 (5 mA) and 28250 in 750 muA steps
+ 			/* ti,current-microamp = <5750>; */
+ 			ti,current-microamp = <12500>;

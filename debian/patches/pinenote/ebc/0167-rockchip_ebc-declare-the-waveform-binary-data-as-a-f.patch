@@ -1,0 +1,23 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Sat, 30 Jul 2022 21:47:33 +0200
+Subject: [rockchip_ebc] declare the waveform binary data as a firmware file
+ so it will be included automatically into the initrd images
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index db08d12..990b53e 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -140,6 +140,9 @@
+ #define EBC_REFRESH_TIMEOUT		msecs_to_jiffies(3000)
+ #define EBC_SUSPEND_DELAY_MS		2000
+ 
++#define EBC_FIRMWARE		"rockchip/ebc.wbf"
++MODULE_FIRMWARE(EBC_FIRMWARE);
++
+ struct rockchip_ebc {
+ 	struct clk			*dclk;
+ 	struct clk			*hclk;

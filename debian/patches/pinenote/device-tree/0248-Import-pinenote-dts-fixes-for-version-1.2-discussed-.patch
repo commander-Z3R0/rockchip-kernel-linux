@@ -1,0 +1,76 @@
+From: Maximilian Weigand <mweigand@geo.uni-bonn.de>
+Date: Mon, 22 Aug 2022 12:26:46 +0200
+Subject: Import pinenote dts fixes for version 1.2,
+ discussed in the pinenote chat and based on merge request by samsaptidev
+ (https://github.com/samsaptidev)
+
+https://github.com/m-weigand/mw_pinenote_misc/pull/1
+---
+ .../boot/dts/rockchip/rk3566-pinenote-v1.2.dts     | 36 ++++++++++++++++++++++
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi  |  2 ++
+ 2 files changed, 38 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote-v1.2.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinenote-v1.2.dts
+index 6bbc4c6..92ef196 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote-v1.2.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote-v1.2.dts
+@@ -16,3 +16,39 @@ &pmu_io_domains {
+ &spk_amp {
+ 	VCC-supply = <&vcc_bat>;
+ };
++
++&usb2phy0_otg {
++	port {
++		usb2phy0_typec_hs: endpoint {
++			remote-endpoint = <&usbc_hs>;
++		};
++	};
++};
++
++&wusb3801 {
++	status = "okay";
++
++	connector {
++		compatible = "usb-c-connector";
++		label = "USB-C";
++		vbus-supply = <&otg_switch>;
++		power-role = "dual";
++		try-power-role = "sink";
++		data-role = "dual";
++		typec-power-opmode = "default";
++		pd-disable;
++
++		ports {
++			#address-cells = <0x01>;
++			#size-cells = <0x00>;
++
++			port@0 {
++				reg = <0x00>;
++
++				usbc_hs: endpoint {
++					remote-endpoint = <&usb2phy0_typec_hs>;
++				};
++			};
++		};
++	};
++};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index 967306e..1b937be 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -5,6 +5,7 @@
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/leds/common.h>
+ #include <dt-bindings/pinctrl/rockchip.h>
++#include <dt-bindings/usb/pd.h>
+ 
+ #include "rk3566.dtsi"
+ 
+@@ -611,6 +612,7 @@ typec_hs_usb2phy0: endpoint {
+ 				};
+ 			};
+ 		};
++		status = "okay";
+ 	};
+ 
+ 	/* TODO: write binding */

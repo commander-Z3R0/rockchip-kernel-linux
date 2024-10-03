@@ -1,0 +1,21 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 1 Aug 2023 21:38:50 +0200
+Subject: [tps65185] fix typo
+
+---
+ drivers/regulator/tps65185-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index 3d8b2f2..17d1936 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -746,7 +746,7 @@ static int __maybe_unused tps65185_resume(struct device *dev)
+ 
+ 	// If I understand correctly regulator TPS65185_REGULATOR_VDRIVE is tied to
+ 	// the powerup pin - therefore when the ebc resumes the tps65185 is
+-	// directly activated. I think its correct to do nothing here any wait.
++	// directly activated. I think its correct to do nothing here and wait.
+ 	// Similar to the probe function which also puts the pmic into standby
+ 	/* Power down all rails, but enable control by the powerup GPIO. */
+ 	ret = regmap_write(tps->regmap, TPS65185_REG_ENABLE,

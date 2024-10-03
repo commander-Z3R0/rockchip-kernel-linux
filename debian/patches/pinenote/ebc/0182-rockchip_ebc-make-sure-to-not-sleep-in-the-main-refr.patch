@@ -1,0 +1,23 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Thu, 24 Nov 2022 20:17:58 +0100
+Subject: [rockchip_ebc] make sure to not sleep in the main refresh loop when
+ a global refresh is triggered
+
+---
+ drivers/gpu/drm/rockchip/rockchip_ebc.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/rockchip/rockchip_ebc.c b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+index 40d4268..7659e08 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_ebc.c
++++ b/drivers/gpu/drm/rockchip/rockchip_ebc.c
+@@ -1230,6 +1230,9 @@ static int rockchip_ebc_refresh_thread(void *data)
+ 				rockchip_ebc_refresh(ebc, ctx, false, default_waveform);
+ 			}
+ 
++			if (ebc->do_one_full_refresh)
++				continue;
++
+ 			set_current_state(TASK_IDLE);
+ 			if (list_empty(&ctx->queue) && (!kthread_should_stop()) && (!kthread_should_park())){
+ 				schedule();

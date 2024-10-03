@@ -1,0 +1,33 @@
+From: Maximilian Weigand <mweigand@mweigand.net>
+Date: Tue, 21 Feb 2023 16:09:41 +0100
+Subject: [tps65185] add a few printk(KERN_WARN statements for thermal
+ interrupts and VIN under voltage
+
+---
+ drivers/regulator/tps65185-regulator.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/drivers/regulator/tps65185-regulator.c b/drivers/regulator/tps65185-regulator.c
+index 774e590..9f92361 100644
+--- a/drivers/regulator/tps65185-regulator.c
++++ b/drivers/regulator/tps65185-regulator.c
+@@ -421,6 +421,19 @@ static irqreturn_t tps65185_irq_handler(int irq, void *p)
+ 						    IIO_EV_DIR_EITHER),
+ 			       iio_get_time_ns(indio_dev));
+ 
++	if (!ret && (status1 & TPS65185_INT1_TSD))
++		printk(KERN_ERR "tps65185 TSD Thermal shutdown interrupt detected");
++	if (!ret && (status1 & TPS65185_INT1_HOT))
++		printk(KERN_ERR "tps65185 HOT Thermal shutdown early warning interrupt detected");
++	if (!ret && (status1 & TPS65185_INT1_TMST_HOT))
++		printk(KERN_ERR "tps65185 TMST HOT Thermistor hot interrupt detected");
++	if (!ret && (status1 & TPS65185_INT1_TMST_COLD))
++		printk(KERN_ERR "tps65185 TMST COLD Thermistor hot interrupt detected");
++	if (!ret && (status1 & TPS65185_INT1_UVLO))
++		printk(KERN_ERR "tps65185 UVLO VIN under voltage detect interrupt detected");
++	// ACQC INT
++	// PRGC Int
++
+ 	ret = regmap_read(tps->regmap, TPS65185_REG_INT2, &status2);
+ 
+ 	if (!ret && (status2 & TPS65185_INT2_VB_UV))
