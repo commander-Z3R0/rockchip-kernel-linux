@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 4 insertions(+)
 
 diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/supply/power_supply_sysfs.c
-index 3e63d165..2e70897 100644
+index 3e63d16..2e70897 100644
 --- a/drivers/power/supply/power_supply_sysfs.c
 +++ b/drivers/power/supply/power_supply_sysfs.c
 @@ -209,6 +209,8 @@ static struct power_supply_attr power_supply_attrs[] = {
