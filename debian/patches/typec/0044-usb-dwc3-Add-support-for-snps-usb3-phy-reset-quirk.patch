@@ -132,7 +132,7 @@ index 6ecac5f..c493519 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 02d986e3..efc1ea4 100644
+index 02d986e..efc1ea4 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -264,6 +264,12 @@
