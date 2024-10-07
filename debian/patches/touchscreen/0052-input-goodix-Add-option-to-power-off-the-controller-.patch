@@ -15,7 +15,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  2 files changed, 38 insertions(+)
 
 diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index 435714f..104f0f9 100644
+index a3e8a51..3a090e5 100644
 --- a/drivers/input/touchscreen/goodix.c
 +++ b/drivers/input/touchscreen/goodix.c
 @@ -1294,6 +1294,7 @@ static void goodix_disable_regulators(void *arg)
