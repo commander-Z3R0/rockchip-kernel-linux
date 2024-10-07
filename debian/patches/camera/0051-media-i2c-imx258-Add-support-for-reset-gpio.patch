@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/i2c/imx258.c b/drivers/media/i2c/imx258.c
-index c07b676..0a4c6ae 100644
+index c2a6c75..110d463 100644
 --- a/drivers/media/i2c/imx258.c
 +++ b/drivers/media/i2c/imx258.c
 @@ -662,6 +662,7 @@ struct imx258 {
