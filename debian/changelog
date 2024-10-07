@@ -1,3 +1,9 @@
+linux-6.12-rockchip (6.12~rc2+rockchip-1) unstable; urgency=medium
+
+  * d/patches: rebase on 6.12-rc2
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 07 Oct 2024 14:52:30 +0200
+
 linux-6.12-rockchip (6.12~rc1+rockchip-1) unstable; urgency=medium
 
   * Initial 6.12 release
