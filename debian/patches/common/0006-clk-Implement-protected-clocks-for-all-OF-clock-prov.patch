@@ -67,7 +67,7 @@ Signed-off-by: Samuel Holland <samuel@sholland.org>
  3 files changed, 91 insertions(+)
 
 diff --git a/drivers/clk/clk-conf.c b/drivers/clk/clk-conf.c
-index 0584205..56fb062 100644
+index 0584205..56fb0623 100644
 --- a/drivers/clk/clk-conf.c
 +++ b/drivers/clk/clk-conf.c
 @@ -11,6 +11,58 @@
