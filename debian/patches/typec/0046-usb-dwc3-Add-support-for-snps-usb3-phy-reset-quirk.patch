@@ -39,7 +39,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  3 files changed, 73 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 065c3c5..f166ccd 100644
+index 4b867df..46ec01c 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -131,7 +131,7 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode)
@@ -117,7 +117,7 @@ index 065c3c5..f166ccd 100644
  
  	dwc->lpm_nyet_threshold = lpm_nyet_threshold;
  	dwc->tx_de_emphasis = tx_de_emphasis;
-@@ -2112,6 +2143,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+@@ -2117,6 +2148,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -125,7 +125,7 @@ index 065c3c5..f166ccd 100644
  		if (pm_runtime_suspended(dwc->dev))
  			break;
  		dwc3_gadget_suspend(dwc);
-@@ -2167,11 +2199,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+@@ -2181,11 +2213,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -139,7 +139,7 @@ index 065c3c5..f166ccd 100644
  		dwc3_gadget_resume(dwc);
  		break;
  	case DWC3_GCTL_PRTCAP_HOST:
-@@ -2226,6 +2259,7 @@ static int dwc3_runtime_checks(struct dwc3 *dwc)
+@@ -2245,6 +2278,7 @@ static int dwc3_runtime_checks(struct dwc3 *dwc)
  {
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -147,7 +147,7 @@ index 065c3c5..f166ccd 100644
  		if (dwc->connected)
  			return -EBUSY;
  		break;
-@@ -2264,6 +2298,7 @@ static int dwc3_runtime_resume(struct device *dev)
+@@ -2283,6 +2317,7 @@ static int dwc3_runtime_resume(struct device *dev)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -155,7 +155,7 @@ index 065c3c5..f166ccd 100644
  		if (dwc->pending_events) {
  			pm_runtime_put(dwc->dev);
  			dwc->pending_events = false;
-@@ -2287,6 +2322,7 @@ static int dwc3_runtime_idle(struct device *dev)
+@@ -2306,6 +2341,7 @@ static int dwc3_runtime_idle(struct device *dev)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -164,7 +164,7 @@ index 065c3c5..f166ccd 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 9ca9f8de..77ecbc9 100644
+index 746750d..017943e 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -251,6 +251,12 @@
@@ -180,10 +180,10 @@ index 9ca9f8de..77ecbc9 100644
  
  #define DWC3_GCTL_CORESOFTRESET		BIT(11)
  #define DWC3_GCTL_SOFITPSYNC		BIT(10)
-@@ -1127,6 +1133,10 @@ struct dwc3_scratchpad_array {
-  * @sys_wakeup: set if the device may do system wakeup.
-  * @wakeup_configured: set if the device is configured for remote wakeup.
+@@ -1129,6 +1135,10 @@ struct dwc3_scratchpad_array {
   * @suspended: set to track suspend event due to U3/L2.
+  * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
+  *		  before PM suspend.
 + * @usb3_phy_reset_quirk: set to power cycle the USB3 PHY during mode
 + *                        changes. Useful on RK3399 that needs this
 + *                        to apply Type-C orientation changes in
@@ -191,9 +191,9 @@ index 9ca9f8de..77ecbc9 100644
   * @imod_interval: set the interrupt moderation interval in 250ns
   *			increments or 0 to disable.
   * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1353,6 +1363,8 @@ struct dwc3 {
- 	unsigned		wakeup_configured:1;
+@@ -1356,6 +1366,8 @@ struct dwc3 {
  	unsigned		suspended:1;
+ 	unsigned		susphy_state:1;
  
 +	unsigned		usb3_phy_reset_quirk:1;
 +
