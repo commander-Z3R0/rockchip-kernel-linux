@@ -1,3 +1,9 @@
+linux-6.1-rockchip (6.1.115+rockchip-1) bookworm; urgency=medium
+
+  * Rebase on 6.1.115
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Sun, 03 Nov 2024 11:29:31 +0100
+
 linux-6.1-rockchip (6.1.114+rockchip-1) bookworm; urgency=medium
 
   * Rebase on 6.1.114
