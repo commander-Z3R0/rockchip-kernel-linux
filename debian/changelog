@@ -1,3 +1,9 @@
+linux-6.12-rockchip (6.12~rc7+rockchip-1) unstable; urgency=medium
+
+  * Rebase on 6.12-rc7
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 11 Nov 2024 18:49:51 +0100
+
 linux-6.12-rockchip (6.12~rc6+rockchip-1) unstable; urgency=medium
 
   * Rebase on 6.12-rc6
