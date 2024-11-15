@@ -12,11 +12,11 @@ Signed-of-by: Kamil Trzciński <ayufan@ayufan.eu>
 
 SQUASH: fixup DTS
 ---
- .../boot/dts/rockchip/rk3399-pinephone-pro.dts     | 409 +++++++++++++++++++++
- 1 file changed, 409 insertions(+)
+ .../boot/dts/rockchip/rk3399-pinephone-pro.dts     | 411 +++++++++++++++++++++
+ 1 file changed, 411 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 61f3fec..f8b385c 100644
+index f4829b2..f8b385c 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -12,6 +12,8 @@
@@ -157,23 +157,25 @@ index 61f3fec..f8b385c 100644
  	/* MIPI DSI panel 1.8v supply */
  	vcc1v8_lcd: vcc1v8-lcd {
  		compatible = "regulator-fixed";
-@@ -139,6 +242,7 @@ vcc1v8_lcd: vcc1v8-lcd {
+@@ -138,6 +241,8 @@ vcc1v8_lcd: vcc1v8-lcd {
+ 		regulator-max-microvolt = <1800000>;
  		vin-supply = <&vcc3v3_sys>;
  		gpio = <&gpio3 RK_PA5 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
++		pinctrl-names = "default";
 +		pinctrl-0 = <&display_pwren1>;
  	};
  
  	/* MIPI DSI panel 2.8v supply */
-@@ -151,6 +255,7 @@ vcc2v8_lcd: vcc2v8-lcd {
+@@ -149,6 +254,8 @@ vcc2v8_lcd: vcc2v8-lcd {
+ 		regulator-max-microvolt = <2800000>;
  		vin-supply = <&vcc3v3_sys>;
  		gpio = <&gpio3 RK_PA1 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
++		pinctrl-names = "default";
 +		pinctrl-0 = <&display_pwren>;
  	};
  };
  
-@@ -185,6 +290,11 @@ &cpu_b1 {
+@@ -183,6 +290,11 @@ &cpu_b1 {
  	cpu-supply = <&vdd_cpu_b>;
  };
  
@@ -185,7 +187,7 @@ index 61f3fec..f8b385c 100644
  &emmc_phy {
  	status = "okay";
  };
-@@ -212,6 +322,8 @@ rk818: pmic@1c {
+@@ -210,6 +322,8 @@ rk818: pmic@1c {
  		rockchip,system-power-controller;
  		wakeup-source;
  
@@ -194,7 +196,7 @@ index 61f3fec..f8b385c 100644
  		vcc1-supply = <&vcc_sys>;
  		vcc2-supply = <&vcc_sys>;
  		vcc3-supply = <&vcc_sys>;
-@@ -348,6 +460,51 @@ regulator-state-mem {
+@@ -346,6 +460,51 @@ regulator-state-mem {
  					regulator-on-in-suspend;
  				};
  			};
@@ -246,7 +248,7 @@ index 61f3fec..f8b385c 100644
  		};
  	};
  
-@@ -388,6 +545,12 @@ regulator-state-mem {
+@@ -386,6 +545,12 @@ regulator-state-mem {
  	};
  };
  
@@ -259,7 +261,7 @@ index 61f3fec..f8b385c 100644
  &i2c3 {
  	i2c-scl-rising-time-ns = <450>;
  	i2c-scl-falling-time-ns = <15>;
-@@ -405,6 +568,113 @@ touchscreen@14 {
+@@ -403,6 +568,113 @@ touchscreen@14 {
  		touchscreen-size-x = <720>;
  		touchscreen-size-y = <1440>;
  	};
@@ -373,7 +375,7 @@ index 61f3fec..f8b385c 100644
  };
  
  &cluster0_opp {
-@@ -460,6 +730,7 @@ panel@0 {
+@@ -458,6 +730,7 @@ panel@0 {
  		vcc-supply = <&vcc2v8_lcd>;
  		iovcc-supply = <&vcc1v8_lcd>;
  		pinctrl-names = "default";
@@ -381,7 +383,7 @@ index 61f3fec..f8b385c 100644
  
  		port {
  			mipi_in_panel: endpoint {
-@@ -481,6 +752,26 @@ pwrbtn_pin: pwrbtn-pin {
+@@ -479,6 +752,26 @@ pwrbtn_pin: pwrbtn-pin {
  		};
  	};
  
@@ -408,7 +410,7 @@ index 61f3fec..f8b385c 100644
  	pmic {
  		pmic_int_l: pmic-int-l {
  			rockchip,pins = <1 RK_PC5 RK_FUNC_GPIO &pcfg_pull_up>;
-@@ -495,12 +786,44 @@ vsel2_pin: vsel2-pin {
+@@ -493,12 +786,44 @@ vsel2_pin: vsel2-pin {
  		};
  	};
  
@@ -453,7 +455,7 @@ index 61f3fec..f8b385c 100644
  	sound {
  		vcc1v8_codec_en: vcc1v8-codec-en {
  			rockchip,pins = <3 RK_PA4 RK_FUNC_GPIO &pcfg_pull_down>;
-@@ -540,6 +863,14 @@ &pwm0 {
+@@ -538,6 +863,14 @@ &pwm0 {
  	status = "okay";
  };
  
@@ -468,7 +470,7 @@ index 61f3fec..f8b385c 100644
  &saradc {
  	vref-supply = <&vcca1v8_s3>;
  	status = "okay";
-@@ -565,12 +896,65 @@ &sdhci {
+@@ -563,12 +896,65 @@ &sdhci {
  	status = "okay";
  };
  
@@ -534,7 +536,7 @@ index 61f3fec..f8b385c 100644
  &uart0 {
  	pinctrl-names = "default";
  	pinctrl-0 = <&uart0_xfer &uart0_cts &uart0_rts>;
-@@ -596,6 +980,31 @@ &uart2 {
+@@ -594,6 +980,31 @@ &uart2 {
  	status = "okay";
  };
  
