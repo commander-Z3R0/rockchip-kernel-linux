@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index fcb509059..104e7ca 100644
+index fcb5090..104e7ca 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -809,6 +809,7 @@ static int dwc3_phy_power_on(struct dwc3 *dwc)
