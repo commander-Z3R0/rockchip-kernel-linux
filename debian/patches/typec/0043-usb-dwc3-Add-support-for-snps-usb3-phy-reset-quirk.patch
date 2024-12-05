@@ -132,7 +132,7 @@ index 7af1e223..fded763 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 4ae3414..2deddf1 100644
+index af7bbac..7143542 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -264,6 +264,12 @@
@@ -148,7 +148,7 @@ index 4ae3414..2deddf1 100644
  
  #define DWC3_GCTL_CORESOFTRESET		BIT(11)
  #define DWC3_GCTL_SOFITPSYNC		BIT(10)
-@@ -1152,6 +1158,10 @@ struct dwc3_scratchpad_array {
+@@ -1156,6 +1162,10 @@ struct dwc3_scratchpad_array {
   * @suspended: set to track suspend event due to U3/L2.
   * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
   *		  before PM suspend.
@@ -159,7 +159,7 @@ index 4ae3414..2deddf1 100644
   * @imod_interval: set the interrupt moderation interval in 250ns
   *			increments or 0 to disable.
   * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1388,6 +1398,8 @@ struct dwc3 {
+@@ -1392,6 +1402,8 @@ struct dwc3 {
  	unsigned		suspended:1;
  	unsigned		susphy_state:1;
  
