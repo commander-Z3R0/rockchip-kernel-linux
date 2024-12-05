@@ -1,3 +1,17 @@
+linux-6.12-rockchip (6.12.2-1) unstable; urgency=medium
+
+  * debian: switch to fragment-based kconfig.
+    In order to reduce maintenance effort and ensure most config options are
+    kept in sync across our various kernel packages, using fragment-based
+    configuration allows using a single, very small device-specific fragment
+    along with shared generic configuration.
+    This doesn't produce an identical defconfig, although the changes
+    shouldn't affect device support (although they would likely increase
+    build duration).
+  * Rebase on 6.12.2
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Thu, 05 Dec 2024 16:05:16 +0100
+
 linux-6.12-rockchip (6.12-1) unstable; urgency=medium
 
   * Rebase on 6.12
