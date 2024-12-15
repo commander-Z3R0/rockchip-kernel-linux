@@ -38,10 +38,10 @@ index fcb5090..104e7ca 100644
  
  	usb_phy_set_suspend(dwc->usb3_phy, 1);
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 3325796..746750d 100644
+index b118f4a..684a929 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
-@@ -1177,6 +1177,7 @@ struct dwc3 {
+@@ -1178,6 +1178,7 @@ struct dwc3 {
  
  	struct phy		*usb2_generic_phy;
  	struct phy		*usb3_generic_phy;
