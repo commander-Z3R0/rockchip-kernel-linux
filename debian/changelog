@@ -1,3 +1,13 @@
+linux-6.1-rockchip (6.1.120-1) bookworm; urgency=medium
+
+  [ Arnaud Ferraris ]
+  * d/rules: add package version in uname output
+
+  [ Mobot ]
+  * Rebase on 6.1.120
+
+ -- Mobot <group_9279_bot_322d6e899378048e14b6d1f9dce111eb@noreply.salsa.debian.org>  Sun, 15 Dec 2024 03:33:34 +0000
+
 linux-6.1-rockchip (6.1.119-1) bookworm; urgency=medium
 
   * Rebase on 6.1.119
