@@ -12,7 +12,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 45 insertions(+)
 
 diff --git a/drivers/usb/typec/tcpm/tcpci.c b/drivers/usb/typec/tcpm/tcpci.c
-index 24a6a43..0471761 100644
+index b2c83f5..7160423 100644
 --- a/drivers/usb/typec/tcpm/tcpci.c
 +++ b/drivers/usb/typec/tcpm/tcpci.c
 @@ -7,6 +7,7 @@
@@ -23,7 +23,7 @@ index 24a6a43..0471761 100644
  #include <linux/kernel.h>
  #include <linux/module.h>
  #include <linux/i2c.h>
-@@ -40,6 +41,8 @@ struct tcpci {
+@@ -41,6 +42,8 @@ struct tcpci {
  
  	struct tcpc_dev tcpc;
  	struct tcpci_data *data;
@@ -32,7 +32,7 @@ index 24a6a43..0471761 100644
  };
  
  struct tcpci_chip {
-@@ -823,6 +826,47 @@ static int tcpci_parse_config(struct tcpci *tcpci)
+@@ -828,6 +831,47 @@ static int tcpci_parse_config(struct tcpci *tcpci)
  	return 0;
  }
  
@@ -80,7 +80,7 @@ index 24a6a43..0471761 100644
  struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data)
  {
  	struct tcpci *tcpci;
-@@ -855,6 +899,7 @@ struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data)
+@@ -860,6 +904,7 @@ struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data)
  	tcpci->tcpc.set_partner_usb_comm_capable = tcpci_set_partner_usb_comm_capable;
  	tcpci->tcpc.cable_comm_capable = tcpci_cable_comm_capable;
  	tcpci->tcpc.attempt_vconn_swap_discovery = tcpci_attempt_vconn_swap_discovery;
