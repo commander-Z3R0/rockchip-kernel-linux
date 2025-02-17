@@ -10,10 +10,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-index b045389..903d37a 100644
+index f576b1a..65e7fa5 100644
 --- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
 +++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
-@@ -968,6 +968,7 @@ static void cdn_dp_pd_event_work(struct work_struct *work)
+@@ -965,6 +965,7 @@ static void cdn_dp_pd_event_work(struct work_struct *work)
  		DRM_DEV_INFO(dp->dev, "Not connected; disabling cdn\n");
  		dp->connected = false;
  
