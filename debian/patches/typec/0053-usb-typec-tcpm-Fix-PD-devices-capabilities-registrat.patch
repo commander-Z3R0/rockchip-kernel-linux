@@ -14,10 +14,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 29 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index f6aecd8..596b72b 100644
+index a7279d1..b98064e 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2402,20 +2402,22 @@ static int tcpm_register_source_caps(struct tcpm_port *port)
+@@ -2404,20 +2404,22 @@ static int tcpm_register_source_caps(struct tcpm_port *port)
  {
  	struct usb_power_delivery_desc desc = { port->negotiated_rev };
  	struct usb_power_delivery_capabilities_desc caps = { };
@@ -49,7 +49,7 @@ index f6aecd8..596b72b 100644
  
  	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
  	if (IS_ERR(cap))
-@@ -2431,15 +2433,22 @@ static int tcpm_register_sink_caps(struct tcpm_port *port)
+@@ -2433,15 +2435,22 @@ static int tcpm_register_sink_caps(struct tcpm_port *port)
  	struct usb_power_delivery_desc desc = { port->negotiated_rev };
  	struct usb_power_delivery_capabilities_desc caps = { };
  	struct usb_power_delivery_capabilities *cap;
@@ -76,7 +76,7 @@ index f6aecd8..596b72b 100644
  	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
  	if (IS_ERR(cap))
  		return PTR_ERR(cap);
-@@ -6128,9 +6137,16 @@ static int tcpm_port_register_pd(struct tcpm_port *port)
+@@ -6130,9 +6139,16 @@ static int tcpm_port_register_pd(struct tcpm_port *port)
  	port->pd = usb_power_delivery_register(port->dev, &desc);
  	if (IS_ERR(port->pd)) {
  		ret = PTR_ERR(port->pd);
