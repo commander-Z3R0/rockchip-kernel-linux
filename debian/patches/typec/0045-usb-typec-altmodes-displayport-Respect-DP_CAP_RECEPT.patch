@@ -13,8 +13,8 @@ wrong VDO.
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
- drivers/usb/typec/altmodes/displayport.c | 33 ++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c | 35 +++++++++++++++++++++++++++-----
+ 1 file changed, 30 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
 index 92cc1b1..be6e074 100644
@@ -38,6 +38,11 @@ index 92cc1b1..be6e074 100644
  
  	/* FIXME: Port can only be DFP_U. */
  
+-	/* Make sure we have compatiple pin configurations */
+-	if (!(DP_CAP_PIN_ASSIGN_DFP_D(port->vdo) &
+-	      DP_CAP_PIN_ASSIGN_UFP_D(alt->vdo)) &&
+-	    !(DP_CAP_PIN_ASSIGN_UFP_D(port->vdo) &
+-	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
 +	/*
 +	 * When port is a receptacle DP_CAP_xFP_D_PIN_ASSIGN macros have the
 +	 * regular meaning. When the port is a plug, the meaning is swapped.
@@ -56,18 +61,14 @@ index 92cc1b1..be6e074 100644
 +	if (!(port->vdo & DP_CAP_RECEPTACLE) && !(alt->vdo & DP_CAP_RECEPTACLE)) {
 +		dev_warn(&alt->dev, "Our Alt-DP VDO 0x%06x and peer port VDO 0x%06x are not compatible (both are reported as plugs!)\n",
 +			 port->vdo, alt->vdo);
-+		return -ENODEV;
+ 		return -ENODEV;
 +	}
 +
- 	/* Make sure we have compatiple pin configurations */
--	if (!(DP_CAP_PIN_ASSIGN_DFP_D(port->vdo) &
--	      DP_CAP_PIN_ASSIGN_UFP_D(alt->vdo)) &&
--	    !(DP_CAP_PIN_ASSIGN_UFP_D(port->vdo) &
--	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
++	/* Make sure we have compatiple pin configurations */
 +	if (!(port_pins & alt_pins)) {
 +		dev_warn(&alt->dev, "Our Alt-DP VDO 0x%06x and peer port VDO 0x%06x are not compatible (no shared pinconf %04x<->%04x (UUDD))\n",
 +			 port->vdo, alt->vdo, port_pins, alt_pins);
- 		return -ENODEV;
++		return -ENODEV;
 +	}
  
  	dp = devm_kzalloc(&alt->dev, sizeof(*dp), GFP_KERNEL);
