@@ -1,3 +1,9 @@
+linux-6.1-rockchip (6.1.133-1) bookworm; urgency=medium
+
+  * Rebase on 6.1.133
+
+ -- Mobot <group_9279_bot_322d6e899378048e14b6d1f9dce111eb@noreply.salsa.debian.org>  Tue, 08 Apr 2025 03:38:07 +0000
+
 linux-6.1-rockchip (6.1.132-1) bookworm; urgency=medium
 
   * Rebase on 6.1.132
