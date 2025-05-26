@@ -1,3 +1,9 @@
+linux-6.1-rockchip (6.1.140-1) bookworm; urgency=medium
+
+  * d/patches: rebase on 6.1.140
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 26 May 2025 08:56:05 +0200
+
 linux-6.1-rockchip (6.1.139-1) bookworm; urgency=medium
 
   * Rebase on 6.1.139
