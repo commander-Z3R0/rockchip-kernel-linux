@@ -17,7 +17,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 44 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index f801241..fbd4326 100644
+index 26e0e72..ef56e2c 100644
 --- a/drivers/usb/typec/altmodes/displayport.c
 +++ b/drivers/usb/typec/altmodes/displayport.c
 @@ -102,11 +102,29 @@ static int dp_altmode_configure(struct dp_altmode *dp, u8 con)
@@ -50,7 +50,7 @@ index f801241..fbd4326 100644
  	/* Determining the initial pin assignment. */
  	if (!DP_CONF_GET_PIN_ASSIGN(dp->data.conf)) {
  		/* Is USB together with DP preferred */
-@@ -564,15 +582,37 @@ int dp_altmode_probe(struct typec_altmode *alt)
+@@ -568,15 +586,37 @@ int dp_altmode_probe(struct typec_altmode *alt)
  	const struct typec_altmode *port = typec_altmode_get_partner(alt);
  	struct fwnode_handle *fwnode;
  	struct dp_altmode *dp;
