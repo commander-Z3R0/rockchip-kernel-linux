@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 7820d68..c9cbf1e 100644
+index f420972..b41b5c4 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -210,10 +210,41 @@ static void __dwc3_set_mode(struct work_struct *work)
