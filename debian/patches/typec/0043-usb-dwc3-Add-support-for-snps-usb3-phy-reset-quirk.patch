@@ -39,7 +39,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  3 files changed, 54 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index c9cbf1e..5a8a4eb 100644
+index b41b5c4..04bdb80 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -150,7 +150,7 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode, bool ignore_susphy)
@@ -85,15 +85,15 @@ index c9cbf1e..5a8a4eb 100644
  
  	dwc->lpm_nyet_threshold = lpm_nyet_threshold;
  	dwc->tx_de_emphasis = tx_de_emphasis;
-@@ -2414,6 +2418,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+@@ -2415,6 +2419,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
 +	case DWC3_GCTL_PRTCAP_DEVICE_DISCONNECTED:
  		if (pm_runtime_suspended(dwc->dev))
  			break;
- 		dwc3_gadget_suspend(dwc);
-@@ -2474,11 +2479,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+ 		ret = dwc3_gadget_suspend(dwc);
+@@ -2479,11 +2484,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -107,7 +107,7 @@ index c9cbf1e..5a8a4eb 100644
  		dwc3_gadget_resume(dwc);
  		break;
  	case DWC3_GCTL_PRTCAP_HOST:
-@@ -2542,6 +2548,7 @@ static int dwc3_runtime_checks(struct dwc3 *dwc)
+@@ -2547,6 +2553,7 @@ static int dwc3_runtime_checks(struct dwc3 *dwc)
  {
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -115,7 +115,7 @@ index c9cbf1e..5a8a4eb 100644
  		if (dwc->connected)
  			return -EBUSY;
  		break;
-@@ -2580,6 +2587,7 @@ static int dwc3_runtime_resume(struct device *dev)
+@@ -2585,6 +2592,7 @@ static int dwc3_runtime_resume(struct device *dev)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -123,7 +123,7 @@ index c9cbf1e..5a8a4eb 100644
  		if (dwc->pending_events) {
  			pm_runtime_put(dwc->dev);
  			dwc->pending_events = false;
-@@ -2603,6 +2611,7 @@ static int dwc3_runtime_idle(struct device *dev)
+@@ -2608,6 +2616,7 @@ static int dwc3_runtime_idle(struct device *dev)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
