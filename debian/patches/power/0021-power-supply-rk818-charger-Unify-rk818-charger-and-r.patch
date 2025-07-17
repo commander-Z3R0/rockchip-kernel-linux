@@ -15,10 +15,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  4 files changed, 94 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index 7b2a8ed..d8dd59e 100644
+index f9b95a5..9e875b3 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
-@@ -1028,14 +1028,6 @@ config FUEL_GAUGE_MM8013
+@@ -1037,14 +1037,6 @@ config FUEL_GAUGE_MM8013
  	  the state of charge, temperature, cycle count, actual and design
  	  capacity, etc.
  
@@ -34,10 +34,10 @@ index 7b2a8ed..d8dd59e 100644
  	bool "RK818 Charger driver"
  	depends on MFD_RK8XX
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
-index f574488..bf0af77 100644
+index 153a635..5effc7a 100644
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
-@@ -118,5 +118,4 @@ obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
+@@ -119,5 +119,4 @@ obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
  obj-$(CONFIG_BATTERY_UG3105)	+= ug3105_battery.o
  obj-$(CONFIG_CHARGER_QCOM_SMB2)	+= qcom_pmi8998_charger.o
  obj-$(CONFIG_FUEL_GAUGE_MM8013)	+= mm8013.o

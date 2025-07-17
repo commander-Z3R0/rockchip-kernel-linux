@@ -14,10 +14,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 4 insertions(+)
 
 diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/supply/power_supply_sysfs.c
-index 571de43..6acca5f 100644
+index edb058c..d4ee73f 100644
 --- a/drivers/power/supply/power_supply_sysfs.c
 +++ b/drivers/power/supply/power_supply_sysfs.c
-@@ -209,6 +209,8 @@ static struct power_supply_attr power_supply_attrs[] __ro_after_init = {
+@@ -212,6 +212,8 @@ static struct power_supply_attr power_supply_attrs[] __ro_after_init = {
  	POWER_SUPPLY_ATTR(TIME_TO_FULL_NOW),
  	POWER_SUPPLY_ATTR(TIME_TO_FULL_AVG),
  	POWER_SUPPLY_ENUM_ATTR(TYPE),
@@ -27,10 +27,10 @@ index 571de43..6acca5f 100644
  	POWER_SUPPLY_ENUM_ATTR(SCOPE),
  	POWER_SUPPLY_ATTR(PRECHARGE_CURRENT),
 diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-index b98106e..94a96e0 100644
+index 6ed53b2..dec890d 100644
 --- a/include/linux/power_supply.h
 +++ b/include/linux/power_supply.h
-@@ -162,6 +162,8 @@ enum power_supply_property {
+@@ -166,6 +166,8 @@ enum power_supply_property {
  	POWER_SUPPLY_PROP_TIME_TO_FULL_NOW,
  	POWER_SUPPLY_PROP_TIME_TO_FULL_AVG,
  	POWER_SUPPLY_PROP_TYPE, /* use power_supply.type instead */

@@ -39,7 +39,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  3 files changed, 54 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 0c4c5e2..552409b 100644
+index 7e1fc83..75183a6 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -150,7 +150,7 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode, bool ignore_susphy)
@@ -76,7 +76,7 @@ index 0c4c5e2..552409b 100644
  		dwc3_core_soft_reset(dwc);
  
  		dwc3_event_buffers_setup(dwc);
-@@ -1846,6 +1848,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+@@ -1866,6 +1868,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
  
  	dwc->dis_split_quirk = device_property_read_bool(dev,
  				"snps,dis-split-quirk");
@@ -85,7 +85,7 @@ index 0c4c5e2..552409b 100644
  
  	dwc->lpm_nyet_threshold = lpm_nyet_threshold;
  	dwc->tx_de_emphasis = tx_de_emphasis;
-@@ -2418,6 +2422,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+@@ -2438,6 +2442,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -93,7 +93,7 @@ index 0c4c5e2..552409b 100644
  		if (pm_runtime_suspended(dwc->dev))
  			break;
  		dwc3_gadget_suspend(dwc);
-@@ -2478,11 +2483,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+@@ -2498,11 +2503,12 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -107,7 +107,7 @@ index 0c4c5e2..552409b 100644
  		dwc3_gadget_resume(dwc);
  		break;
  	case DWC3_GCTL_PRTCAP_HOST:
-@@ -2546,6 +2552,7 @@ static int dwc3_runtime_checks(struct dwc3 *dwc)
+@@ -2566,6 +2572,7 @@ static int dwc3_runtime_checks(struct dwc3 *dwc)
  {
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -115,7 +115,7 @@ index 0c4c5e2..552409b 100644
  		if (dwc->connected)
  			return -EBUSY;
  		break;
-@@ -2584,6 +2591,7 @@ static int dwc3_runtime_resume(struct device *dev)
+@@ -2604,6 +2611,7 @@ static int dwc3_runtime_resume(struct device *dev)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -123,7 +123,7 @@ index 0c4c5e2..552409b 100644
  		if (dwc->pending_events) {
  			pm_runtime_put(dwc->dev);
  			dwc->pending_events = false;
-@@ -2607,6 +2615,7 @@ static int dwc3_runtime_idle(struct device *dev)
+@@ -2627,6 +2635,7 @@ static int dwc3_runtime_idle(struct device *dev)
  
  	switch (dwc->current_dr_role) {
  	case DWC3_GCTL_PRTCAP_DEVICE:
@@ -132,7 +132,7 @@ index 0c4c5e2..552409b 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index ac913de..0931c67 100644
+index f955d84..c64d63c 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -264,6 +264,12 @@
@@ -148,7 +148,7 @@ index ac913de..0931c67 100644
  
  #define DWC3_GCTL_CORESOFTRESET		BIT(11)
  #define DWC3_GCTL_SOFITPSYNC		BIT(10)
-@@ -1151,6 +1157,10 @@ struct dwc3_scratchpad_array {
+@@ -1153,6 +1159,10 @@ struct dwc3_scratchpad_array {
   * @suspended: set to track suspend event due to U3/L2.
   * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
   *		  before PM suspend.
@@ -159,7 +159,7 @@ index ac913de..0931c67 100644
   * @imod_interval: set the interrupt moderation interval in 250ns
   *			increments or 0 to disable.
   * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1387,6 +1397,8 @@ struct dwc3 {
+@@ -1389,6 +1399,8 @@ struct dwc3 {
  	unsigned		suspended:1;
  	unsigned		susphy_state:1;
  
