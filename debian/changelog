@@ -1,5 +1,5 @@
-linux-6.15-rockchip (6.15-1) UNRELEASED; urgency=medium
+linux-6.15-rockchip (6.15-1) unstable; urgency=medium
 
   * Initial 6.15 release
 
- -- Arnaud Ferraris <aferraris@debian.org>  Thu, 06 Oct 2022 14:38:14 +0200
+ -- Arnaud Ferraris <aferraris@debian.org>  Thu, 17 Jul 2025 16:26:15 +0200
