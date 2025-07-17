@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 104 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/fusb302.c
-index 674e8eb..5ea027b 100644
+index 0d531c18..540af20 100644
 --- a/drivers/usb/typec/tcpm/fusb302.c
 +++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -68,7 +68,7 @@ static const u8 rd_mda_value[] = {
+@@ -69,7 +69,7 @@ static const u8 rd_mda_value[] = {
  };
  
  #define LOG_BUFFER_ENTRIES	1024
@@ -175,7 +175,7 @@ index 674e8eb..5ea027b 100644
 +
  		comp_result = !!(status0 & FUSB_REG_STATUS0_COMP);
 -		fusb302_log(chip, "IRQ: COMP_CHNG, comp=%s",
--			    comp_result ? "true" : "false");
+-			    str_true_false(comp_result));
 -		if (comp_result) {
 +		fusb302_log(chip, "IRQ: COMP_CHNG, cc* %s mdac (%u mV)",
 +			    comp_result ? ">" : "<", ((mda & 0x3f) + 1) * 42 * (mda & BIT(6) ? 10 : 1));

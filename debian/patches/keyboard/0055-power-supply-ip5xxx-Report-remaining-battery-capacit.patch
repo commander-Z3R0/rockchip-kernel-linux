@@ -11,19 +11,19 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 43 insertions(+)
 
 diff --git a/drivers/power/supply/ip5xxx_power.c b/drivers/power/supply/ip5xxx_power.c
-index 8226364..9641990 100644
+index c448e0a..240e93a 100644
 --- a/drivers/power/supply/ip5xxx_power.c
 +++ b/drivers/power/supply/ip5xxx_power.c
-@@ -76,6 +76,8 @@
+@@ -21,6 +21,8 @@
  
  struct ip5xxx {
  	struct regmap *regmap;
 +	struct power_supply_battery_info *bat;
 +	int r_int;
  	bool initialized;
- };
- 
-@@ -171,6 +173,8 @@ static const enum power_supply_property ip5xxx_battery_properties[] = {
+ 	struct {
+ 		struct {
+@@ -256,6 +258,8 @@ static const enum power_supply_property ip5xxx_battery_properties[] = {
  	POWER_SUPPLY_PROP_STATUS,
  	POWER_SUPPLY_PROP_CHARGE_TYPE,
  	POWER_SUPPLY_PROP_HEALTH,
@@ -32,7 +32,7 @@ index 8226364..9641990 100644
  	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
  	POWER_SUPPLY_PROP_VOLTAGE_NOW,
  	POWER_SUPPLY_PROP_VOLTAGE_OCV,
-@@ -316,6 +320,7 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
+@@ -417,6 +421,7 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
  	struct ip5xxx *ip5xxx = power_supply_get_drvdata(psy);
  	int raw, ret, vmax;
  	unsigned int rval;
@@ -40,7 +40,7 @@ index 8226364..9641990 100644
  
  	ret = ip5xxx_initialize(psy);
  	if (ret)
-@@ -331,6 +336,23 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
+@@ -432,6 +437,23 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
  	case POWER_SUPPLY_PROP_HEALTH:
  		return ip5xxx_battery_get_health(ip5xxx, &val->intval);
  
@@ -64,7 +64,7 @@ index 8226364..9641990 100644
  	case POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN:
  		return ip5xxx_battery_get_voltage_max(ip5xxx, &val->intval);
  
-@@ -389,6 +411,10 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
+@@ -491,6 +513,10 @@ static int ip5xxx_battery_get_property(struct power_supply *psy,
  		val->intval = vmax + 14000 * 3;
  		return 0;
  
@@ -75,9 +75,9 @@ index 8226364..9641990 100644
  	default:
  		return -EINVAL;
  	}
-@@ -472,6 +498,12 @@ static int ip5xxx_battery_set_property(struct power_supply *psy,
- 		return ip5xxx_update_bits(ip5xxx, IP5XXX_CHG_CTL2,
- 					  IP5XXX_CHG_CTL2_CONST_VOLT_SEL, rval);
+@@ -577,6 +603,12 @@ static int ip5xxx_battery_set_property(struct power_supply *psy,
+ 		rval = (val->intval - vmax) / 14000;
+ 		return ip5xxx_write(ip5xxx, ip5xxx->regs.charger.const_volt_sel, rval);
  
 +	case POWER_SUPPLY_PROP_CALIBRATE:
 +		if (val->intval < 0 || val->intval > 1000)
@@ -88,7 +88,7 @@ index 8226364..9641990 100644
  	default:
  		return -EINVAL;
  	}
-@@ -482,6 +514,7 @@ static int ip5xxx_battery_property_is_writeable(struct power_supply *psy,
+@@ -587,6 +619,7 @@ static int ip5xxx_battery_property_is_writeable(struct power_supply *psy,
  {
  	return psp == POWER_SUPPLY_PROP_STATUS ||
  	       psp == POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN ||
@@ -96,15 +96,15 @@ index 8226364..9641990 100644
  	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT ||
  	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE;
  }
-@@ -592,6 +625,7 @@ static int ip5xxx_power_probe(struct i2c_client *client)
- 	struct device *dev = &client->dev;
+@@ -834,6 +867,7 @@ static int ip5xxx_power_probe(struct i2c_client *client)
+ 	const struct of_device_id *of_id;
  	struct power_supply *psy;
  	struct ip5xxx *ip5xxx;
 +	int ret;
  
  	ip5xxx = devm_kzalloc(dev, sizeof(*ip5xxx), GFP_KERNEL);
  	if (!ip5xxx)
-@@ -612,6 +646,15 @@ static int ip5xxx_power_probe(struct i2c_client *client)
+@@ -859,6 +893,15 @@ static int ip5xxx_power_probe(struct i2c_client *client)
  	if (IS_ERR(psy))
  		return PTR_ERR(psy);
  
