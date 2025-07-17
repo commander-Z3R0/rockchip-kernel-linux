@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 4 insertions(+)
 
 diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/supply/power_supply_sysfs.c
-index edb058c..d4ee73f 100644
+index 439dd0b..98aaf9f 100644
 --- a/drivers/power/supply/power_supply_sysfs.c
 +++ b/drivers/power/supply/power_supply_sysfs.c
 @@ -212,6 +212,8 @@ static struct power_supply_attr power_supply_attrs[] __ro_after_init = {
@@ -27,7 +27,7 @@ index edb058c..d4ee73f 100644
  	POWER_SUPPLY_ENUM_ATTR(SCOPE),
  	POWER_SUPPLY_ATTR(PRECHARGE_CURRENT),
 diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-index 6ed53b2..dec890d 100644
+index 8888245..4775455 100644
 --- a/include/linux/power_supply.h
 +++ b/include/linux/power_supply.h
 @@ -166,6 +166,8 @@ enum power_supply_property {

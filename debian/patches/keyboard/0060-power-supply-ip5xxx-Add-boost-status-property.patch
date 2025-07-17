@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 16 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/power/supply/ip5xxx_power.c b/drivers/power/supply/ip5xxx_power.c
-index 99c1223..052e348 100644
+index 7741939..991c3e3 100644
 --- a/drivers/power/supply/ip5xxx_power.c
 +++ b/drivers/power/supply/ip5xxx_power.c
 @@ -42,6 +42,8 @@ struct ip5xxx {

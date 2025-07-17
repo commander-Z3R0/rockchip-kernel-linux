@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 5 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index 7d9baec..e8ef205 100644
+index 2331994..4c1e3eb2 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -218,7 +218,6 @@ struct rk818_battery {
@@ -121,6 +121,6 @@ index 7d9baec..e8ef205 100644
  	cancel_delayed_work_sync(&di->bat_delay_work);
  	cancel_delayed_work_sync(&di->calib_delay_work);
 -	rk818_bat_unregister_fb_notify(di);
- 	del_timer(&di->caltimer);
+ 	timer_delete(&di->caltimer);
  	if (base2sec(di->boot_base) < REBOOT_PERIOD_SEC)
  		cnt = rk818_bat_check_reboot(di);

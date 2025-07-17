@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 43 insertions(+)
 
 diff --git a/drivers/power/supply/ip5xxx_power.c b/drivers/power/supply/ip5xxx_power.c
-index c448e0a..240e93a 100644
+index 24eea7a..698c017 100644
 --- a/drivers/power/supply/ip5xxx_power.c
 +++ b/drivers/power/supply/ip5xxx_power.c
 @@ -21,6 +21,8 @@
@@ -96,15 +96,15 @@ index c448e0a..240e93a 100644
  	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT ||
  	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE;
  }
-@@ -834,6 +867,7 @@ static int ip5xxx_power_probe(struct i2c_client *client)
- 	const struct of_device_id *of_id;
+@@ -833,6 +866,7 @@ static int ip5xxx_power_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
  	struct power_supply *psy;
  	struct ip5xxx *ip5xxx;
 +	int ret;
  
  	ip5xxx = devm_kzalloc(dev, sizeof(*ip5xxx), GFP_KERNEL);
  	if (!ip5xxx)
-@@ -859,6 +893,15 @@ static int ip5xxx_power_probe(struct i2c_client *client)
+@@ -856,6 +890,15 @@ static int ip5xxx_power_probe(struct i2c_client *client)
  	if (IS_ERR(psy))
  		return PTR_ERR(psy);
  

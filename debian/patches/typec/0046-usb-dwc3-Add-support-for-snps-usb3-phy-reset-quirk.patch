@@ -132,7 +132,7 @@ index 7e1fc83..75183a6 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index f955d84..c64d63c 100644
+index 77644ee..b95facd 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -264,6 +264,12 @@
@@ -159,7 +159,7 @@ index f955d84..c64d63c 100644
   * @imod_interval: set the interrupt moderation interval in 250ns
   *			increments or 0 to disable.
   * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1389,6 +1399,8 @@ struct dwc3 {
+@@ -1392,6 +1402,8 @@ struct dwc3 {
  	unsigned		suspended:1;
  	unsigned		susphy_state:1;
  

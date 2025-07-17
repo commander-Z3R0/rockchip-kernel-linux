@@ -87,7 +87,7 @@ index 37287b0..9c64d01 100644
  
  static const struct regmap_config rk805_regmap_config = {
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index 7b18358..c9bf4f50 100644
+index 8dbd39a..4e35a00 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
 @@ -1037,4 +1037,12 @@ config FUEL_GAUGE_MM8013
@@ -104,7 +104,7 @@ index 7b18358..c9bf4f50 100644
 +
  endif # POWER_SUPPLY
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
-index b55cc48..b171762 100644
+index 61677be..792c50e 100644
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
 @@ -119,3 +119,4 @@ obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
@@ -114,7 +114,7 @@ index b55cc48..b171762 100644
 +obj-$(CONFIG_BATTERY_RK818)	+= rk818_battery.o
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
 new file mode 100644
-index 00000000..7041fa8
+index 00000000..98e88ef
 --- /dev/null
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -0,0 +1,3569 @@
@@ -3648,7 +3648,7 @@ index 00000000..7041fa8
 +	cancel_delayed_work_sync(&di->bat_delay_work);
 +	cancel_delayed_work_sync(&di->calib_delay_work);
 +	rk818_bat_unregister_fb_notify(di);
-+	del_timer(&di->caltimer);
++	timer_delete(&di->caltimer);
 +	if (base2sec(di->boot_base) < REBOOT_PERIOD_SEC)
 +		cnt = rk818_bat_check_reboot(di);
 +	else

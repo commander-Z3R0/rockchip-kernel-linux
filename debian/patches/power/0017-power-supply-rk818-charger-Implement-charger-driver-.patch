@@ -29,7 +29,7 @@ index d7035a0..0f5467c 100644
  		.name = "rk808-rtc",
  		.num_resources = ARRAY_SIZE(rtc_resources),
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index c9bf4f50..f9b95a5 100644
+index 4e35a00..4d6d764 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
 @@ -1045,4 +1045,12 @@ config BATTERY_RK818
@@ -46,7 +46,7 @@ index c9bf4f50..f9b95a5 100644
 +
  endif # POWER_SUPPLY
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
-index b171762..153a635 100644
+index 792c50e..6769f3e 100644
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
 @@ -120,3 +120,4 @@ obj-$(CONFIG_BATTERY_UG3105)	+= ug3105_battery.o

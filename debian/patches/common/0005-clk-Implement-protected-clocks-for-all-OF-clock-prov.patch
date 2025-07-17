@@ -143,10 +143,10 @@ index 303a0bb..a7977f8 100644
  	if (rc < 0)
  		return rc;
 diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index cf7720b..3ec9bbf 100644
+index 0565c87..2a38aca 100644
 --- a/drivers/clk/clk.c
 +++ b/drivers/clk/clk.c
-@@ -4731,6 +4731,37 @@ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
+@@ -4738,6 +4738,37 @@ struct clk *devm_clk_hw_get_clk(struct device *dev, struct clk_hw *hw,
  }
  EXPORT_SYMBOL_GPL(devm_clk_hw_get_clk);
  

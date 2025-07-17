@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 49 insertions(+)
 
 diff --git a/drivers/power/supply/ip5xxx_power.c b/drivers/power/supply/ip5xxx_power.c
-index 052e348..47d8655 100644
+index 991c3e3..d483fe3 100644
 --- a/drivers/power/supply/ip5xxx_power.c
 +++ b/drivers/power/supply/ip5xxx_power.c
 @@ -40,6 +40,8 @@ struct ip5xxx {
@@ -100,7 +100,7 @@ index 052e348..47d8655 100644
  	ip5xxx_setup_reg(boost_status, boost.status);
  	ip5xxx_setup_reg(boost_enable, boost.enable);
  	ip5xxx_setup_reg(boost_llshdn_enable, boost.light_load_shutdown.enable);
-@@ -918,6 +963,10 @@ static int ip5xxx_power_probe(struct i2c_client *client)
+@@ -915,6 +960,10 @@ static int ip5xxx_power_probe(struct i2c_client *client)
  	if (IS_ERR(psy))
  		return PTR_ERR(psy);
  

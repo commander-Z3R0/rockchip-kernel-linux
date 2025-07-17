@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 59 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-index 996733e..57b2ea9 100644
+index 0890add..8d100b9 100644
 --- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
 +++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
 @@ -9,6 +9,7 @@
@@ -52,7 +52,7 @@ index 996733e..57b2ea9 100644
  		hdmi->phy_mask |= HDMI_PHY_RX_SENSE;
  	else
  		hdmi->phy_mask &= ~HDMI_PHY_RX_SENSE;
-@@ -3128,7 +3137,7 @@ static irqreturn_t dw_hdmi_irq(int irq, void *dev_id)
+@@ -3127,7 +3136,7 @@ static irqreturn_t dw_hdmi_irq(int irq, void *dev_id)
  			status = connector_status_disconnected;
  	}
  
@@ -61,7 +61,7 @@ index 996733e..57b2ea9 100644
  		dev_dbg(hdmi->dev, "EVENT=%s\n",
  			status == connector_status_connected ?
  			"plugin" : "plugout");
-@@ -3314,6 +3323,25 @@ bool dw_hdmi_bus_fmt_is_420(struct dw_hdmi *hdmi)
+@@ -3313,6 +3322,25 @@ bool dw_hdmi_bus_fmt_is_420(struct dw_hdmi *hdmi)
  }
  EXPORT_SYMBOL_GPL(dw_hdmi_bus_fmt_is_420);
  
@@ -87,7 +87,7 @@ index 996733e..57b2ea9 100644
  struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
  			      const struct dw_hdmi_plat_data *plat_data)
  {
-@@ -3356,15 +3384,38 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
+@@ -3355,15 +3383,38 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
  	if (ret < 0)
  		return ERR_PTR(ret);
  
@@ -128,7 +128,7 @@ index 996733e..57b2ea9 100644
  	} else {
  		dev_dbg(hdmi->dev, "no ddc property found\n");
  	}
-@@ -3583,6 +3634,8 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
+@@ -3582,6 +3633,8 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
  
  err_res:
  	i2c_put_adapter(hdmi->ddc);
@@ -137,7 +137,7 @@ index 996733e..57b2ea9 100644
  
  	return ERR_PTR(ret);
  }
-@@ -3590,6 +3643,8 @@ EXPORT_SYMBOL_GPL(dw_hdmi_probe);
+@@ -3589,6 +3642,8 @@ EXPORT_SYMBOL_GPL(dw_hdmi_probe);
  
  void dw_hdmi_remove(struct dw_hdmi *hdmi)
  {

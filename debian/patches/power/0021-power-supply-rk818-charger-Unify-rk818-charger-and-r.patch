@@ -15,7 +15,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  4 files changed, 94 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/power/supply/Kconfig b/drivers/power/supply/Kconfig
-index f9b95a5..9e875b3 100644
+index 4d6d764..14912c7 100644
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
 @@ -1037,14 +1037,6 @@ config FUEL_GAUGE_MM8013
@@ -34,7 +34,7 @@ index f9b95a5..9e875b3 100644
  	bool "RK818 Charger driver"
  	depends on MFD_RK8XX
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
-index 153a635..5effc7a 100644
+index 6769f3e..6a01e0e 100644
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
 @@ -119,5 +119,4 @@ obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
@@ -45,7 +45,7 @@ index 153a635..5effc7a 100644
 -obj-$(CONFIG_CHARGER_RK818)	+= rk818_charger.o
 +obj-$(CONFIG_CHARGER_RK818)	+= rk818_charger.o rk818_battery.o
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index 62814f8..7d9baec 100644
+index 274ee27..2331994 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
 @@ -899,12 +899,10 @@ static int rk818_bat_get_charge_state(struct rk818_battery *di)
