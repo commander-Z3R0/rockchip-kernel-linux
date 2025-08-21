@@ -27,7 +27,7 @@ index 18e5e84..4876bec 100644
  	POWER_SUPPLY_ENUM_ATTR(SCOPE),
  	POWER_SUPPLY_ATTR(PRECHARGE_CURRENT),
 diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
-index 0cca01b..83b976c5 100644
+index 0cca01b..83b976c 100644
 --- a/include/linux/power_supply.h
 +++ b/include/linux/power_supply.h
 @@ -168,6 +168,8 @@ enum power_supply_property {
