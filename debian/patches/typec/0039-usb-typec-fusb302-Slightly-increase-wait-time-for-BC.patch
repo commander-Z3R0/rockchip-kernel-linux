@@ -12,10 +12,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/fusb302.c
-index d18b0a7..22e6a43 100644
+index e904aaf..999d6ab 100644
 --- a/drivers/usb/typec/tcpm/fusb302.c
 +++ b/drivers/usb/typec/tcpm/fusb302.c
-@@ -533,9 +533,9 @@ static int tcpm_get_current_limit(struct tcpc_dev *dev)
+@@ -535,9 +535,9 @@ static int tcpm_get_current_limit(struct tcpc_dev *dev)
  
  	/*
  	 * USB2 Charger detection may still be in progress when we get here,
