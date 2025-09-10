@@ -260,23 +260,23 @@ index 8200cca..7e207c8 100644
  	};
  };
  
--&u2phy1 {
 +&u2phy0_otg {
 +	status = "okay";
 +};
 +
 +&u2phy0_host {
- 	status = "okay";
++	status = "okay";
 +	phy-supply = <&vcc5v0_sys>;
++};
++
+ &u2phy1 {
+ 	status = "okay";
 +};
  
 -	u2phy1_otg: otg-port {
 -		status = "okay";
 -	};
-+&u2phy1 {
-+	status = "okay";
-+};
- 
+-
 -	u2phy1_host: host-port {
 -		status = "okay";
 -		phy-supply = <&vcc5v0_sys>;
