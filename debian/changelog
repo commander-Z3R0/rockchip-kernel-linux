@@ -1,3 +1,9 @@
+linux-6.18-rockchip (6.18~rc4-1) unstable; urgency=medium
+
+  * Rebase on 6.18-rc4
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 03 Nov 2025 22:14:34 +0100
+
 linux-6.18-rockchip (6.18~rc3-1) unstable; urgency=medium
 
   * Rebase on 6.18-rc3
