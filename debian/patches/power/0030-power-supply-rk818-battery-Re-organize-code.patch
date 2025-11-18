@@ -4,8 +4,8 @@ Subject: power: supply: rk818-battery: Re-organize code
 
 Signed-off-by: Ondrej Jirman <megi@xff.cz>
 ---
- drivers/power/supply/rk818_battery.c | 1065 ++++++++++++++++++----------------
- 1 file changed, 555 insertions(+), 510 deletions(-)
+ drivers/power/supply/rk818_battery.c | 1147 ++++++++++++++++++----------------
+ 1 file changed, 596 insertions(+), 551 deletions(-)
 
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
 index c595b80..bdc6929 100644
@@ -286,7 +286,7 @@ index c595b80..bdc6929 100644
  static void rk818_bat_save_cap(struct rk818_battery *di, int cap)
  {
  	u8 buf;
-@@ -1329,104 +1291,6 @@ static u8 rk818_bat_parse_finish_ma(struct rk818_battery *di, int fcc)
+@@ -1329,136 +1291,38 @@ static u8 rk818_bat_parse_finish_ma(struct rk818_battery *di, int fcc)
  	return ma;
  }
  
@@ -331,26 +331,48 @@ index c595b80..bdc6929 100644
 -}
 -
 -static void rk818_bat_init_coffset(struct rk818_battery *di)
--{
++static void rk818_bat_init_zero_table(struct rk818_battery *di)
+ {
 -	int coffset, ioffset;
--
++	int i, diff, min, max;
++	size_t ocv_size, length;
+ 
 -	ioffset = rk818_bat_get_ioffset(di);
 -	di->poffset = rk818_bat_read(di, RK818_POFFSET_REG);
 -	if (!di->poffset)
 -		di->poffset = DEFAULT_POFFSET;
--
++	ocv_size = di->pdata->ocv_size;
++	length = sizeof(di->pdata->zero_table) * ocv_size;
++	di->pdata->zero_table =
++			devm_kzalloc(di->dev, length, GFP_KERNEL);
++	if (!di->pdata->zero_table) {
++		di->pdata->zero_table = di->pdata->ocv_table;
++		dev_err(di->dev, "malloc zero table fail\n");
++		return;
++	}
+ 
 -	coffset = di->poffset + ioffset;
 -	if (coffset < INVALID_COFFSET_MIN || coffset > INVALID_COFFSET_MAX)
 -		coffset = DEFAULT_COFFSET;
--
++	min = di->pdata->pwroff_vol,
++	max = di->pdata->ocv_table[ocv_size - 4];
++	diff = (max - min) / DIV(ocv_size - 1);
++	for (i = 0; i < ocv_size; i++)
++		di->pdata->zero_table[i] = min + (i * diff);
+ 
 -	rk818_bat_set_coffset(di, coffset);
--
++	for (i = 0; i < ocv_size; i++)
++		DBG("zero[%d] = %d\n", i, di->pdata->zero_table[i]);
+ 
 -	DBG("<%s>. offset: p=0x%x, i=0x%x, c=0x%x\n",
 -	    __func__, di->poffset, ioffset, rk818_bat_get_coffset(di));
--}
--
++	for (i = 0; i < ocv_size; i++)
++		DBG("ocv[%d] = %d\n", i, di->pdata->ocv_table[i]);
+ }
+ 
 -static void rk818_bat_caltimer_isr(struct timer_list *t)
--{
++static void rk818_bat_calc_sm_linek(struct rk818_battery *di)
+ {
 -	struct rk818_battery *di = timer_container_of(di, t, caltimer);
 -
 -	mod_timer(&di->caltimer, jiffies + MINUTE(8) * HZ);
@@ -388,9 +410,43 @@ index c595b80..bdc6929 100644
 -	INIT_DELAYED_WORK(&di->calib_delay_work, rk818_bat_internal_calib);
 -}
 -
- static void rk818_bat_init_zero_table(struct rk818_battery *di)
- {
- 	int i, diff, min, max;
+-static void rk818_bat_init_zero_table(struct rk818_battery *di)
+-{
+-	int i, diff, min, max;
+-	size_t ocv_size, length;
+-
+-	ocv_size = di->pdata->ocv_size;
+-	length = sizeof(di->pdata->zero_table) * ocv_size;
+-	di->pdata->zero_table =
+-			devm_kzalloc(di->dev, length, GFP_KERNEL);
+-	if (!di->pdata->zero_table) {
+-		di->pdata->zero_table = di->pdata->ocv_table;
+-		dev_err(di->dev, "malloc zero table fail\n");
+-		return;
+-	}
+-
+-	min = di->pdata->pwroff_vol,
+-	max = di->pdata->ocv_table[ocv_size - 4];
+-	diff = (max - min) / DIV(ocv_size - 1);
+-	for (i = 0; i < ocv_size; i++)
+-		di->pdata->zero_table[i] = min + (i * diff);
+-
+-	for (i = 0; i < ocv_size; i++)
+-		DBG("zero[%d] = %d\n", i, di->pdata->zero_table[i]);
+-
+-	for (i = 0; i < ocv_size; i++)
+-		DBG("ocv[%d] = %d\n", i, di->pdata->ocv_table[i]);
+-}
+-
+-static void rk818_bat_calc_sm_linek(struct rk818_battery *di)
+-{
+-	int linek, current_avg;
+-	u8 diff, delta;
++	int linek, current_avg;
++	u8 diff, delta;
+ 
+ 	delta = abs(di->dsoc - di->rsoc);
+ 	diff = delta * 3;/* speed:3/4 */
 @@ -1852,14 +1716,14 @@ static void rk818_bat_debug_info(struct rk818_battery *di)
  	dcdc_en = rk818_bat_read(di, RK818_DCDC_EN_REG);
  	reboot_cnt = rk818_bat_read(di, RK818_REBOOT_CNT_REG);
@@ -583,15 +639,19 @@ index c595b80..bdc6929 100644
  static void rk818_bat_init_dsoc_algorithm(struct rk818_battery *di)
  {
  	u8 buf;
-@@ -2891,70 +2587,6 @@ static void rk818_bat_save_data(struct rk818_battery *di)
+@@ -2891,121 +2587,424 @@ static void rk818_bat_save_data(struct rk818_battery *di)
  	rk818_bat_save_algo_rest(di);
  }
  
 -static void rk818_battery_work(struct work_struct *work)
--{
++static time64_t rk818_get_rtc_sec(void)
+ {
 -	struct rk818_battery *di =
 -		container_of(work, struct rk818_battery, bat_delay_work.work);
--
++	int err;
++	struct rtc_time tm;
++	struct rtc_device *rtc = rtc_class_open(CONFIG_RTC_HCTOSYS_DEVICE);
+ 
 -	rk818_bat_update_info(di);
 -	rk818_bat_wait_finish_sig(di);
 -	rk818_bat_rsoc_daemon(di);
@@ -600,64 +660,69 @@ index c595b80..bdc6929 100644
 -	rk818_bat_power_supply_changed(di);
 -	rk818_bat_save_data(di);
 -	rk818_bat_debug_info(di);
--
++	err = rtc_read_time(rtc, &tm);
++	if (err) {
++		dev_err(rtc->dev.parent, "read hardware clk failed\n");
++		return 0;
++	}
+ 
 -	queue_delayed_work(di->bat_monitor_wq, &di->bat_delay_work,
 -			   msecs_to_jiffies(di->monitor_ms));
 -}
--
++	err = rtc_valid_tm(&tm);
++	if (err) {
++		dev_err(rtc->dev.parent, "invalid date time\n");
++		return 0;
++	}
+ 
 -static irqreturn_t rk818_vb_low_irq(int irq, void *bat)
--{
++	return rtc_tm_to_time64(&tm);
++}
++
++static int rk818_bat_rtc_sleep_sec(struct rk818_battery *di)
+ {
 -	struct rk818_battery *di = (struct rk818_battery *)bat;
--
++	int interval_sec;
+ 
 -	BAT_INFO("lower power yet, power off system! v=%d, c=%d, dsoc=%d\n",
 -		 di->voltage_avg, di->current_avg, di->dsoc);
--
++	interval_sec = rk818_get_rtc_sec() - di->rtc_base;
+ 
 -	return IRQ_HANDLED;
--}
--
++	return (interval_sec > 0) ? interval_sec : 0;
+ }
+ 
 -static int rk818_bat_init_irqs(struct rk818_battery *di)
--{
++static void rk818_bat_set_shtd_vol(struct rk818_battery *di)
+ {
 -	struct rk808 *rk818 = di->rk818;
 -	struct platform_device *pdev = di->pdev;
 -	int ret, vb_lo_irq;
--
++	u8 val;
+ 
 -	vb_lo_irq = regmap_irq_get_virq(rk818->irq_data, RK818_IRQ_VB_LO);
 -	if (vb_lo_irq < 0) {
 -		dev_err(di->dev, "vb_lo_irq request failed!\n");
 -		return vb_lo_irq;
--	}
--
--	ret = devm_request_threaded_irq(di->dev, vb_lo_irq, NULL,
--					rk818_vb_low_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
--					"rk818_vb_low", di);
--	if (ret) {
--		dev_err(&pdev->dev, "vb_lo_irq request failed!\n");
--		return ret;
--	}
--	enable_irq_wake(vb_lo_irq);
--
--	return 0;
--}
--
--static void rk818_bat_init_info(struct rk818_battery *di)
--{
--	di->design_cap = di->pdata->design_capacity;
--	di->qmax = di->pdata->design_qmax;
--	di->bat_res = di->pdata->bat_res;
--	di->monitor_ms = di->pdata->monitor_sec * TIMER_MS_COUNTS;
--	di->boot_base = POWER_ON_SEC_BASE;
--	di->res_div = (di->pdata->sample_res == SAMPLE_RES_20MR) ?
--		       SAMPLE_RES_DIV1 : SAMPLE_RES_DIV2;
--}
--
- static time64_t rk818_get_rtc_sec(void)
- {
- 	int err;
-@@ -3008,6 +2640,373 @@ static void rk818_bat_set_shtd_vol(struct rk818_battery *di)
- 	rk818_bat_set_bits(di, RK818_INT_STS_MSK_REG1, VB_LOW_INT_EN, 0);
- }
- 
++#if 0
++	/* set vbat lowest 3.0v shutdown */
++	val = rk818_bat_read(di, RK818_VB_MON_REG);
++	val &= ~(VBAT_LOW_VOL_MASK | VBAT_LOW_ACT_MASK);
++	val |= (RK818_VBAT_LOW_3V0 | EN_VABT_LOW_SHUT_DOWN);
++	rk818_bat_write(di, RK818_VB_MON_REG, val);
++
++	/* disable low irq */
++	rk818_bat_set_bits(di, RK818_INT_STS_MSK_REG1,
++			   VB_LOW_INT_EN, VB_LOW_INT_EN);
++#endif
++
++	val = rk818_bat_read(di, RK818_VB_MON_REG);
++	val &= (~(VBAT_LOW_VOL_MASK | VBAT_LOW_ACT_MASK));
++	val |= (RK818_VBAT_LOW_3V4 | EN_VBAT_LOW_IRQ);
++	rk818_bat_write(di, RK818_VB_MON_REG, val);
++	rk818_bat_set_bits(di, RK818_INT_STS_MSK_REG1, VB_LOW_INT_EN, 0);
++}
++
 +// }}}
 +// {{{ Temperature
 +
@@ -689,9 +754,16 @@ index c595b80..bdc6929 100644
 +		di->pdata->ntc_factor = NTC_CALC_FACTOR_20UA;
 +		di->pdata->ntc_uA = 20;
 +		buf |= ADC_CUR_20UA;
-+	}
+ 	}
 +	rk818_bat_write(di, RK818_TS_CTRL_REG, buf);
-+
+ 
+-	ret = devm_request_threaded_irq(di->dev, vb_lo_irq, NULL,
+-					rk818_vb_low_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+-					"rk818_vb_low", di);
+-	if (ret) {
+-		dev_err(&pdev->dev, "vb_lo_irq request failed!\n");
+-		return ret;
 +	/* enable ADC_TS1_EN */
 +	buf = rk818_bat_read(di, RK818_ADC_CTRL_REG);
 +	buf |= ADC_TS1_EN;
@@ -945,59 +1017,97 @@ index c595b80..bdc6929 100644
 +		break;
 +	default:
 +		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
+ 	}
+-	enable_irq_wake(vb_lo_irq);
+ 
+ 	return 0;
+ }
 +EXPORT_SYMBOL_GPL(rk818_battery_get_property);
-+
+ 
+-static void rk818_bat_init_info(struct rk818_battery *di)
 +// }}}
 +// {{{ Timers/workqueues
 +
 +static void rk818_bat_caltimer_isr(struct timer_list *t)
-+{
+ {
+-	di->design_cap = di->pdata->design_capacity;
+-	di->qmax = di->pdata->design_qmax;
+-	di->bat_res = di->pdata->bat_res;
+-	di->monitor_ms = di->pdata->monitor_sec * TIMER_MS_COUNTS;
+-	di->boot_base = POWER_ON_SEC_BASE;
+-	di->res_div = (di->pdata->sample_res == SAMPLE_RES_20MR) ?
+-		       SAMPLE_RES_DIV1 : SAMPLE_RES_DIV2;
 +	struct rk818_battery *di = timer_container_of(di, t, caltimer);
 +
 +	mod_timer(&di->caltimer, jiffies + MINUTE(8) * HZ);
 +	queue_delayed_work(di->bat_monitor_wq, &di->calib_delay_work,
 +			   msecs_to_jiffies(10));
-+}
-+
+ }
+ 
+-static time64_t rk818_get_rtc_sec(void)
 +static void rk818_bat_internal_calib(struct work_struct *work)
-+{
+ {
+-	int err;
+-	struct rtc_time tm;
+-	struct rtc_device *rtc = rtc_class_open(CONFIG_RTC_HCTOSYS_DEVICE);
 +	int ioffset, poffset;
 +	struct rk818_battery *di = container_of(work,
 +			struct rk818_battery, calib_delay_work.work);
-+
+ 
+-	err = rtc_read_time(rtc, &tm);
+-	if (err) {
+-		dev_err(rtc->dev.parent, "read hardware clk failed\n");
+-		return 0;
+-	}
 +	/* calib coffset */
 +	poffset = rk818_bat_read(di, RK818_POFFSET_REG);
 +	if (poffset)
 +		di->poffset = poffset;
 +	else
 +		di->poffset = DEFAULT_POFFSET;
-+
+ 
+-	err = rtc_valid_tm(&tm);
+-	if (err) {
+-		dev_err(rtc->dev.parent, "invalid date time\n");
+-		return 0;
+-	}
 +	ioffset = rk818_bat_get_ioffset(di);
 +	rk818_bat_set_coffset(di, ioffset + di->poffset);
-+
+ 
+-	return rtc_tm_to_time64(&tm);
 +	/* calib voltage kb */
 +	rk818_bat_init_voltage_kb(di);
 +	BAT_INFO("caltimer: ioffset=0x%x, coffset=0x%x, poffset=%d\n",
 +		 ioffset, rk818_bat_get_coffset(di), di->poffset);
-+}
-+
+ }
+ 
+-static int rk818_bat_rtc_sleep_sec(struct rk818_battery *di)
 +static void rk818_bat_init_caltimer(struct rk818_battery *di)
-+{
+ {
+-	int interval_sec;
+-
+-	interval_sec = rk818_get_rtc_sec() - di->rtc_base;
+-
+-	return (interval_sec > 0) ? interval_sec : 0;
 +	timer_setup(&di->caltimer, rk818_bat_caltimer_isr, 0);
 +	di->caltimer.expires = jiffies + MINUTE(8) * HZ;
 +	add_timer(&di->caltimer);
 +	INIT_DELAYED_WORK(&di->calib_delay_work, rk818_bat_internal_calib);
-+}
-+
+ }
+ 
+-static void rk818_bat_set_shtd_vol(struct rk818_battery *di)
 +static void rk818_battery_work(struct work_struct *work)
-+{
+ {
+-	u8 val;
 +	struct rk818_battery *di =
 +		container_of(work, struct rk818_battery, bat_delay_work.work);
-+
+ 
+-#if 0
+-	/* set vbat lowest 3.0v shutdown */
+-	val = rk818_bat_read(di, RK818_VB_MON_REG);
+-	val &= ~(VBAT_LOW_VOL_MASK | VBAT_LOW_ACT_MASK);
+-	val |= (RK818_VBAT_LOW_3V0 | EN_VABT_LOW_SHUT_DOWN);
+-	rk818_bat_write(di, RK818_VB_MON_REG, val);
 +	rk818_bat_update_info(di);
 +	rk818_bat_wait_finish_sig(di);
 +	rk818_bat_rsoc_daemon(di);
@@ -1006,11 +1116,20 @@ index c595b80..bdc6929 100644
 +	rk818_bat_power_supply_changed(di);
 +	rk818_bat_save_data(di);
 +	rk818_bat_debug_info(di);
-+
+ 
+-	/* disable low irq */
+-	rk818_bat_set_bits(di, RK818_INT_STS_MSK_REG1,
+-			   VB_LOW_INT_EN, VB_LOW_INT_EN);
+-#endif
 +	queue_delayed_work(di->bat_monitor_wq, &di->bat_delay_work,
 +			   msecs_to_jiffies(di->monitor_ms));
 +}
-+
+ 
+-	val = rk818_bat_read(di, RK818_VB_MON_REG);
+-	val &= (~(VBAT_LOW_VOL_MASK | VBAT_LOW_ACT_MASK));
+-	val |= (RK818_VBAT_LOW_3V4 | EN_VBAT_LOW_IRQ);
+-	rk818_bat_write(di, RK818_VB_MON_REG, val);
+-	rk818_bat_set_bits(di, RK818_INT_STS_MSK_REG1, VB_LOW_INT_EN, 0);
 +// }}}
 +// {{{ Initialization/DT parsing
 +
@@ -1023,11 +1142,9 @@ index c595b80..bdc6929 100644
 +	di->boot_base = POWER_ON_SEC_BASE;
 +	di->res_div = (di->pdata->sample_res == SAMPLE_RES_20MR) ?
 +		       SAMPLE_RES_DIV1 : SAMPLE_RES_DIV2;
-+}
-+
+ }
+ 
  static void rk818_bat_init_fg(struct rk818_battery *di)
- {
- 	rk818_bat_enable_gauge(di);
 @@ -3041,6 +3040,41 @@ static void rk818_bat_init_fg(struct rk818_battery *di)
  	    di->voltage_relax, di->dsoc, di->rsoc, di->current_avg);
  }
