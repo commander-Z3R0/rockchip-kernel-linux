@@ -713,30 +713,22 @@ index 2f4430a..3f2a5f7 100644
 -#define PLUG_IN_MSK		BIT(0)
 -#define PLUG_OUT_MSK		BIT(1)
 -#define CHRG_CVTLMT_INT_MSK	BIT(6)
-+#include <linux/power_supply.h>
- 
+-
 -/* RK818_TS_CTRL_REG */
 -#define GG_EN			BIT(7)
 -#define ADC_CUR_EN		BIT(6)
 -#define ADC_TS1_EN		BIT(5)
 -#define ADC_TS2_EN		BIT(4)
 -#define TS1_CUR_MSK		0x03
-+struct rk818_battery;
- 
+-
 -/* RK818_GGCON */
 -#define OCV_SAMP_MIN_MSK	0x0c
 -#define OCV_SAMP_8MIN		(0x00 << 2)
-+struct rk818_battery;
- 
+-
 -#define ADC_CAL_MIN_MSK		0x30
 -#define ADC_CAL_8MIN		(0x00 << 4)
 -#define ADC_CUR_MODE		BIT(1)
-+int rk818_battery_get_property(struct rk818_battery *di,
-+			       enum power_supply_property psp,
-+			       union power_supply_propval *val);
-+struct rk818_battery* rk818_battery_get(void);
-+struct rk818_battery* rk818_battery_get(void);
- 
+-
 -/* RK818_GGSTS */
 -#define BAT_CON			BIT(4)
 -#define RELAX_VOL1_UPD		BIT(3)
@@ -852,19 +844,27 @@ index 2f4430a..3f2a5f7 100644
 -static const u16 chrg_vol_sel_array[] = {
 -	4050, 4100, 4150, 4200, 4250, 4300, 4350
 -};
--
++#include <linux/power_supply.h>
+ 
 -static const u16 chrg_cur_sel_array[] = {
 -	1000, 1200, 1400, 1600, 1800, 2000, 2250, 2400, 2600, 2800, 3000
 -};
--
++struct rk818_battery;
+ 
 -static const u16 chrg_cur_input_array[] = {
 -	450, 80, 850, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000
 -};
--
++struct rk818_battery;
+ 
 -void kernel_power_off(void);
 -int rk818_bat_temp_notifier_register(struct notifier_block *nb);
 -int rk818_bat_temp_notifier_unregister(struct notifier_block *nb);
--
++int rk818_battery_get_property(struct rk818_battery *di,
++			       enum power_supply_property psp,
++			       union power_supply_propval *val);
++struct rk818_battery* rk818_battery_get(void);
++struct rk818_battery* rk818_battery_get(void);
+ 
 -#endif
 \ No newline at end of file
 +#endif
