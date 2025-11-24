@@ -14,7 +14,7 @@ Signed-off-by: Peter Geis <pgwipeout@gmail.com>
  1 file changed, 12 insertions(+)
 
 diff --git a/drivers/mmc/host/dw_mmc-rockchip.c b/drivers/mmc/host/dw_mmc-rockchip.c
-index 82dd906..3c7dbd1 100644
+index 6813549..d882d33 100644
 --- a/drivers/mmc/host/dw_mmc-rockchip.c
 +++ b/drivers/mmc/host/dw_mmc-rockchip.c
 @@ -11,6 +11,7 @@
