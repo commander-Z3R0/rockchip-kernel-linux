@@ -45,10 +45,10 @@ index 7bfd991..a3749db 100644
 -obj-$(CONFIG_CHARGER_RK818)	+= rk818_charger.o
 +obj-$(CONFIG_CHARGER_RK818)	+= rk818_charger.o rk818_battery.o
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index 5b40c04..bbb89b7 100644
+index 769c72f..ba85c36 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
-@@ -898,12 +898,10 @@ static int rk818_bat_get_charge_state(struct rk818_battery *di)
+@@ -899,12 +899,10 @@ static int rk818_bat_get_charge_state(struct rk818_battery *di)
  	return di->current_avg > 0;
  }
  
@@ -64,7 +64,7 @@ index 5b40c04..bbb89b7 100644
  	switch (psp) {
  	case POWER_SUPPLY_PROP_CURRENT_NOW:
  		val->intval = di->current_avg * 1000;/*uA*/
-@@ -962,16 +960,26 @@ static int rk818_battery_get_property(struct power_supply *psy,
+@@ -963,16 +961,26 @@ static int rk818_battery_get_property(struct power_supply *psy,
  
  	return 0;
  }
@@ -93,7 +93,7 @@ index 5b40c04..bbb89b7 100644
  {
  	struct power_supply_config psy_cfg = { .drv_data = di, };
  
-@@ -2451,7 +2459,10 @@ static void rk818_bat_power_supply_changed(struct rk818_battery *di)
+@@ -2452,7 +2460,10 @@ static void rk818_bat_power_supply_changed(struct rk818_battery *di)
  	status = (status & CHRG_STATUS_MSK) >> 4;
  	old_soc = di->dsoc;
  	di->last_dsoc = di->dsoc;
@@ -105,7 +105,7 @@ index 5b40c04..bbb89b7 100644
  	BAT_INFO("changed: dsoc=%d, rsoc=%d, v=%d, ov=%d c=%d, "
  		 "cap=%d, f=%d, st=%s, hotdie=%d\n",
  		 di->dsoc, di->rsoc, di->voltage_avg, di->voltage_ocv,
-@@ -3282,6 +3293,14 @@ static const struct of_device_id rk818_battery_of_match[] = {
+@@ -3283,6 +3294,14 @@ static const struct of_device_id rk818_battery_of_match[] = {
  	{ },
  };
  
@@ -120,7 +120,7 @@ index 5b40c04..bbb89b7 100644
  static int rk818_battery_probe(struct platform_device *pdev)
  {
  	const struct of_device_id *of_id =
-@@ -3322,11 +3341,13 @@ static int rk818_battery_probe(struct platform_device *pdev)
+@@ -3323,11 +3342,13 @@ static int rk818_battery_probe(struct platform_device *pdev)
  		return ret;
  	}
  
@@ -134,7 +134,7 @@ index 5b40c04..bbb89b7 100644
  
  	rk818_bat_init_info(di);
  	rk818_bat_init_fg(di);
-@@ -3341,6 +3362,7 @@ static int rk818_battery_probe(struct platform_device *pdev)
+@@ -3342,6 +3363,7 @@ static int rk818_battery_probe(struct platform_device *pdev)
  
  	BAT_INFO("driver version %s\n", DRIVER_VERSION);
  
@@ -143,10 +143,10 @@ index 5b40c04..bbb89b7 100644
  }
  
 diff --git a/drivers/power/supply/rk818_charger.c b/drivers/power/supply/rk818_charger.c
-index f2c3dea8..d4d54ff 100644
+index ce46a901..26f21c4 100644
 --- a/drivers/power/supply/rk818_charger.c
 +++ b/drivers/power/supply/rk818_charger.c
-@@ -357,14 +357,36 @@ static int rk818_charger_get_voltage_max(struct rk818_charger *cg, int *val)
+@@ -356,14 +356,36 @@ static int rk818_charger_get_voltage_max(struct rk818_charger *cg, int *val)
  	return 0;
  }
  
@@ -183,7 +183,7 @@ index f2c3dea8..d4d54ff 100644
  	switch (psp) {
  	case POWER_SUPPLY_PROP_ONLINE:
  		ret = regmap_read(cg->regmap, RK818_CHRG_CTRL_REG1, &reg);
-@@ -376,6 +398,20 @@ static int rk818_charger_get_property(struct power_supply *psy,
+@@ -375,6 +397,20 @@ static int rk818_charger_get_property(struct power_supply *psy,
  		val->intval = !!(reg & RK818_CHRG_CTRL_REG1_CHRG_EN);
  		break;
  
@@ -204,7 +204,7 @@ index f2c3dea8..d4d54ff 100644
  	case POWER_SUPPLY_PROP_STATUS:
  		ret = regmap_read(cg->regmap, RK818_SUP_STS_REG, &reg);
  		if (ret)
-@@ -481,14 +517,18 @@ static int rk818_charger_set_property(struct power_supply *psy,
+@@ -480,14 +516,18 @@ static int rk818_charger_set_property(struct power_supply *psy,
  	struct rk818_charger *cg = power_supply_get_drvdata(psy);
  
  	switch (psp) {
@@ -231,7 +231,7 @@ index f2c3dea8..d4d54ff 100644
  
  	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE:
                  return rk818_charger_set_voltage_max(cg, val->intval);
-@@ -507,7 +547,7 @@ static int rk818_charger_prop_writeable(struct power_supply *psy,
+@@ -506,7 +546,7 @@ static int rk818_charger_prop_writeable(struct power_supply *psy,
  	switch (psp) {
  	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
  	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE:
@@ -240,7 +240,7 @@ index f2c3dea8..d4d54ff 100644
  		return 1;
  
  	default:
-@@ -519,6 +559,7 @@ static enum power_supply_property rk818_charger_props[] = {
+@@ -518,6 +558,7 @@ static enum power_supply_property rk818_charger_props[] = {
  	POWER_SUPPLY_PROP_ONLINE,
  	POWER_SUPPLY_PROP_HEALTH,
  	POWER_SUPPLY_PROP_STATUS,
@@ -248,7 +248,7 @@ index f2c3dea8..d4d54ff 100644
  	POWER_SUPPLY_PROP_CHARGE_TYPE,
  	POWER_SUPPLY_PROP_CHARGE_TERM_CURRENT,
  	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT,
-@@ -526,16 +567,24 @@ static enum power_supply_property rk818_charger_props[] = {
+@@ -525,16 +566,24 @@ static enum power_supply_property rk818_charger_props[] = {
  	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
  	POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE_MAX,
  	POWER_SUPPLY_PROP_PRECHARGE_CURRENT,
