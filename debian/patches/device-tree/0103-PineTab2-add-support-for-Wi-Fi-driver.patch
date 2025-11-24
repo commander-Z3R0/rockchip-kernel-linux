@@ -57,7 +57,7 @@ index 9349541c..ee6db7e 100644
 +	mmc-pwrseq = <&sdio_pwrseq &sdio_pwrkey>;
  };
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-index d0e3841..bf4ff40 100644
+index 08bf40d..0245ef1 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
 @@ -134,6 +134,16 @@ simple-audio-card,codec {
