@@ -1,3 +1,10 @@
+linux-6.18-rockchip (6.18~rc7-1) unstable; urgency=medium
+
+  * d/patches: fix power supplies on the PinePhone Pro
+  * Rebase on 6.18-rc7
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 24 Nov 2025 10:04:21 +0100
+
 linux-6.18-rockchip (6.18~rc4-1) unstable; urgency=medium
 
   * Rebase on 6.18-rc4
