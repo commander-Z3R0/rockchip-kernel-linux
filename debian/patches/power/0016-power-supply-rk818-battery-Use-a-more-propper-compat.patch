@@ -24,10 +24,10 @@ index c564d34..cb6437f 100644
  		.name = "rk808-rtc",
  		.num_resources = ARRAY_SIZE(rtc_resources),
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index 60c0fe7..b69067f 100644
+index 0cf3589..1dfa76e4 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
-@@ -3340,7 +3340,7 @@ static int rk818_bat_parse_dt(struct rk818_battery *di)
+@@ -3339,7 +3339,7 @@ static int rk818_bat_parse_dt(struct rk818_battery *di)
  #endif
  
  static const struct of_device_id rk818_battery_of_match[] = {
@@ -36,7 +36,7 @@ index 60c0fe7..b69067f 100644
  	{ },
  };
  
-@@ -3566,4 +3566,4 @@ module_exit(battery_exit);
+@@ -3565,4 +3565,4 @@ module_exit(battery_exit);
  
  MODULE_LICENSE("GPL");
  MODULE_ALIAS("platform:rk818-battery");
