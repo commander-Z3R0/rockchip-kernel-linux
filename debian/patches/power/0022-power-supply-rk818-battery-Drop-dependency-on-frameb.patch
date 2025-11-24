@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 5 insertions(+), 38 deletions(-)
 
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index ba85c36..c9863eb 100644
+index bbb89b7..07d13df 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
-@@ -218,7 +218,6 @@ struct rk818_battery {
+@@ -217,7 +217,6 @@ struct rk818_battery {
  	bool				sleep_chrg_online;
  	u8				sleep_chrg_status;
  	bool				adc_allow_update;
@@ -22,7 +22,7 @@ index ba85c36..c9863eb 100644
  	bool				s2r; /*suspend to resume*/
  	u32				work_mode;
  	int				temperature;
-@@ -1106,34 +1105,6 @@ static void rk818_bat_save_reboot_cnt(struct rk818_battery *di, u8 save_cnt)
+@@ -1105,34 +1104,6 @@ static void rk818_bat_save_reboot_cnt(struct rk818_battery *di, u8 save_cnt)
  	rk818_bat_write(di, RK818_REBOOT_CNT_REG, save_cnt);
  }
  
@@ -57,7 +57,7 @@ index ba85c36..c9863eb 100644
  static u8 rk818_bat_get_halt_cnt(struct rk818_battery *di)
  {
  	return rk818_bat_read(di, RK818_HALT_CNT_REG);
-@@ -1521,7 +1492,7 @@ static void rk818_bat_calc_zero_linek(struct rk818_battery *di)
+@@ -1520,7 +1491,7 @@ static void rk818_bat_calc_zero_linek(struct rk818_battery *di)
  	int ocv_cap, dead_cap, xsoc;
  	int ocv_soc, dead_soc;
  	int pwroff_vol;
@@ -66,7 +66,7 @@ index ba85c36..c9863eb 100644
  	int org_linek = 0, min_gap_xsoc;
  
  	if ((abs(di->current_avg) < 500) && (di->dsoc > 10))
-@@ -1893,7 +1864,7 @@ static void rk818_bat_debug_info(struct rk818_battery *di)
+@@ -1892,7 +1863,7 @@ static void rk818_bat_debug_info(struct rk818_battery *di)
  	    "Dsoc=%d, Rsoc=%d, Vavg=%d, Iavg=%d, Cap=%d, Fcc=%d, d=%d\n"
  	    "K=%d, Mode=%s, Oldcap=%d, Is=%d, Ip=%d, Vs=%d\n"
  	    "fb_temp=%d, bat_temp=%d, sample_res=%d, USB=%d, DC=%d\n"
@@ -75,7 +75,7 @@ index ba85c36..c9863eb 100644
  	    "adp:finish=%lu, boot_min=%lu, sleep_min=%lu, adc=%d, Vsys=%d\n"
  	    "bat:%s, meet: soc=%d, calc: dsoc=%d, rsoc=%d, Vocv=%d\n"
  	    "pwr: dsoc=%d, rsoc=%d, vol=%d, halt: st=%d, cnt=%d, reboot=%d\n"
-@@ -1910,7 +1881,7 @@ static void rk818_bat_debug_info(struct rk818_battery *di)
+@@ -1909,7 +1880,7 @@ static void rk818_bat_debug_info(struct rk818_battery *di)
  	    di->pdata->sample_res, di->usb_in, di->ac_in,
  	    rk818_bat_get_ioffset(di),
  	    rk818_bat_get_coffset(di), di->poffset, di->bat_res,
@@ -84,7 +84,7 @@ index ba85c36..c9863eb 100644
  	    base2min(di->finish_base),
  	    base2min(di->boot_base), di->sleep_sum_sec / 60,
  	    di->adc_allow_update,
-@@ -2507,13 +2478,12 @@ static void rk818_bat_rsoc_daemon(struct rk818_battery *di)
+@@ -2506,13 +2477,12 @@ static void rk818_bat_rsoc_daemon(struct rk818_battery *di)
  	int est_vol, remain_cap;
  	static unsigned long sec;
  
@@ -100,7 +100,7 @@ index ba85c36..c9863eb 100644
  		if (base2sec(sec) >= 60) {
  			sec = 0;
  			di->dbg_cap_low0++;
-@@ -2523,7 +2493,6 @@ static void rk818_bat_rsoc_daemon(struct rk818_battery *di)
+@@ -2522,7 +2492,6 @@ static void rk818_bat_rsoc_daemon(struct rk818_battery *di)
  			rk818_bat_init_capacity(di, remain_cap);
  			BAT_INFO("adjust cap below 0 --> %d, rsoc=%d\n",
  				 di->remain_cap, di->rsoc);
@@ -108,7 +108,7 @@ index ba85c36..c9863eb 100644
  		}
  	} else {
  		sec = 0;
-@@ -3353,7 +3322,6 @@ static int rk818_battery_probe(struct platform_device *pdev)
+@@ -3352,7 +3321,6 @@ static int rk818_battery_probe(struct platform_device *pdev)
  	rk818_bat_init_info(di);
  	rk818_bat_init_fg(di);
  	rk818_bat_init_sysfs(di);
@@ -116,7 +116,7 @@ index ba85c36..c9863eb 100644
  	//wake_lock_init(&di->wake_lock, WAKE_LOCK_SUSPEND, "rk818_bat_lock");
  	di->bat_monitor_wq = alloc_ordered_workqueue("%s",
  			WQ_MEM_RECLAIM | WQ_FREEZABLE, "rk818-bat-monitor-wq");
-@@ -3488,7 +3456,6 @@ static void rk818_battery_shutdown(struct platform_device *dev)
+@@ -3487,7 +3455,6 @@ static void rk818_battery_shutdown(struct platform_device *dev)
  
  	cancel_delayed_work_sync(&di->bat_delay_work);
  	cancel_delayed_work_sync(&di->calib_delay_work);
