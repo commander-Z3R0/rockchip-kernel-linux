@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index c9863eb..a4b3ce5 100644
+index 07d13df..f19d536 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
-@@ -904,12 +904,12 @@ int rk818_battery_get_property(struct rk818_battery *di,
+@@ -903,12 +903,12 @@ int rk818_battery_get_property(struct rk818_battery *di,
  {
  	switch (psp) {
  	case POWER_SUPPLY_PROP_CURRENT_NOW:
