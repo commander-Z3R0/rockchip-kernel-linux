@@ -11,10 +11,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/power/supply/rk818_battery.c b/drivers/power/supply/rk818_battery.c
-index e7fb5b6..88df402 100644
+index fc1e2f9..f7084942 100644
 --- a/drivers/power/supply/rk818_battery.c
 +++ b/drivers/power/supply/rk818_battery.c
-@@ -2931,7 +2931,6 @@ static irqreturn_t rk818_vb_low_irq(int irq, void *bat)
+@@ -2930,7 +2930,6 @@ static irqreturn_t rk818_vb_low_irq(int irq, void *bat)
  {
  	struct rk818_battery *di = (struct rk818_battery *)bat;
  
