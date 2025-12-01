@@ -1,3 +1,9 @@
+linux-6.18-rockchip (6.18-1) unstable; urgency=medium
+
+  * Rebase on 6.18
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 01 Dec 2025 11:54:34 +0100
+
 linux-6.18-rockchip (6.18~rc7-1) unstable; urgency=medium
 
   * d/patches: fix power supplies on the PinePhone Pro
