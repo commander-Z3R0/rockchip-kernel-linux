@@ -16,7 +16,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 14 deletions(-)
 
 diff --git a/drivers/input/touchscreen/goodix.c b/drivers/input/touchscreen/goodix.c
-index 3a090e5..40e8276 100644
+index eb94815..3ed108e 100644
 --- a/drivers/input/touchscreen/goodix.c
 +++ b/drivers/input/touchscreen/goodix.c
 @@ -1426,8 +1426,6 @@ static int goodix_suspend(struct device *dev)
