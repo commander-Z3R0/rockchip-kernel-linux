@@ -14,10 +14,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index f420972..b41b5c4 100644
+index dac06d0..dfc4608 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
-@@ -210,10 +210,41 @@ static void __dwc3_set_mode(struct work_struct *work)
+@@ -211,10 +211,41 @@ static void __dwc3_set_mode(struct work_struct *work)
  	if (dwc->current_dr_role && ((DWC3_IP_IS(DWC3) ||
  			DWC3_VER_IS_PRIOR(DWC31, 190A)) &&
  			desired_dr_role != DWC3_GCTL_PRTCAP_OTG)) {
@@ -59,7 +59,7 @@ index f420972..b41b5c4 100644
  		/*
  		 * Wait for internal clocks to synchronized. DWC_usb31 and
  		 * DWC_usb32 may need at least 50ms (less for DWC_usb3). To
-@@ -896,6 +927,7 @@ static int dwc3_phy_power_on(struct dwc3 *dwc)
+@@ -897,6 +928,7 @@ static int dwc3_phy_power_on(struct dwc3 *dwc)
  			goto err_power_off_usb3_phy;
  	}
  
@@ -67,7 +67,7 @@ index f420972..b41b5c4 100644
  	return 0;
  
  err_power_off_usb3_phy:
-@@ -916,8 +948,10 @@ static void dwc3_phy_power_off(struct dwc3 *dwc)
+@@ -917,8 +949,10 @@ static void dwc3_phy_power_off(struct dwc3 *dwc)
  {
  	int i;
  
