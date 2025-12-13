@@ -143,7 +143,7 @@ index 769c72f..ba85c36 100644
  }
  
 diff --git a/drivers/power/supply/rk818_charger.c b/drivers/power/supply/rk818_charger.c
-index ce46a901..26f21c4 100644
+index ce46a90..26f21c4 100644
 --- a/drivers/power/supply/rk818_charger.c
 +++ b/drivers/power/supply/rk818_charger.c
 @@ -356,14 +356,36 @@ static int rk818_charger_get_voltage_max(struct rk818_charger *cg, int *val)
