@@ -9,7 +9,7 @@ Subject: [PATCH] arm64: dts: rockchip: pinetab2: Apply BES changes
  3 files changed, 55 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
-index 5fe6ca5d..615ae72 100644
+index 5fe6ca5..615ae72 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v0.1.dts
 @@ -24,5 +24,5 @@ lcd0_rst_l: lcd0-rst-l {
@@ -20,7 +20,7 @@ index 5fe6ca5d..615ae72 100644
 +	mmc-pwrseq = <&sdio_pwrseq>;
  };
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
-index 9349541c..ee6db7e 100644
+index 9349541..ee6db7e 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2-v2.0.dts
 @@ -7,6 +7,16 @@
