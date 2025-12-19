@@ -1,4 +1,4 @@
-linux-6.18-rockchip (6.18.2-1) unstable; urgency=medium
+linux-6.18-rockchip (6.18.2-1) trixie; urgency=medium
 
   * Rebase on 6.18.2
 
