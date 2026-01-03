@@ -185,7 +185,7 @@ index 85d2f24..611a6cd 100644
   * clkdev helpers
   */
 diff --git a/drivers/clk/clk.h b/drivers/clk/clk.h
-index 2d80190..367a0f0 100644
+index 2d80190..367a0f03 100644
 --- a/drivers/clk/clk.h
 +++ b/drivers/clk/clk.h
 @@ -24,6 +24,7 @@ struct clk_hw *clk_find_hw(const char *dev_id, const char *con_id);
