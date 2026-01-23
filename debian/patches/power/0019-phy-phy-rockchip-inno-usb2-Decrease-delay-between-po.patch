@@ -22,10 +22,10 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-index 4f71373..df05812 100644
+index 0c75976..85becad 100644
 --- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
 +++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-@@ -520,7 +520,7 @@ static int rockchip_usb2phy_init(struct phy *phy)
+@@ -517,7 +517,7 @@ static int rockchip_usb2phy_init(struct phy *phy)
  				goto out;
  
  			schedule_delayed_work(&rport->otg_sm_work,
