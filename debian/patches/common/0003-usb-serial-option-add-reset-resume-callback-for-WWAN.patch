@@ -16,10 +16,10 @@ However the rest of the patch is not needed/already upstreamed.
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index 4c0e5a3..6ef951e 100644
+index 9f2cc5f..288796f 100644
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -2536,6 +2536,7 @@ static struct usb_serial_driver option_1port_device = {
+@@ -2537,6 +2537,7 @@ static struct usb_serial_driver option_1port_device = {
  #ifdef CONFIG_PM
  	.suspend           = usb_wwan_suspend,
  	.resume            = usb_wwan_resume,
