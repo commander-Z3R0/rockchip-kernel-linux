@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index dac06d0..dfc4608 100644
+index b37a86f..7e15803 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -211,10 +211,41 @@ static void __dwc3_set_mode(struct work_struct *work)
@@ -81,7 +81,7 @@ index dac06d0..dfc4608 100644
  	for (i = 0; i < dwc->num_usb2_ports; i++)
  		phy_power_off(dwc->usb2_generic_phy[i]);
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 30fe7df..e175325 100644
+index d47ea3b..dff9811 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -1217,6 +1217,8 @@ struct dwc3 {
