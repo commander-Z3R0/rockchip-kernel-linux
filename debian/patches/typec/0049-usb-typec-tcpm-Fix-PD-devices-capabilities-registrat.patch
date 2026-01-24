@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 29 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index ef9452ef..5580e94 100644
+index eb1d247..9d827ad 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
 @@ -3119,20 +3119,22 @@ static int tcpm_register_source_caps(struct tcpm_port *port)
