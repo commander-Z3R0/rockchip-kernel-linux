@@ -11,7 +11,7 @@ Signed-off-by: Caleb Connolly <caleb@connolly.tech>
  1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 11477d0..3913369 100644
+index 8e12862..2ea176e 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -986,6 +986,8 @@ light-sensor@48 {
