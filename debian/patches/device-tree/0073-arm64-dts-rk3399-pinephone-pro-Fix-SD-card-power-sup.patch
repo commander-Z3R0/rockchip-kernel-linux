@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 17 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 846a6c9..2bc838d 100644
+index 598e8a8..e3dc055 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -210,23 +210,6 @@ wifi_pwrseq: sdio-wifi-pwrseq {
