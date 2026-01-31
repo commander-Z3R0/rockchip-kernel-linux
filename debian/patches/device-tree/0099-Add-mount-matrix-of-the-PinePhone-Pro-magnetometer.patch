@@ -16,7 +16,7 @@ Signed-of-by: Leonardo G. Trombetta <lgtrombetta@gmx.com>
  1 file changed, 5 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 8e5e35c..f0f4b55 100644
+index 3a87d09..ea8edd6 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -1049,6 +1049,11 @@ af8133j: compass@1c {

@@ -97,9 +97,8 @@ device-tree/0096-arm64-dts-rk3399-pinephone-pro-Make-LOUT-use-mono-di.patch
 device-tree/0097-arm64-dts-rk3399-pinephone-pro-Fix-initial-codec-clo.patch
 device-tree/0098-arm64-dts-rk3399-pinephone-pro-Enable-SDR104-on-SD-c.patch
 device-tree/0099-Add-mount-matrix-of-the-PinePhone-Pro-magnetometer.patch
-device-tree/0100-arm64-dts-rk3399-pinephone-pro-Fix-adc-keys-threshol.patch
-device-tree/0101-arm64-dts-rk3399-pinephone-pro-Add-individual-LED-fu.patch
-device-tree/0102-PineTab2-add-support-for-Wi-Fi-driver.patch
-device-tree/0103-PineTab2-add-device-node-for-Wi-Fi-driver.patch
-device-tree/0104-PineTab2-add-ethernet-node-for-Wi-Fi-driver.patch
-debian/0105-wireless-add-debian-wireless-regdb-certificates.patch
+device-tree/0100-arm64-dts-rk3399-pinephone-pro-Add-individual-LED-fu.patch
+device-tree/0101-PineTab2-add-support-for-Wi-Fi-driver.patch
+device-tree/0102-PineTab2-add-device-node-for-Wi-Fi-driver.patch
+device-tree/0103-PineTab2-add-ethernet-node-for-Wi-Fi-driver.patch
+debian/0104-wireless-add-debian-wireless-regdb-certificates.patch
