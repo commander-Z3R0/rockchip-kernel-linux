@@ -9,7 +9,7 @@ Signed-of-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 243338d..4760535 100644
+index 26e61e7..9c7f67e 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -481,8 +481,8 @@ otg_switch: OTG_SWITCH {
