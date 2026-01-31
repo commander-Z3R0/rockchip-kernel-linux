@@ -12,7 +12,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 5 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index 144587b..0fa9fa8 100644
+index c1ade82..69990b1 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
 @@ -390,10 +390,6 @@ vcc5v0_typec: vcc5v0-typec-regulator {
