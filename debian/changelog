@@ -1,3 +1,9 @@
+linux-6.18-rockchip (6.18.8-1) trixie; urgency=medium
+
+  * Rebase on 6.18.8
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Sat, 31 Jan 2026 10:02:42 +0100
+
 linux-6.18-rockchip (6.18.7-1) trixie; urgency=medium
 
   * Rebase on 6.18.7
