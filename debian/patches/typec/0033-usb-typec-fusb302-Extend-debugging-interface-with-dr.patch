@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 78 insertions(+)
 
 diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/fusb302.c
-index ce0cf1c..2cc156f 100644
+index b80d127..385dbed 100644
 --- a/drivers/usb/typec/tcpm/fusb302.c
 +++ b/drivers/usb/typec/tcpm/fusb302.c
 @@ -209,6 +209,81 @@ static int fusb302_debug_show(struct seq_file *s, void *v)
