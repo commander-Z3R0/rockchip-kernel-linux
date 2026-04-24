@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megous@megous.com>
  1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/fusb302.c b/drivers/usb/typec/tcpm/fusb302.c
-index b93a2d0..8bfb2db 100644
+index 868cee4..230dc8e 100644
 --- a/drivers/usb/typec/tcpm/fusb302.c
 +++ b/drivers/usb/typec/tcpm/fusb302.c
 @@ -1724,14 +1724,16 @@ static void fusb302_irq_work(struct work_struct *work)
