@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 38 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index c6b7df5..2e27420 100644
+index a1f99c3..7665678 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -214,10 +214,41 @@ static void __dwc3_set_mode(struct work_struct *work)
@@ -44,9 +44,9 @@ index c6b7df5..2e27420 100644
 +			for (int j = 0; j < dwc->num_usb3_ports; j++)
 +				phy_power_off(dwc->usb3_generic_phy[j]);
 +
- 		reg = dwc3_readl(dwc->regs, DWC3_GCTL);
+ 		reg = dwc3_readl(dwc, DWC3_GCTL);
  		reg |= DWC3_GCTL_CORESOFTRESET;
- 		dwc3_writel(dwc->regs, DWC3_GCTL, reg);
+ 		dwc3_writel(dwc, DWC3_GCTL, reg);
  
 +		if (dwc->usb3_phy_reset_quirk) {
 +			for (int j = 0; j < dwc->num_usb3_ports; j++) {
@@ -81,10 +81,10 @@ index c6b7df5..2e27420 100644
  	for (i = 0; i < dwc->num_usb2_ports; i++)
  		phy_power_off(dwc->usb2_generic_phy[i]);
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 9cfc36d..6afb3f7 100644
+index a35b3db1..88c5098 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
-@@ -1230,6 +1230,8 @@ struct dwc3 {
+@@ -1228,6 +1228,8 @@ struct dwc3 {
  	u8			num_usb2_ports;
  	u8			num_usb3_ports;
  

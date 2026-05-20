@@ -39,7 +39,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  3 files changed, 54 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 2e27420..fc78aaa 100644
+index 7665678..44a8645 100644
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
 @@ -153,7 +153,7 @@ void dwc3_set_prtcap(struct dwc3 *dwc, u32 mode, bool ignore_susphy)
@@ -48,7 +48,7 @@ index 2e27420..fc78aaa 100644
  	reg &= ~(DWC3_GCTL_PRTCAPDIR(DWC3_GCTL_PRTCAP_OTG));
 -	reg |= DWC3_GCTL_PRTCAPDIR(mode);
 +	reg |= DWC3_GCTL_PRTCAPDIR(mode & DWC3_GCTL_PRTCAP_OTG);
- 	dwc3_writel(dwc->regs, DWC3_GCTL, reg);
+ 	dwc3_writel(dwc, DWC3_GCTL, reg);
  
  	dwc->current_dr_role = mode;
 @@ -193,6 +193,7 @@ static void __dwc3_set_mode(struct work_struct *work)
@@ -132,7 +132,7 @@ index 2e27420..fc78aaa 100644
  			return -EBUSY;
  		break;
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index 6afb3f7..fd9e9ba 100644
+index 88c5098..1039ac8 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
 @@ -264,6 +264,12 @@
@@ -148,7 +148,7 @@ index 6afb3f7..fd9e9ba 100644
  
  #define DWC3_GCTL_CORESOFTRESET		BIT(11)
  #define DWC3_GCTL_SOFITPSYNC		BIT(10)
-@@ -1168,6 +1174,10 @@ struct dwc3_glue_ops {
+@@ -1166,6 +1172,10 @@ struct dwc3_glue_ops {
   * @suspended: set to track suspend event due to U3/L2.
   * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
   *		  before PM suspend.
@@ -159,7 +159,7 @@ index 6afb3f7..fd9e9ba 100644
   * @imod_interval: set the interrupt moderation interval in 250ns
   *			increments or 0 to disable.
   * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1413,6 +1423,8 @@ struct dwc3 {
+@@ -1411,6 +1421,8 @@ struct dwc3 {
  	unsigned		suspended:1;
  	unsigned		susphy_state:1;
  
@@ -169,7 +169,7 @@ index 6afb3f7..fd9e9ba 100644
  
  	int			max_cfg_eps;
 diff --git a/drivers/usb/dwc3/drd.c b/drivers/usb/dwc3/drd.c
-index 4c91240..05b6961 100644
+index b229fb1..cf934f8 100644
 --- a/drivers/usb/dwc3/drd.c
 +++ b/drivers/usb/dwc3/drd.c
 @@ -417,15 +417,28 @@ void dwc3_otg_update(struct dwc3 *dwc, bool ignore_idstatus)
