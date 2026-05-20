@@ -14,7 +14,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 29 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index f6b9008..f31c46e 100644
+index 6b5194d..64b55aa 100644
 --- a/drivers/usb/typec/tcpm/tcpm.c
 +++ b/drivers/usb/typec/tcpm/tcpm.c
 @@ -3124,20 +3124,22 @@ static int tcpm_register_source_caps(struct tcpm_port *port)
@@ -76,7 +76,7 @@ index f6b9008..f31c46e 100644
  	cap = usb_power_delivery_register_capabilities(port->partner_pd, &caps);
  	if (IS_ERR(cap))
  		return PTR_ERR(cap);
-@@ -7226,10 +7235,17 @@ static int tcpm_port_register_pd(struct tcpm_port *port)
+@@ -7228,10 +7237,17 @@ static int tcpm_port_register_pd(struct tcpm_port *port)
  		port->pds[i] = usb_power_delivery_register(port->dev, &desc);
  		if (IS_ERR(port->pds[i])) {
  			ret = PTR_ERR(port->pds[i]);
