@@ -1,3 +1,9 @@
+linux-6.18-rockchip (6.18.33-1) trixie; urgency=medium
+
+  * Rebase on 6.18.33
+
+ -- Mobot <group_9279_bot_3d620cd42b5548cd487aa9eaff458c11@noreply.salsa.debian.org>  Sun, 24 May 2026 04:47:45 +0000
+
 linux-6.18-rockchip (6.18.32-1) trixie; urgency=medium
 
   * Rebase on 6.18.32
