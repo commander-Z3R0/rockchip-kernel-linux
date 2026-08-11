@@ -2,7 +2,6 @@ name: Sync Mobian Rockchip Linux
 
 on:
   schedule:
-    # Every 6 hours: 00:00, 06:00, 12:00, and 18:00 UTC
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
@@ -28,6 +27,8 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config http.postBuffer 524288000
+          git config http.version HTTP/1.1
 
       - name: Add Salsa remote
         run: |
@@ -38,7 +39,17 @@ jobs:
         run: |
           git fetch upstream --prune --tags '+refs/heads/*:refs/remotes/upstream/*'
 
-      - name: Mirror push to GitHub
+      - name: Push all branches
         run: |
-          # Push everything (all branches and tags) preserving exact history
-          git push --mirror origin
+          git for-each-ref --format='%(refname)' refs/remotes/upstream/ | while read ref; do
+            branch="${ref#refs/remotes/upstream/}"
+            if [ "$branch" != "HEAD" ]; then
+              git push origin "${ref}:refs/heads/${branch}" || true
+            fi
+          done
+
+      - name: Push all tags
+        run: |
+          git tag --list | while read tag; do
+            git push origin "refs/tags/${tag}:refs/tags/${tag}" || true
+          done
