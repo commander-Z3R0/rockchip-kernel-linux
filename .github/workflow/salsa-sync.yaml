@@ -1,0 +1,44 @@
+name: Sync Mobian Rockchip Linux
+
+on:
+  schedule:
+    # Every 6 hours: 00:00, 06:00, 12:00, and 18:00 UTC
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-rockchip-linux
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add Salsa remote
+        run: |
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream https://salsa.debian.org/Mobian-team/devices/kernels/rockchip-linux.git
+
+      - name: Fetch all refs from Salsa
+        run: |
+          git fetch upstream --prune --tags '+refs/heads/*:refs/remotes/upstream/*'
+
+      - name: Mirror push to GitHub
+        run: |
+          # Push everything (all branches and tags) preserving exact history
+          git push --mirror origin
