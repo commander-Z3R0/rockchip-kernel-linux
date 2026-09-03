@@ -16,7 +16,7 @@ However the rest of the patch is not needed/already upstreamed.
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
-index 89624f3..b636eab 100644
+index 5652155..89bb24a 100644
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
 @@ -2580,6 +2580,7 @@ static struct usb_serial_driver option_1port_device = {
