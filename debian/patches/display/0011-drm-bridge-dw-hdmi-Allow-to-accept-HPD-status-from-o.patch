@@ -10,7 +10,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 59 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
-index 206b099..e818c0a 100644
+index 748ed62..56f043e 100644
 --- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
 +++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi.c
 @@ -10,6 +10,7 @@
@@ -128,7 +128,7 @@ index 206b099..e818c0a 100644
  	} else {
  		dev_dbg(hdmi->dev, "no ddc property found\n");
  	}
-@@ -3584,6 +3635,8 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
+@@ -3585,6 +3636,8 @@ struct dw_hdmi *dw_hdmi_probe(struct platform_device *pdev,
  
  err_res:
  	i2c_put_adapter(hdmi->ddc);
@@ -137,7 +137,7 @@ index 206b099..e818c0a 100644
  
  	return ERR_PTR(ret);
  }
-@@ -3591,6 +3644,8 @@ EXPORT_SYMBOL_GPL(dw_hdmi_probe);
+@@ -3592,6 +3645,8 @@ EXPORT_SYMBOL_GPL(dw_hdmi_probe);
  
  void dw_hdmi_remove(struct dw_hdmi *hdmi)
  {
