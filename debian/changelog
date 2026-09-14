@@ -1,3 +1,9 @@
+linux-6.12-rockchip (6.12.110-1) trixie; urgency=medium
+
+  * Rebase on 6.12.110
+
+ -- Mobot <group_9279_bot_40125486ee952f2e6334e71f7a0e5111@noreply.salsa.debian.org>  Mon, 14 Sep 2026 14:40:58 +0000
+
 linux-6.12-rockchip (6.12.109-1) trixie; urgency=medium
 
   * Rebase on 6.12.109
