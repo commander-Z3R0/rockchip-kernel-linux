@@ -81,10 +81,10 @@ index 2cdb073..7395411 100644
  	for (i = 0; i < dwc->num_usb2_ports; i++)
  		phy_power_off(dwc->usb2_generic_phy[i]);
 diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index eb8b8f3..c47a6da 100644
+index 7ee7228..caa3832 100644
 --- a/drivers/usb/dwc3/core.h
 +++ b/drivers/usb/dwc3/core.h
-@@ -1219,6 +1219,8 @@ struct dwc3 {
+@@ -1220,6 +1220,8 @@ struct dwc3 {
  	u8			num_usb2_ports;
  	u8			num_usb3_ports;
  
