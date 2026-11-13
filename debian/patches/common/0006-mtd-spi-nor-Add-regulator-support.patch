@@ -9,10 +9,10 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  2 files changed, 34 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 037407f..35d9c2d 100644
+index 512d0e4..aea588b 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
-@@ -3710,6 +3710,22 @@ static int spi_nor_probe(struct spi_mem *spimem)
+@@ -3719,6 +3719,22 @@ static int spi_nor_probe(struct spi_mem *spimem)
  	if (!nor)
  		return -ENOMEM;
  
@@ -35,7 +35,7 @@ index 037407f..35d9c2d 100644
  	nor->spimem = spimem;
  	nor->dev = dev;
  	spi_nor_set_flash_node(nor, dev->of_node);
-@@ -3737,7 +3753,7 @@ static int spi_nor_probe(struct spi_mem *spimem)
+@@ -3746,7 +3762,7 @@ static int spi_nor_probe(struct spi_mem *spimem)
  
  	ret = spi_nor_scan(nor, flash_name, &hwcaps);
  	if (ret)
@@ -44,7 +44,7 @@ index 037407f..35d9c2d 100644
  
  	spi_nor_debugfs_register(nor);
  
-@@ -3751,20 +3767,28 @@ static int spi_nor_probe(struct spi_mem *spimem)
+@@ -3760,20 +3776,28 @@ static int spi_nor_probe(struct spi_mem *spimem)
  		devm_kfree(dev, nor->bouncebuf);
  		nor->bouncebuf = devm_kmalloc(dev, nor->bouncebuf_size,
  					      GFP_KERNEL);
@@ -78,7 +78,7 @@ index 037407f..35d9c2d 100644
  }
  
  static int spi_nor_remove(struct spi_mem *spimem)
-@@ -3772,6 +3796,7 @@ static int spi_nor_remove(struct spi_mem *spimem)
+@@ -3781,6 +3805,7 @@ static int spi_nor_remove(struct spi_mem *spimem)
  	struct spi_nor *nor = spi_mem_get_drvdata(spimem);
  
  	spi_nor_restore(nor);
