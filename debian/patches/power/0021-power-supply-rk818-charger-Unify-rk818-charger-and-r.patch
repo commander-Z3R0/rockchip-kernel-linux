@@ -34,12 +34,12 @@ index 5424bed..31b3fdc 100644
  	bool "RK818 Charger driver"
  	depends on MFD_RK8XX
 diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
-index 3c10aad..c8ad916 100644
+index 359a083..fd428a5 100644
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
 @@ -117,5 +117,4 @@ obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
  obj-$(CONFIG_BATTERY_UG3105)	+= ug3105_battery.o
- obj-$(CONFIG_CHARGER_QCOM_SMB2)	+= qcom_pmi8998_charger.o
+ obj-$(CONFIG_CHARGER_QCOM_SMB2)	+= qcom_smbx.o
  obj-$(CONFIG_FUEL_GAUGE_MM8013)	+= mm8013.o
 -obj-$(CONFIG_BATTERY_RK818)	+= rk818_battery.o
 -obj-$(CONFIG_CHARGER_RK818)	+= rk818_charger.o
