@@ -95,3 +95,4 @@ device-tree/0094-arm64-dts-rk3399-pinephone-pro-Add-individual-LED-fu.patch
 device-tree/0095-PineTab2-add-support-for-Wi-Fi-driver.patch
 device-tree/0096-PineTab2-add-device-node-for-Wi-Fi-driver.patch
 device-tree/0097-PineTab2-add-ethernet-node-for-Wi-Fi-driver.patch
+debian/0098-wireless-add-debian-wireless-regdb-certificates.patch
